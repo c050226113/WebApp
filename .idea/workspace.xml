@@ -32,11 +32,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/main_soft/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3213873" vertical-offset="12132" max-vertical-offset="13345">
-              <caret line="730" column="72" selection-start-line="730" selection-start-column="72" selection-end-line="730" selection-end-column="72" />
+            <state vertical-scroll-proportion="-14.615385" vertical-offset="12132" max-vertical-offset="13345">
+              <caret line="736" column="7" selection-start-line="736" selection-start-column="7" selection-end-line="736" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -88,24 +88,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="629">
-              <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.2665505" vertical-offset="0" max-vertical-offset="629">
+              <caret line="9" column="51" selection-start-line="9" selection-start-column="51" selection-end-line="9" selection-end-column="51" />
               <folding>
                 <element signature="e#6#19#0#PHP" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MongoManager.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/model/MongoManager.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="3927">
-              <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -151,7 +141,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/view/main_soft/css/index_vue.css" />
         <option value="$PROJECT_DIR$/view/main_soft/js/index_vue.js" />
         <option value="$PROJECT_DIR$/view/main_soft/js/launcher_vue.js" />
         <option value="$PROJECT_DIR$/view/js/App.js" />
@@ -202,6 +191,7 @@
         <option value="$PROJECT_DIR$/core/App.php" />
         <option value="$PROJECT_DIR$/server/server.php" />
         <option value="$PROJECT_DIR$/view/main_soft/js/login_vue.js" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -714,6 +704,7 @@
     <frame x="-8" y="-8" width="1852" height="1096" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3254818" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -725,7 +716,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262032" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31477517" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -759,20 +749,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3329646" vertical-offset="15764" max-vertical-offset="81617">
-          <caret line="945" column="18" selection-start-line="945" selection-start-column="18" selection-end-line="945" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/main_soft/js/index_vue.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="12655" max-vertical-offset="14025">
-          <caret line="643" column="10" selection-start-line="643" selection-start-column="10" selection-end-line="643" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/main_soft/js/launcher_vue.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="2329">
@@ -1010,6 +986,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.965517" vertical-offset="0" max-vertical-offset="1173">
           <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1062,16 +1039,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="646">
           <caret line="32" column="1" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="629">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-          <folding>
-            <element signature="e#6#19#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1135,11 +1102,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.git/config">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27293578" vertical-offset="0" max-vertical-offset="872">
+          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/view/main_soft/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3213873" vertical-offset="12132" max-vertical-offset="13345">
-          <caret line="730" column="72" selection-start-line="730" selection-start-column="72" selection-end-line="730" selection-end-column="72" />
+        <state vertical-scroll-proportion="-14.615385" vertical-offset="12132" max-vertical-offset="13345">
+          <caret line="736" column="7" selection-start-line="736" selection-start-column="7" selection-end-line="736" selection-end-column="7" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.029565217" vertical-offset="0" max-vertical-offset="575">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2665505" vertical-offset="0" max-vertical-offset="629">
+          <caret line="9" column="51" selection-start-line="9" selection-start-column="51" selection-end-line="9" selection-end-column="51" />
+          <folding>
+            <element signature="e#6#19#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
