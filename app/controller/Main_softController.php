@@ -17,9 +17,6 @@ class Main_softController extends Controller{
     private $account;
     private $password;
 
-    /**
-     * init();
-     */
     public function __construct(){
         $this->getSessionUser();
     }
@@ -29,7 +26,7 @@ class Main_softController extends Controller{
      * @param $password
      */
     protected function setSessionUser($account,$password){
-        $session = App::getInstance()->getSESSION();
+        $session = &App::getInstance()->getSESSION();
         $session[Main_softUtil::MAIN_SOFT_ACCOUNT] = $account;
         $session[Main_softUtil::MAIN_SOFT_PASSWORD] = $password;
         App::getInstance()->setSESSION($session);

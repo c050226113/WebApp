@@ -2,7 +2,6 @@
 use core\App;
 use core\lib\Response;
 
-
 if(defined("IS_SWOOLE")){
     App::getInstance()->run();
 }else{

@@ -1,7 +1,6 @@
 <?php
 
-class vote extends Thread {
-
+class MyThread extends Thread {
     public $res    = '';
     public $url    = array();
     public $name   = '';
@@ -9,7 +8,6 @@ class vote extends Thread {
     public $lc     = false;
 
     public function __construct($name) {
-
         $this->res    = '暂无,第一次运行.';
         $this->param    = 0;
         $this->lurl   = 0;
@@ -38,9 +36,9 @@ class vote extends Thread {
 }
 
 //这里创建线程池.
-$pool[] = new vote('a');
-$pool[] = new vote('b');
-$pool[] = new vote('c');
+$pool[] = new MyThread('a');
+$pool[] = new MyThread('b');
+$pool[] = new MyThread('c');
 
 //启动所有线程,使其处于工作状态
 foreach ($pool as $w) {
@@ -68,7 +66,7 @@ echo "所有线程派发完毕,等待执行完成.\n";
 while (count($pool)) {
     //遍历检查线程组运行结束
     foreach ($pool as $key => $threads) {
-        if ($worker->param=='') {
+        if ($threads->param=='') {
             echo "[{$threads->name}]线程空闲,上次参数[{$threads->lurl}]结果[{$threads->res}].\n";
             echo "[{$threads->name}]线程运行完成,退出.\n";
             //设置结束标志
