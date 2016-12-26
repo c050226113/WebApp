@@ -22,7 +22,7 @@ if(defined("IS_SWOOLE")){
     App::getInstance()->create();
     try{
         App::getInstance()->run();
-    }catch (Exception $err){
-        Response::getInstance()->responseErrorJsCode($err->getMessage());
+    }catch (Exception $e){
+        Response::getInstance()->responseErrorJsCode($e->getMessage());
     }
 }
