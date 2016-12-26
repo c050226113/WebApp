@@ -1,0 +1,26 @@
+i=1
+while(($i<=3))
+do
+((nowSsh=100+i))
+/usr/bin/expect <<-EOF
+spawn ssh -p "${nowSsh}22" root@192.168.31.176 pkill php
+expect {
+"*yes/no*" { send "yes\r" }
+"*password:*" { send "q12345t\r" }
+}
+interact
+expect eof
+EOF
+sleep 0.5
+/usr/bin/expect <<-EOF
+spawn ssh -p "${nowSsh}22" root@192.168.31.176 /usr/local/php/bin/php /var/www/highcharts/server/server.php
+expect {
+"*yes/no*" { send "yes\r" }
+"*password:*" { send "q12345t\r" }
+}
+interact
+expect eof
+EOF
+((i=i+1))
+sleep 1
+done

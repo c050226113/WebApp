@@ -1,0 +1,117 @@
+{
+    "frames": {
+        "hand.png": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 139,
+                "h": 139,
+                "idx": 0
+            },
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 139,
+                "h": 139
+            },
+            "sourceSize": {
+                "w": 139,
+                "h": 139
+            },
+            "rotated": false,
+            "trimed": false
+        },
+        "launch.png": {
+            "frame": {
+                "x": 141,
+                "y": 0,
+                "w": 207,
+                "h": 202,
+                "idx": 0
+            },
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 207,
+                "h": 202
+            },
+            "sourceSize": {
+                "w": 207,
+                "h": 202
+            },
+            "rotated": false,
+            "trimed": false
+        },
+        "left.png": {
+            "frame": {
+                "x": 350,
+                "y": 0,
+                "w": 154,
+                "h": 152,
+                "idx": 0
+            },
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 154,
+                "h": 152
+            },
+            "sourceSize": {
+                "w": 154,
+                "h": 152
+            },
+            "rotated": false,
+            "trimed": false
+        },
+        "right.png": {
+            "frame": {
+                "x": 350,
+                "y": 154,
+                "w": 154,
+                "h": 152,
+                "idx": 0
+            },
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 154,
+                "h": 152
+            },
+            "sourceSize": {
+                "w": 154,
+                "h": 152
+            },
+            "rotated": false,
+            "trimed": false
+        },
+        "ship.png": {
+            "frame": {
+                "x": 0,
+                "y": 204,
+                "w": 278,
+                "h": 179,
+                "idx": 0
+            },
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 278,
+                "h": 179
+            },
+            "sourceSize": {
+                "w": 278,
+                "h": 179
+            },
+            "rotated": false,
+            "trimed": false
+        }
+    },
+    "meta": {
+        "app": "http:\/\/www.layabox.com",
+        "version": "0.1.0 alpha",
+        "format": "json",
+        "scale": 1,
+        "image": "ui.png",
+        "prefix": "ui\/"
+    }
+}

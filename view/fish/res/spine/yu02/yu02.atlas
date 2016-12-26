@@ -1,0 +1,97 @@
+
+yu02.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chi01
+  rotate: true
+  xy: 470, 72
+  size: 54, 29
+  orig: 54, 29
+  offset: 0, 0
+  index: -1
+chi02
+  rotate: false
+  xy: 297, 89
+  size: 70, 37
+  orig: 70, 37
+  offset: 0, 0
+  index: -1
+shenti01
+  rotate: false
+  xy: 239, 74
+  size: 56, 52
+  orig: 56, 52
+  offset: 0, 0
+  index: -1
+shenti02
+  rotate: false
+  xy: 2, 2
+  size: 105, 60
+  orig: 105, 60
+  offset: 0, 0
+  index: -1
+shenti03
+  rotate: false
+  xy: 425, 77
+  size: 43, 49
+  orig: 43, 49
+  offset: 0, 0
+  index: -1
+shenti04
+  rotate: false
+  xy: 109, 19
+  size: 47, 41
+  orig: 47, 41
+  offset: 0, 0
+  index: -1
+shenti05
+  rotate: false
+  xy: 369, 74
+  size: 54, 52
+  orig: 54, 52
+  offset: 0, 0
+  index: -1
+yan01
+  rotate: false
+  xy: 194, 34
+  size: 27, 26
+  orig: 27, 26
+  offset: 0, 0
+  index: -1
+yan02
+  rotate: true
+  xy: 297, 65
+  size: 22, 23
+  orig: 22, 23
+  offset: 0, 0
+  index: -1
+yan03
+  rotate: true
+  xy: 223, 34
+  size: 26, 24
+  orig: 26, 24
+  offset: 0, 0
+  index: -1
+yan04
+  rotate: false
+  xy: 158, 29
+  size: 34, 31
+  orig: 34, 31
+  offset: 0, 0
+  index: -1
+zhuan01
+  rotate: false
+  xy: 134, 62
+  size: 103, 64
+  orig: 103, 64
+  offset: 0, 0
+  index: -1
+zhuan02
+  rotate: false
+  xy: 2, 64
+  size: 130, 62
+  orig: 130, 62
+  offset: 0, 0
+  index: -1

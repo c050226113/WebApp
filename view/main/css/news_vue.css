@@ -1,0 +1,28 @@
+section#news_vue{
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-width: 1100px;
+}
+section#news_vue .item{
+    float: left;
+    width: 33.33333333%;
+    padding: 20px;
+}
+section#news_vue .item p:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+section#news_vue .background >div{
+    background-color: #0088e4;
+    opacity: 0;
+}
+section#news_vue .background >div:hover{
+    cursor: pointer;
+}
+section#news_vue .background >div{
+    transition: all 0.4s ease;
+}
+section#news_vue .background >div img{
+    height: 30%;
+}

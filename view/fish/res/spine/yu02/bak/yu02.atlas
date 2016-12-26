@@ -1,0 +1,76 @@
+
+yu02.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chi01
+  rotate: false
+  xy: 72, 10
+  size: 52, 27
+  orig: 54, 29
+  offset: 1, 1
+  index: -1
+chi02
+  rotate: false
+  xy: 2, 2
+  size: 68, 35
+  orig: 70, 37
+  offset: 1, 1
+  index: -1
+shenti
+  rotate: false
+  xy: 2, 39
+  size: 149, 66
+  orig: 151, 68
+  offset: 1, 1
+  index: -1
+sheti02
+  rotate: false
+  xy: 153, 39
+  size: 149, 66
+  orig: 151, 68
+  offset: 1, 1
+  index: -1
+yan01
+  rotate: false
+  xy: 160, 13
+  size: 25, 24
+  orig: 27, 26
+  offset: 1, 1
+  index: -1
+yan02
+  rotate: false
+  xy: 213, 16
+  size: 20, 21
+  orig: 22, 23
+  offset: 1, 1
+  index: -1
+yan03
+  rotate: false
+  xy: 187, 15
+  size: 24, 22
+  orig: 26, 24
+  offset: 1, 1
+  index: -1
+yan04
+  rotate: false
+  xy: 126, 8
+  size: 32, 29
+  orig: 34, 31
+  offset: 1, 1
+  index: -1
+zhuan01
+  rotate: true
+  xy: 436, 2
+  size: 103, 64
+  orig: 103, 64
+  offset: 0, 0
+  index: -1
+zhuan02
+  rotate: false
+  xy: 304, 43
+  size: 130, 62
+  orig: 130, 62
+  offset: 0, 0
+  index: -1

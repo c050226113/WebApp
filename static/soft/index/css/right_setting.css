@@ -1,0 +1,18 @@
+#right .setting{background-color: #f6f6f6;}
+#right .setting .setPasswordTitle p, .setting .aboutUsTitle p{color: #888;padding-left: 8%;margin: 0;}
+#right .setting .setPassword h1, .setting .aboutUs h1,.logOut h1{background-color: #fff;  font-size: 140%;padding: 4% 8% 4% 8%;border-bottom: 1px solid #bbb;border-top: 1px solid #bbb;margin: 3% 0 5% 0;}
+#right .setting .version{margin-top: 2%;}
+#right .setting .version p span{font-size: 130%}
+#right .setting .goTo{top: 33%;right: 5%;height: 25%;}
+#right input{border: none;outline: medium;color: #000}
+#right .logOut h1{color:red;font-weight: 900}
+#right .softReset h1{padding: 2% 0 2% 8%}
+#right .softReset .setPasswordTitle p{color: #000}
+#right .settingButton{padding: 0 7%}
+#right .showPassword{padding: 4% 7%}
+#right .account{height: 10%;margin-bottom: 8%;}
+#right .account img{left: 10%}
+#right .account .d1,.d2{left: 0;padding-left: 27%;}
+#right .account .d2{top: 50%;}
+#right .account .d1{top: 10%;}
+#right .account span{color:#999;}

@@ -1,0 +1,13 @@
+#right .baby{background-color: #f6f6f6}
+#right .baby .touxiang{height: 26%}
+#right .baby .touxiang img{bottom: 0;left: 35%}
+#right .baby p{margin: 0;color: #999}
+#right .baby p:nth-of-type(1){margin-top: 5%;font-size: 100%}
+#right .baby p:nth-of-type(2){font-size: 80%;margin-bottom: 8%}
+#right .baby .item{background-color: #fff;border-bottom: solid 1px #ddd}
+#right .baby .item h1{margin: 0; font-size: 100%; padding: 4% 14% 4% 8%;}
+#right .baby .item h1 span:nth-of-type(1){color: #000}
+#right .baby .item h1 span:nth-of-type(2){float: right;color: #aaa}
+#right .baby .item img{right: 5%;top: 33%;height: 34%;}
+#right .baby .right_baby_cover{position: absolute;height: 100%;width: 100%;background-color: #000;opacity: 0.6;z-index: 9999;display: none;  }
+#right .baby .editor{position: absolute;z-index: 99999;width: 80%;background: #fff;margin: auto;top: 0;left: 0;bottom: 0;right: 0;  }

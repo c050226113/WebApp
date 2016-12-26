@@ -1,0 +1,21 @@
+body{
+    background-color: #f6f6f6;
+}
+.setPasswordTitle p{
+    color: black;
+    font-size: 126%;
+    font-weight: 900;
+    margin-bottom: 0;
+    padding-left: 7%;
+}
+input.change{
+    font-size: 53%;
+    width: 100%;
+    padding: 3% 7%;
+    border: none;
+    box-shadow: 1px 1px 1px #aaa;
+    color: black;
+}
+h1{
+    margin: 1% 0 7% 0;
+}

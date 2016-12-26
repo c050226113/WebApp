@@ -1,0 +1,5 @@
+.nav_add{bottom: 0;left: 0;right: 0;top: 0;margin: auto 0 auto auto;position: absolute;width: 25%;height: 14px;font-size: 14px;text-align: center;padding: 0;line-height: 0.9;color: #fff;}
+.nav{position: relative;background-color: #0098FB;height: 7%;width: 100%;}
+.nav_back{bottom: 0;left: 0;right: 0;top: 0;margin: auto auto auto 0;position: absolute;width: 25%;height: 14px;font-size: 14px;text-align: center;padding: 0;line-height: 0.9;color: #fff;  }
+.nav_back img{transform: translateX(-5px) scale(1.4);}
+.nav h1{bottom: 0;left: 0;right: 0;top: 0;margin: auto;position: absolute;width: 50%;height: 20px;font-size: 20px;text-align: center;padding: 0;line-height: 0.9;color: #fff;  }

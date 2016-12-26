@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+<div id="parent">
+    <span>{{span}}</span>
+</div>
+<div id="div1">
+    <span>{{span}}</span>
+</div>
+<div id="div2">
+    <span>{{span}}</span>
+</div>
+<script>
+    var parent = new Vue({
+        el: '#parent',
+        data:{
+            span:'parent'
+        },
+        components:{
+            
+        }
+    });
+    var div1 = new Vue({
+        el: '#div1',
+        data:{
+            span:'div1content'
+        }
+    });
+    var div2 = new Vue({
+        el: '#div2',
+        data:{
+            span:'div2content'
+        }
+    });
+</script>
+</body>
+</html>

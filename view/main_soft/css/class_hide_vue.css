@@ -1,0 +1,11 @@
+#class_hide_vue .item{position: relative;height: 110px;border-bottom: 1px solid #bbb}
+#class_hide_vue .item ul{position: absolute;height: 50%;right: 0;bottom: 0;width: 100%;padding-top: 16px;}
+#class_hide_vue .item li{position: relative;float: right;width: 27px;height: 27px;margin-right: 2%;border-radius: 50%;background-color: #bbb;text-align: center;color: white;font-size: 18px;}
+#class_hide_vue .item .switch{line-height: 125px;z-index: 3;}
+#class_hide_vue .item p{position: absolute;height: 50%;width: 100%;text-align: right;font-size: 30px;padding-right: 16px;padding-top: 10px;}
+#class_hide_vue .opt{position: absolute;background: #fff;height: 230px;bottom: 0;left: 0;transition: all 0.4s ease;}
+#class_hide_vue .opt ul{position: relative;height: 55px;left: 0;top: 0;width: 100%;border-top: 1px solid #bbb;border-bottom: 1px solid #bbb;}
+#class_hide_vue .opt li{height: 100%;width: 14%;float: left;text-align: center;position: relative;}
+#class_hide_vue .opt span{color: #fff;background: #bbb;border-radius: 50%;width: 35px;height: 35px;font-size: 21px;display: block;}
+#class_hide_vue .opt .start_time{position: relative;width: 80%;left: 10%;margin-top: 18px;margin-bottom: 2%}
+#class_hide_vue .opt .end_time{position: relative;width: 80%;left: 10%;margin-bottom: 3%}

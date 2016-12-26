@@ -1,0 +1,22 @@
+var translate = {
+    chanpingzhongxin:['产品中心','apple'],
+    xinwendongtai:['新闻动态','apple'],
+    guanyuwomen:['关于我们','apple'],
+    zaixianshanchen:['在线商城','apple'],
+    youqinglianjie:['友情链接','apple'],
+    dierdaizhinengshoubiao:['第二代智能手表',''],
+    gongsixinwen:['公司新闻',''],
+    hanyedongtai:['行业动态',''],
+    shipingzhongxin:['视频中心',''],
+    guanyutengxuertongshoubiao:['关于腾讯儿童手表',''],
+    lianxiwomen:['联系我们',''],
+    shiyongshuoming:['使用说明',''],
+    kefurexian:['7X24小时客服热线',''],
+    shouye:['首页',''],
+    ertongpingpandiannao:['儿童平板电脑',''],
+    ertongqqjing:['儿童qq镜',''],
+    ertongyanbaobiao:['儿童眼保膘',''],
+    appxiazai:['APP下载',''],
+    gujianshengji:['固件升级',''],
+    apple:['苹果','apple']
+};

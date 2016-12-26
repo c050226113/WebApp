@@ -1,0 +1,9 @@
+#location_mapOpt{bottom: 0;position: absolute;height: 20%;transition: all 0.3s ease-in-out;-webkit-transform:translateY(0%)}
+#locationP_fence_toolBar{bottom: 0;position: absolute;height: 20%;transition: all 0.3s ease-in-out;-webkit-transform:translateY(100%)}
+#locationP_waypoint_toolBar{bottom: 0;position: absolute;height: 20%;transition: all 0.3s ease-in-out;-webkit-transform:translateY(100%)}
+#location_mapOpt li>div{width: 52px;height: 52px;border-radius: 50%; border:solid 1px deepskyblue;}
+#location_mapOpt li div.cover{border-radius: 50%;opacity: .8;background: #fff}
+#location_aMap{height: 93%;}
+#location_aMap{height: 100%;}
+#locationP_vue{background: url('../img/mapBackground.png') no-repeat;background-size: 100% 100%;}
+#locationP_fence_toolBar li img.cover,#locationP_waypoint_toolBar li img.cover{left: 10%;background: #fff;border-radius: 50%;border: solid 1px deepskyblue;bottom: -13%;width: 80%;}

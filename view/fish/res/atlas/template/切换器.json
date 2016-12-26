@@ -1,0 +1,33 @@
+{
+    "frames": {
+        "checkbox_switch.png": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 108,
+                "h": 144,
+                "idx": 0
+            },
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 108,
+                "h": 144
+            },
+            "sourceSize": {
+                "w": 108,
+                "h": 144
+            },
+            "rotated": false,
+            "trimed": false
+        }
+    },
+    "meta": {
+        "app": "http:\/\/www.layabox.com",
+        "version": "0.1.0 alpha",
+        "format": "json",
+        "scale": 1,
+        "image": "切换器.png",
+        "prefix": "template\/切换器\/"
+    }
+}

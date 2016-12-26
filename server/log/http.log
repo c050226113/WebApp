@@ -1,0 +1,213 @@
+
+[2016-11-24 09:50:52 *30846.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:50:57 *30848.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:51:06 *30850.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:51:42 *30852.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:52:47 *30856.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:52:49 *30858.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:53:31 *30860.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:53:46 *30862.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:54:05 *30864.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:54:25 *30866.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:55:34 *30872.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:55:46 *30874.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:56:58 *30882.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:57:20 *30884.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:57:32 *30886.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:59:24 *30892.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 09:59:52 *30894.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:00:12 *30902.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:07:59 *30913.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:08:34 *30915.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:09:51 *30921.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:10:13 *30923.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:10:21 *30925.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:11:16 *30927.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:13:03 *30929.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:14:09 *30931.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:14:14 *30933.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:14:23 *30935.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:14:49 *30937.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-24 10:15:00 *30939.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Cannot use app\model\self as self because 'self' is a special class name in /var/www/html/highcharts/app/controller/Main_softController.php on line 5.
+[2016-11-25 06:56:24 *6340.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Undefined class constant 'USER_PASSWORD' in /var/www/html/highcharts/app/model/UserModel.php:38
+Stack trace:
+#0 /var/www/html/highcharts/app/controller/Main_softController.php(421): app\model\UserModel->register('18566650234', '7fb7a5326690cd9...')
+#1 [internal function]: app\controller\Main_softController->actionRegister()
+#2 /var/www/html/highcharts/core/app.php(62): ReflectionMethod->invoke(Object(app\controller\Main_softController))
+#3 /var
+[2016-11-25 06:56:32 *6342.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Undefined class constant 'USER_PASSWORD' in /var/www/html/highcharts/app/model/UserModel.php:38
+Stack trace:
+#0 /var/www/html/highcharts/app/controller/Main_softController.php(421): app\model\UserModel->register('18566650234', '7fb7a5326690cd9...')
+#1 [internal function]: app\controller\Main_softController->actionRegister()
+#2 /var/www/html/highcharts/core/app.php(62): ReflectionMethod->invoke(Object(app\controller\Main_softController))
+#3 /var
+[2016-11-25 06:57:37 #6017.0]	NOTICE	Server is shutdown now.
+[2016-11-25 06:57:42 #30631.0]	NOTICE	Server is shutdown now.
+[2016-11-25 07:00:17 *6372.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Undefined class constant 'USER_PASSWORD' in /var/www/html/highcharts/app/model/UserModel.php:38
+Stack trace:
+#0 /var/www/html/highcharts/app/controller/Main_softController.php(421): app\model\UserModel->register('18566650234', '7fb7a5326690cd9...')
+#1 [internal function]: app\controller\Main_softController->actionRegister()
+#2 /var/www/html/highcharts/core/app.php(62): ReflectionMethod->invoke(Object(app\controller\Main_softController))
+#3 /var
+[2016-11-25 07:01:48 *6378.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Undefined class constant 'USER_PASSWORD' in /var/www/html/highcharts/app/model/UserModel.php:38
+Stack trace:
+#0 /var/www/html/highcharts/app/controller/Main_softController.php(422): app\model\UserModel->register('18566650234', '7fb7a5326690cd9...')
+#1 [internal function]: app\controller\Main_softController->actionRegister()
+#2 /var/www/html/highcharts/core/app.php(62): ReflectionMethod->invoke(Object(app\controller\Main_softController))
+#3 /var
+[2016-11-26 06:40:07 *7114.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Class 'app\model\MongoManager' not found in /var/www/html/highcharts/core/lib/Session.php:28
+Stack trace:
+#0 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#1 /var/www/html/highcharts/server/server.php(48): include('/var/www/html/h...')
+#2 [internal function]: {closure}()
+#3 /var/www/html/highcharts/server/server.php(61): swoole_http_server->start()
+#4 {main}
+  thrown in /var/www/html/highcharts/core/lib/Session.php on 
+[2016-11-26 08:18:27 *7190.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getLast_is_master() in /var/www/html/highcharts/app/model/MongoManager.php:36
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('9fc4075b4a60f7b...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/hi
+[2016-11-26 08:18:28 *7192.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getLast_is_master() in /var/www/html/highcharts/app/model/MongoManager.php:36
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('290eedf33ccbce1...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/hi
+[2016-11-26 08:18:29 *7194.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getLast_is_master() in /var/www/html/highcharts/app/model/MongoManager.php:36
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('5508b04d38a4c2f...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/hi
+[2016-11-26 08:18:57 *7198.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getPrimary() in /var/www/html/highcharts/app/model/MongoManager.php:35
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('283c81c4c666f21...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/highchart
+[2016-11-26 08:19:00 *7200.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getPrimary() in /var/www/html/highcharts/app/model/MongoManager.php:35
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('55f0dc110797026...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/highchart
+[2016-11-26 08:19:01 *7202.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getPrimary() in /var/www/html/highcharts/app/model/MongoManager.php:35
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('a2bc55483bc9775...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/highchart
+[2016-11-26 08:19:01 *7204.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getPrimary() in /var/www/html/highcharts/app/model/MongoManager.php:35
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('96840bac7c151db...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/highchart
+[2016-11-26 08:19:01 *7206.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getPrimary() in /var/www/html/highcharts/app/model/MongoManager.php:35
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('59e93cd2449b621...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/highchart
+[2016-11-26 08:19:10 *7208.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method MongoDB\Driver\Server::getPrimary() in /var/www/html/highcharts/app/model/MongoManager.php:35
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('d36f8b1d9dc23f1...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/highchart
+[2016-11-26 08:20:14 *7212.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Cannot use [] for reading in /var/www/html/highcharts/app/model/MongoManager.php:36
+Stack trace:
+#0 /var/www/html/highcharts/app/model/MongoManager.php(71): app\model\MongoManager->solveDbErr()
+#1 /var/www/html/highcharts/core/lib/Session.php(36): app\model\MongoManager->insertById('e1cb1c8ed8b668d...', Array)
+#2 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#3 /var/www/html/highcharts/server/server.php(48): include('/
+[2016-11-26 08:41:12 *7260.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Class 'app\model\MongoManager' not found in /var/www/html/highcharts/core/lib/Session.php:28
+Stack trace:
+#0 /var/www/html/highcharts/index.php(8): core\lib\Session::sessionStart()
+#1 /var/www/html/highcharts/server/server.php(48): include('/var/www/html/h...')
+#2 [internal function]: {closure}()
+#3 /var/www/html/highcharts/server/server.php(61): swoole_http_server->start()
+#4 {main}
+  thrown in /var/www/html/highcharts/core/lib/Session.php on 
+[2016-11-28 02:03:38 *31061.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method app\controller\Main_softController::setDbName() in /var/www/html/highcharts/app/controller/Main_softController.php:23
+Stack trace:
+#0 /var/www/html/highcharts/core/app.php(50): app\controller\Main_softController->__construct()
+#1 /var/www/html/highcharts/index.php(9): core\APP::run()
+#2 /var/www/html/highcharts/server/server.php(48): include('/var/www/html/h...')
+#3 [internal function]: {closure}()
+#4 /var/www/html/high
+[2016-11-28 02:03:49 *31063.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method app\controller\Main_softController::setDbName() in /var/www/html/highcharts/app/controller/Main_softController.php:23
+Stack trace:
+#0 /var/www/html/highcharts/core/app.php(50): app\controller\Main_softController->__construct()
+#1 /var/www/html/highcharts/index.php(9): core\APP::run()
+#2 /var/www/html/highcharts/server/server.php(48): include('/var/www/html/h...')
+#3 [internal function]: {closure}()
+#4 /var/www/html/high
+[2016-11-29 03:56:45 *31285.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Call to undefined method app\controller\Main_softController::getDbName() in /var/www/html/highcharts/app/controller/Main_softController.php:532
+Stack trace:
+#0 [internal function]: app\controller\Main_softController->actionBind()
+#1 /var/www/html/highcharts/core/app.php(60): ReflectionMethod->invoke(Object(app\controller\Main_softController))
+#2 /var/www/html/highcharts/index.php(9): core\APP::run()
+#3 /var/www/html/highcharts/server/server.php
+[2016-11-29 04:00:50 *31297.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Undefined class constant 'DEVICE_EVENT_TIME' in /var/www/html/highcharts/app/controller/Main_softController.php:404
+Stack trace:
+#0 [internal function]: app\controller\Main_softController->actionGet_events()
+#1 /var/www/html/highcharts/core/app.php(60): ReflectionMethod->invoke(Object(app\controller\Main_softController))
+#2 /var/www/html/highcharts/index.php(9): core\APP::run()
+#3 /var/www/html/highcharts/server/server.php(48): include('/var/ww
+[2016-11-29 04:01:13 *31303.0]	ERROR	zm_deactivate_swoole (ERROR 103): Fatal error: Uncaught Error: Undefined class constant 'DEVICE_EVENT_TIME' in /var/www/html/highcharts/app/controller/Main_softController.php:404
+Stack trace:
+#0 [internal function]: app\controller\Main_softController->actionGet_events()
+#1 /var/www/html/highcharts/core/app.php(60): ReflectionMethod->invoke(Object(app\controller\Main_softController))
+#2 /var/www/html/highcharts/index.php(9): core\APP::run()
+#3 /var/www/html/highcharts/server/server.php(48): include('/var/ww
+[2016-11-30 02:21:28 *26.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#4 is closed.
+[2016-11-30 02:21:28 *26.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#4 is closed.
+[2016-11-30 02:21:28 *26.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#4 is closed.
+[2016-11-30 02:21:37 *34.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#8 is closed.
+[2016-11-30 02:21:37 *34.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#8 is closed.
+[2016-11-30 02:21:37 *34.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#8 is closed.
+[2016-11-30 02:22:09 *38.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#10 is closed.
+[2016-11-30 02:22:09 *38.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#10 is closed.
+[2016-11-30 02:22:09 *38.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#10 is closed.
+[2016-12-02 06:26:08 *872.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#428 is closed.
+[2016-12-02 06:26:08 *872.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#428 is closed.
+[2016-12-02 06:26:08 *872.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#428 is closed.
+[2016-12-02 06:26:16 *60.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#21 is closed.
+[2016-12-02 06:26:16 *60.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#21 is closed.
+[2016-12-02 06:26:16 *60.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#21 is closed.
+[2016-12-02 06:26:26 *64.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#23 is closed.
+[2016-12-02 06:26:26 *64.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#23 is closed.
+[2016-12-02 06:26:26 *64.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#23 is closed.
+[2016-12-02 06:44:08 *900.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#442 is closed.
+[2016-12-02 06:44:08 *900.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#442 is closed.
+[2016-12-02 06:44:08 *900.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#442 is closed.
+[2016-12-02 06:44:25 *70.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#26 is closed.
+[2016-12-02 06:44:25 *70.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#26 is closed.
+[2016-12-02 06:44:25 *70.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#26 is closed.
+[2016-12-02 06:44:34 *74.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#28 is closed.
+[2016-12-02 06:44:34 *74.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#28 is closed.
+[2016-12-02 06:44:34 *74.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#28 is closed.
+[2016-12-02 07:35:22 *1066.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#525 is closed.
+[2016-12-02 07:35:22 *1066.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#525 is closed.
+[2016-12-02 07:35:22 *1066.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#525 is closed.
+[2016-12-02 07:35:41 *82.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#32 is closed.
+[2016-12-02 07:35:41 *82.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#32 is closed.
+[2016-12-02 07:35:41 *82.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#32 is closed.
+[2016-12-02 07:36:08 *1068.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#526 is closed.
+[2016-12-02 07:36:08 *1068.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#526 is closed.
+[2016-12-02 07:36:08 *1068.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#526 is closed.
+[2016-12-02 07:36:17 *88.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#35 is closed.
+[2016-12-02 07:36:17 *88.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#35 is closed.
+[2016-12-02 07:36:17 *88.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#35 is closed.
+[2016-12-02 07:36:26 *92.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#37 is closed.
+[2016-12-02 07:36:26 *92.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#37 is closed.
+[2016-12-02 07:36:26 *92.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#37 is closed.
+[2016-12-02 07:36:53 *1070.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#527 is closed.
+[2016-12-02 07:36:53 *1070.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#527 is closed.
+[2016-12-02 07:36:53 *1070.1]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#527 is closed.
+[2016-12-02 07:37:01 *96.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 156 byte failed, because session#39 is closed.
+[2016-12-02 07:37:01 *96.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#39 is closed.
+[2016-12-02 07:37:01 *96.0]	ERROR	swFactoryProcess_finish (ERROR 1004): send 147 byte failed, because session#39 is closed.

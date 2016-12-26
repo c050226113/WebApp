@@ -1,0 +1,24 @@
+@media screen and (max-width:800px) and (min-width:768px) {html{font-size: 4px}}
+@media screen and (max-width:850px) and (min-width:800px) {html{font-size: 5px}}
+@media screen and (max-width:900px) and (min-width:850px) {html{font-size: 6px}}
+@media screen and (max-width:950px) and (min-width:900px) {html{font-size: 7px}}
+@media screen and (max-width:1000px) and (min-width:950px) {html{font-size: 8px}}
+@media screen and (min-width: 1000px) {html{font-size: 9px}}
+
+table.navigation{position: relative;background-color: #0098FB;height: 7%;width: 100%;}
+table.navigation td img{width: 1.4rem;margin-top: -3px;}
+table.navigation td{color: white;text-align: center;}
+table.navigation td:nth-of-type(1){font-size: 1.4rem;width: 25%;padding-right: 5%;}
+table.navigation td:nth-of-type(2){font-size: 1.7rem;width: 50%;}
+table.navigation td:nth-of-type(3){font-size: 1.4rem;width: 25%;}
+
+input::-webkit-input-placeholder{color: #bbb;}
+.btn.focus, .btn:focus, .btn:hover {text-decoration: none;color:#fff}
+#all_notice a.focus, #all_notice a:focus, #all_notice a:hover {text-decoration: none;}
+.switch{height: 34px;background: #ddd;width: 67px;border-radius: 46px;transition: all 0.2s ease}
+.switch label{position: absolute;width: 30px;height: 30px;background: #fff;margin-top: 2px;border-radius: 50%;-webkit-transform: translateX(2px);transition: all 0.2s ease}
+.switch input{display:none;}
+.switch.open{background-color: #0088e4}
+.switch.open label{-webkit-transform: translateX(35px);}
+
+select{background-color: #fff;border: 0;text-align:right;outline:none;}

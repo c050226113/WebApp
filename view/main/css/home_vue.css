@@ -1,0 +1,21 @@
+.carousel{margin-top: 4px;height:auto;width: 100%;}
+.carousel .imgs li{transition: all 1s ease;-webkit-transition: all 1s ease;width: 100%;position: absolute;}
+.carousel .points{z-index: 10;top: 80%;height: 10%;width: 60%;left: 20%;}
+.carousel .points img{background-color: #fff;border-radius: 50%;margin: 3px}
+.carousel .points img:hover{cursor: pointer;}
+.carousel .left{width: 20%;z-index:10}
+.carousel .right{width: 20%;z-index:10;}
+.carousel .left img{height: 10%;top: 40%;left: 10%}
+.carousel .right img{height: 10%;top: 40%;right: 10%}
+.carousel .left-right{opacity: .3;transition: opacity .2s ease}
+.carousel .left-right:hover{opacity: 1}
+.carousel .left-right img:hover{cursor: pointer;}
+.rotate180{-webkit-transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);}
+
+
+.product-show .t0:hover{cursor: pointer;}
+.product-show .fl{margin-bottom: 900px;margin-left: 2%;text-align: center;width: 14%;height: auto;padding:20px;background: url('../img/product-backgroud.jpg');background-size: 100% 100%;}
+.product-show .fl:hover{background-color: #fff;opacity: .75;cursor: pointer;}
+.product-show .fl img{width: 100%;height: 100%;}
+.product-show .fl h2{font-weight: 600;font-size: 1.5rem;}
+.product-show .fl p{font-size: 1rem;}

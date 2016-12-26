@@ -1,0 +1,5 @@
+#guard_vue .main h1{
+    font-size: 2.5vw;
+    padding: 15px 46px;
+    margin: 0;
+}

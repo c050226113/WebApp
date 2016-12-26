@@ -1,0 +1,174 @@
+#cover {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background: #000;
+    z-index: 1;
+}
+#succ, #fail, #prize {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+#succ .fish {
+    width: 91.73vw;
+    height: 58.13vw;
+    background: url(../images/succ.png);
+    background-size: 100% 100%; 
+    position: absolute;
+    left: 4.2vw;
+    top: 18vh;
+}
+#succ .btn {
+    width: 35.87vw;
+    height: 35.87vw;
+    background: url(../images/prize.png);
+    background-size: 100% 100%; 
+    position: absolute;
+    left: 32.065vw;
+    top: 59vh;
+}
+#prize .goods-box {
+    width: 96.67vw;
+    height: 68.4vw;
+    background: url(../images/goods-box.png);
+    background-size: 100% 100%; 
+    position: absolute;
+    left: 1.665vw;
+    top: 10vh;
+}
+.goods-img {
+    display: block;
+    width: 23.07vw;
+    height: 23.07vw;
+    margin: 14vw auto 0 auto;
+}
+.goods-name {
+    font-size: 4vw;
+    font-weight: 700;
+    margin-top: 2.5vw;
+    width: 100%;
+    text-align: center;
+    color: #833f00;
+}
+#prize .btn {
+    width: 35.87vw;
+    height: 35.87vw;
+    background: url(../images/again2.png);
+    background-size: 100% 100%; 
+    position: absolute;
+    left: 32.065vw;
+    top: 59vh;
+}
+#fail .fish {
+    width: 91.73vw;
+    height: 58.13vw;
+    background: url(../images/fail.png);
+    background-size: 100% 100%; 
+    position: absolute;
+    left: 4.2vw;
+    top: 18vh;
+}
+#fail .btn {
+    width: 35.87vw;
+    height: 35.87vw;
+    background: url(../images/again.png);
+    background-size: 100% 100%; 
+    position: absolute;
+    left: 32.065vw;
+    top: 59vh;
+}
+.loading {
+    width: 100%;
+    height: 100vh;
+    background: url(../images/bg_1.jpg);
+    background-size: 100% 100%; 
+    position: fixed;
+    left: 0;
+    font-size: 5vw;
+    color: #fff95d;
+    text-align: center;
+}
+#loading .line_1 {
+    margin-top: 35vh;
+}
+#loading .line_2 {
+    margin-top: 3vh;
+}
+#loading .line_3{
+    border-radius: 2.8vh;
+    background: #000;
+    opacity: 0.5;
+}
+.line_3, .loading_notice {
+    font-size: 3.2vw;
+    color: #fff;
+    line-height: 3.4vh;
+    height: 3.4vh;
+    position: absolute;
+    bottom: 4vh;
+    left: 0;
+    width: 100vw; 
+    text-align: center;
+}
+.btn_cover_ {
+    width: 35.87vw;
+    height: 35.87vw;
+    border-radius: 50%;
+    background: #000;
+    opacity: 0.5;
+    left: 32.065vw;
+    top: 59vh;
+    position: absolute;
+}
+#countdown {
+    position: absolute;
+    left: 45vw;
+    top: 27vh;
+    z-index: 1;
+}
+.countdownNum {
+    width: 10vw;
+    height: 15vw;
+    top: 0;
+    left: 0;
+    position: absolute; 
+    transition: transform, opacity 0.3s,0.3s ease,ease;
+    transform: scale(1.3);
+    opacity: 0;
+}
+.countdownNum.on {
+    opacity: 1;
+    transform: scale(1);
+}
+#study {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+}
+#music {
+    width: 7.6vw;
+    height: 6.93vw;
+    background: url(../images/music.png);
+    background-size: 100% 100%;
+    position: fixed;
+    top: 2.5vh;
+    left: 6vw;
+    z-index: 2;
+}
+#music.off {
+    background: url(../images/music-off.png);
+    background-size: 100% 100%;
+}
+
+
+
+.none {
+    display: none;
+}
+

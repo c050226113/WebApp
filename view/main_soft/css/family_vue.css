@@ -1,0 +1,5 @@
+#family_vue{background-color: #f5f5f5;}
+#family_info{margin-bottom: 30px;margin-top: 12%;background-color: #fff;border-radius: 3px;position: relative;width: 92%;left: 4%;height: auto;}
+#family_info p{font-size: 84%;position:relative;width: 92%;left: 4%;margin: 0;border-top: 1px solid #ddd;height: 45px;line-height: 45px;}
+#family_info p:nth-of-type(1){border:none}
+#family_info b{color: #0088e4;font-weight: 100;position: absolute;width: 50%;text-align: center;margin-top: -10%;left: 25%;  }

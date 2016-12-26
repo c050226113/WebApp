@@ -1,0 +1,20 @@
+
+#left .head{height: 20%;opacity: 1;}
+#left .head .user{height: 60.0%;background-color: #ddd;}
+#left > div {position: absolute;left: 0;
+    width:100%}
+#left .second{height: 18%;}
+#left .second .addBaby{width: 60px}
+#left .second .addBabyFont{font-size:90%;top: 64%}
+#left .second .addBaby>div>div{bottom: 41%;left: 5%}
+#left .space{background-color: black;height: 1px;width: 80%;left: 10%;}
+#left .operation{height: 100%}
+#left .operationItem{height: 15%;width: 100%;}
+#left .operation > .row{padding: 4% 0 0 0;}
+#left .operation_img img{width: 90%;-webkit-transform: translateY(-5%);transform: translateY(-5%);}
+#left .addCover{position: absolute;background-color: white;right: -50%;width: 50%}
+#left .user{border: solid 2px #555}
+#left .news{height: 15%}
+#left .newsIcon{height: 70%;display: inline-block;width: 31px;position: relative;top: 20%;}
+.space100{width: 100%;float: right;height: 1px;background-color: #ddd}
+.space75{width: 78%;float: right;height: 1px;background-color: #ddd}

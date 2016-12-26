@@ -1,0 +1,35 @@
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    position: relative;
+    z-index: 100;
+    height: 8%;
+    width: 100%;
+    background-color: #00CAC6;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.input {
+    padding-top: 7%
+}
+
+.input p {
+    width: 25%;
+    float: left;
+}
+
+.input input {
+    width: 75%;
+    float: right;
+}
+
+.watch {
+    left: 25%;
+    margin-top: 10%;
+    position: relative;
+}

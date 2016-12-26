@@ -1,0 +1,18 @@
+#appdownload_vue .main{
+    border:solid 1px #ddd;
+    margin: 15px;
+    width:calc(70% - 30px);
+    overflow: hidden;
+    height: 500px;
+}
+
+#appdownload_vue{
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-width: 1100px;
+}
+#appdownload_vue .main img{
+    transform: scale(2);
+    transform-origin: top center;
+}

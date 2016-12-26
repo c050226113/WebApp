@@ -1,0 +1,55 @@
+
+yu03.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+shenti
+  rotate: false
+  xy: 224, 68
+  size: 252, 58
+  orig: 252, 58
+  offset: 0, 0
+  index: -1
+shenti02
+  rotate: false
+  xy: 478, 68
+  size: 252, 58
+  orig: 252, 58
+  offset: 0, 0
+  index: -1
+yan01
+  rotate: false
+  xy: 2, 2
+  size: 15, 10
+  orig: 15, 10
+  offset: 0, 0
+  index: -1
+yan02
+  rotate: false
+  xy: 19, 2
+  size: 15, 10
+  orig: 15, 10
+  offset: 0, 0
+  index: -1
+yan03
+  rotate: false
+  xy: 224, 48
+  size: 22, 18
+  orig: 22, 18
+  offset: 0, 0
+  index: -1
+zhuan01
+  rotate: false
+  xy: 2, 14
+  size: 220, 112
+  orig: 220, 112
+  offset: 0, 0
+  index: -1
+zhuan02
+  rotate: false
+  xy: 732, 43
+  size: 202, 83
+  orig: 202, 83
+  offset: 0, 0
+  index: -1

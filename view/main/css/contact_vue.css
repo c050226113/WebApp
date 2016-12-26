@@ -1,0 +1,4 @@
+.contact #map{width: 100%;height: 600px;}
+.contact #map *{    -webkit-box-sizing: initial;
+    -moz-box-sizing: initial;
+    box-sizing: initial;}

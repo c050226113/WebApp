@@ -1,0 +1,12 @@
+.w100 {width: 100%;}
+.w60 {width: 60%;}
+body {width: 98%;text-align: center;}
+.fr {float: right;}
+.row {width: 100%;float: right;}
+.pos_a {position: absolute;}
+iframe {border: none;}
+.glyphicon-search {font-size: 222%;color: #000;float: right;}
+.glyphicon-cloud:hover {cursor: pointer;}
+.col-xs-4.a {margin: 0;padding: 0;border-bottom: 1px solid #000;border-right: 1px solid #000;}
+.col-xs-4 > .row {margin: 0;padding: 6px 0;}
+.col-xs-4 > .row.title {background-color: silver;font-weight: 900;font-size: 118%;height: 40px;}

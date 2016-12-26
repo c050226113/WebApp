@@ -1,0 +1,300 @@
+﻿<!DOCTYPE>
+<html>
+
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'>
+	<meta name='apple-mobile-web-app-capable' content='yes'>
+	<meta name='full-screen' content='true'>
+	<meta name='screen-orientation' content='portrait'>
+	<meta name='x5-fullscreen' content='true'>
+	<meta name='360-fullscreen' content='true'>
+	<title>fish</title>
+</head>
+
+<body>
+
+	<script src="js/zepto.min.js"></script>
+	<script src="js/touch.js"></script>
+
+	<link rel="stylesheet" href="css/reset.min.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<div id="music"></div>
+	<section id="cover" class="none"></section>
+	<section class="loading">
+		<div class="ani hide none" id="loading">
+			<div class="line_1">
+				加载中 . . . <span id="txt"></span>
+			</div>
+			<div class="line_2">
+				首次加载时间可能比较长，请耐心等待！
+			</div>
+			<div class="line_3"></div>
+			<span class="loading_notice">
+				因网络问题造成游戏未正常开启，系统会在2个小时候退款至微信钱包
+			</span>
+		</div>
+	</section>
+	<section id="succ" class="none">
+		<div class="fish"></div>
+		<div class="btn" id="receive"></div>
+		<div class="btn_cover_ none"></div>
+	</section>
+	<section id="fail" class="none">
+		<div class="fish"></div>
+		<div class="btn" id="again"></div>
+		<div class="btn_cover_ none"></div>
+	</section>
+	<!--<section id="prize" class="none">-->
+		<!--<div class="goods-box">-->
+			<!--<img class="goods-img" src="images/goods.jpg">-->
+			<!--<div class="goods-name">雀巢香滑咖啡罐</div>-->
+		<!--</div>-->
+		<!--<div class="btn" id="again2"></div>-->
+		<!--<div class="btn_cover_ none"></div>-->
+	<!--</section>-->
+	<section id="countdown" class="none">
+		<img class="countdownNum" src="images/3.png">
+		<img class="countdownNum" src="images/2.png">
+		<img class="countdownNum" src="images/1.png">
+	</section>
+	<section id="study"></section>
+
+	<script>
+var interfaceCls = {
+    code: {
+        ERROR: -100, // 发生错误
+        SUCCESS: 0, // 请求成功
+        UBOX_ERROR_CODE: -1, // ubox返回非200的状态码
+        SIGN_ERROR: 40001, // 签名校验失败
+        PARAM_GAME_ID_ERROR: 40002, // 缺少game_id参数
+        DATABASE_ERROR: 40003, //数据库错误
+        GET_GAME_CONFIG_ERROR: 4004, // 读取游戏配置文件错误
+        REQUEST_UBOX_ERROR: 40006, // 链接UBox接口网络错误
+    },
+    nodeUpIds: [
+        10100, //支付成功后进入到加载页面
+        10200, //加载完成后进入到游戏玩法页面并开始游戏新手教程
+        10300, //游戏新手教程结束，并开始游戏
+        10400, //游戏流程结束后进入到成功或失败页面
+        10500, //成功页面点击出货按钮
+        10600 //进入到出货成功页面
+    ],
+    nodeUrl: 'http://10.10.15.13:3000/v1/30001/report/click/',
+    resultUrl: 'http://10.10.15.13:3000/v1/30001/play/info',
+    getGoodsUrl: 'http://10.10.15.13:3000/v1/30001/play/notifyDeliverTrade',
+
+
+    // 节点数据上报
+    nodeUp: function (id) {
+        var user_id = localStorage.getItem('user_id') ? localStorage.getItem('user_id') : ''
+        var data = {
+            id: id,
+            user_id: user_id,
+            os: this.get_os()
+        }
+        console.log(data)
+        $.ajax({
+            type: 'GET',
+            url: this.nodeUrl,
+            data: data,
+            // jsonpCallback: 'jsonp',
+            dataType: 'json',
+            // timeout: 300,
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    },
+    return_url: '',
+    redirect_url: '',
+    order_id: 0,
+    pay_price: 0,
+    mode: 0,
+    gameRes: function () {
+        var data = this.getUrlPars()
+        
+
+        data.product_picture = this.decodeTwice(data.product_picture);
+        data.product_name = this.decodeTwice(data.product_name);
+        // data.nsukey = this.decodeTwice(data.nsukey);
+
+        this.order_id = data.order_id
+        this.pay_price = data.pay_price
+
+        $('.goods-img').attr('src', data.product_picture)
+        $('.goods-name').html(data.product_name)
+        if (data.user_id) localStorage.setItem('user_id', data.user_id)
+
+        var obj = this;
+        $.ajax({
+            type: 'GET',
+            url: this.resultUrl,
+            data: data,
+            // jsonpCallback: 'jsonp',
+            dataType: 'json',
+            // timeout: 300,
+            success: function (data) {
+                if (data.code != 0) {
+                    obj.return_url = obj.decodeOnce( data.data.return_url  ) // 失败按钮
+                    obj.mode = 1
+                    gameCls.init()
+                } else {
+                    obj.return_url = obj.decodeOnce( data.data.return_url  ) // 失败按钮
+                    obj.redirect_url = obj.decodeOnce( data.data.redirect_url  ) // 成功按钮
+                    obj.mode = data.data.result
+                    gameCls.init()
+                }
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+        
+    },
+    getGoods: function () {
+        var data = {
+            order_id: this.order_id,
+            pay_price: this.pay_price
+        }
+        $.ajax({
+            type: 'GET',
+            url: this.getGoodsUrl,
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                $('#chload').addClass('hide')
+                if (data.code != 0) {
+                    // 失败
+                    $('.chsb').removeClass('none')
+                } else {
+                    // 成功
+                    $('.chcg').removeClass('none')
+                }
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    },
+    getUrlPars: function () {
+        var url = location.search;
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                var sTemp = strs[i].split("=");
+                theRequest[sTemp[0]] = (sTemp[1]);
+            }
+        }
+        return theRequest;
+    },
+    get_os: function () {
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+            return 0;
+        } else if (isiOS) {
+            return 1;
+        } else {
+            return 2;
+        }
+    },
+    decodeOnce: function (str) {
+        return decodeURIComponent(str)
+    },
+    decodeTwice: function (str) {
+        return decodeURIComponent(decodeURIComponent(str))
+    }
+    // get_wx_info: function () {
+    //     var wechatInfo = navigator.userAgent.match(/MicroMessenger\/([\\d\\.]+)/i);
+    //     alert(wechatInfo[1])
+    //     return wechatInfo[1];
+    // },
+    // is_weixn: function () {
+    //     var ua = navigator.userAgent.toLowerCase();
+    //     if (ua.match(/MicroMessenger/i) == "micromessenger") {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+}
+
+
+
+	</script>
+	<script src="js/laya.core.js"></script>
+	<script src="js/laya.webgl.js"></script>
+	<script src="js/laya.ani.js"></script>
+	<script src="js/laya.filter.js"></script>
+	<script src="js/laya.html.js"></script>
+	<script src="js/laya.particle.js"></script>
+	<script src="js/laya.tiledmap.js"></script>
+	<script src="js/laya.ui.js"></script>
+	<script src="js/matter.js"></script>
+	<script src="js/matter-RenderLaya.js"></script>
+	<script src="js/BackGround.js"></script>
+	<script src="js/Bubble.js"></script>
+	<script src="js/Bait.js"></script>
+	<script src="js/Fish.js"></script>
+	<script src="js/Line.js"></script>
+	<script src="js/Ui.js"></script>
+	<script src="js/Study.js"></script>
+	<script src="js/ui/layaUI.max.all.js"></script>
+	<script src="js/Game.js"></script>
+
+	<script>
+		
+		var cover = $('#cover')
+		var succ = $('#succ')
+		var fail = $('#fail')
+		var prize = $('#prize')
+		var again = $('#again')
+		var again2 = $('#again2')
+		var receive = $('#receive')
+		var study = $('#study')
+		var music = $('#music')
+		var countdown = $('#countdown');
+		var countdownNum = $('.countdownNum');
+
+		var GAME = new Game(1, music, study, succ, fail, cover, countdown, countdownNum);
+
+		again.on('click', function(){
+			fail.addClass('none')
+			cover.addClass('none')
+			GAME.gameStart();
+		})
+		again2.on('click', function(){
+			prize.addClass('none')
+			cover.addClass('none')
+			GAME.gameStart();
+		})
+		receive.on('click', function(){
+			prize.removeClass('none')
+			succ.addClass('none')
+		})
+		study.on('click', function(){
+			GAME.studyIsPause = true;
+			if (confirm('你确定跳过教程介绍吗？')) GAME.gameStart();
+			else GAME.studyIsPause = false;
+		})
+		music.on('click', function(){
+			if($(this).hasClass('off')) {
+				$(this).removeClass('off')
+				GAME.playSound()
+			} else {
+				$(this).addClass('off')
+				GAME.shutSound()
+			}
+		})
+	</script>
+</body>
+
+</html>

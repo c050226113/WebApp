@@ -1,0 +1,30 @@
+#main{
+    border:solid 1px #ddd;
+    margin: 15px;
+    width:calc(70% - 30px);
+    overflow: hidden;
+    padding: 20px 20px;
+}
+#update_vue{
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-width: 1100px;
+}
+.rightPart{
+    max-width: 1100px;
+}
+#main button.download{
+    background-color: #12BEF8;
+}
+#main .tip{
+    border: solid 1px #12BEF8;
+    color:#12BEF8;
+}
+#main h1{}
+#main h2{text-align: left;}
+#main h3{text-align: left;}
+#main h4{text-align: left;}
+#main h5{text-align: left;}
+#main h6{text-align: left;}
+#main p{text-align: left;}
