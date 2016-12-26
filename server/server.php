@@ -4,7 +4,7 @@ use server\ServerFactory;
 
 $http = new swoole_http_server("0.0.0.0", 9002);
 $http->set([
-        'worker_num' => 1,
+        'worker_num' => 2,
         'daemonize' => false,
         'max_request' => 3000,
         'dispatch_mode' => 2,
@@ -21,6 +21,7 @@ $http->on('WorkerStart', function ($server, $worker_id) {
     require_once('/var/www/html/webapp/server/ServerFactory.php');
     spl_autoload_register('server\ServerFactory::autoLoad');
     ServerFactory::getInstance()->createServer();
+    define('IS_SWOOLE',true);
 });
 $http->on('Request', function ($request, $response) {
     try {
@@ -30,13 +31,12 @@ $http->on('Request', function ($request, $response) {
         else
             throw new Exception("404");
     }catch(Exception $e){
-        if($e->getMessage()!=='0')
+        if($e->getMessage()!=='0') //'0' : 正常 退出
             e('<!DOCTYPE html><html style="padding:20px;"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"><title>error</title><link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"></head><body><div class="well" style="color:red">'.$e->getMessage().'</div></body></html>');
     }
     unset($request);
     unset($response);
     App::getInstance()->destroy();
-//    var_dump('exit');
 //    exit();
 });
 $http->start();

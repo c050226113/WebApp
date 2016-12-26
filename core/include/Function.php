@@ -1,23 +1,11 @@
 <?php
 use core\App;
 
-if(!defined('IS_SWOOLE')){
-    define('IS_SWOOLE',true);
-}
-
 function e($str=""){
-    if(IS_SWOOLE){
-        App::getInstance()->getResponse()->write($str);
-    }else{
-        echo $str;
-    }
+    App::getInstance()->funcEcho($str);
 }
 function q(){
-    if(IS_SWOOLE){
-        throw new Exception('0');
-    }else{
-        exit();
-    }
+    App::getInstance()->funcQuit();
 }
 function d($obj){
     ob_start();

@@ -1,6 +1,5 @@
 <?php
 //flag
-define("LOADED",true);
 define("DEBUG",true);
 
 //dir
