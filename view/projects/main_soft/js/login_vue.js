@@ -55,11 +55,14 @@ var login_vue = new Vue({
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        Message.removeWait();
-                        app.publish(APP_EVENT_LOGOUT);
-                        console.log(errorThrown);
-                        console.log(jqXHR);
-                        console.log(textStatus);
+                        if(jqXHR.responseText.length == 32){
+                            app.sessionId = jqXHR.responseText;
+                            app.publish(APP_EVENT_CHANGE_SESSION);
+                            self.login();
+                        }
+                        //if(data)
+                        //Message.removeWait();
+                        //app.publish(APP_EVENT_LOGOUT);
                         //window.location.reload();
                     }
                 });

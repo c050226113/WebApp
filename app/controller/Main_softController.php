@@ -26,7 +26,7 @@ class Main_softController extends Controller{
      * @param $password
      */
     protected function setSessionUser($account,$password){
-        $session = &App::getInstance()->getSESSION();
+        $session = App::getInstance()->getSESSION();
         $session[Main_softUtil::MAIN_SOFT_ACCOUNT] = $account;
         $session[Main_softUtil::MAIN_SOFT_PASSWORD] = $password;
         App::getInstance()->setSESSION($session);
@@ -58,74 +58,72 @@ class Main_softController extends Controller{
 
 
     public function actionLogin(){
-        if(Request::getInstance()->isPost()){
-            $account = Request::getInstance()->hasPost(self::ACCOUNT);
-            if(!$account || !Util::getInstance()->isMobileNumber($account)) {
-                e(json_encode([self::CODE => 1, self::MESSAGE => "用户名有误"]));
-                q();
-            }
+        try{
+            if(Request::getInstance()->isPost()){
+                $account = Request::getInstance()->hasPost(self::ACCOUNT);
+                if(!$account || !Util::getInstance()->isMobileNumber($account))
+                    throw new Exception('用户名有误');
 
-            $password = Request::getInstance()->hasPost(self::PASSWORD);
-            if(!$password){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"密码有误"]));
-                q();
-            }
+                $password = Request::getInstance()->hasPost(self::PASSWORD);
+                if(!$password)
+                    throw new Exception('密码有误');
 
-            $filter = [
-                '_id'=>$account
-            ];
-            $arr = Main_softUtil::getInstance()->getUserCollection()->arr2need([
-                Main_softUtil::USER_USING,Main_softUtil::USER_PASSWORD,Main_softUtil::USER_NAME,Main_softUtil::USER_AVT
-            ]);
-            $res = Main_softUtil::getInstance()->getUserCollection()->find($filter,$arr);
-            if(!is_array($res) || !$res[0] || !count($res[0])){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"账号还未注册"]));
-            }else{
-                $arr = @Util::getInstance()->object2array($res[0][0]);
-                $pwd = Util::getInstance()->hasArr($arr,Main_softUtil::USER_PASSWORD);
-                if($pwd != $password){
-                    e(json_encode([self::CODE=>1,self::MESSAGE=>"账号或密码有误"]));
+                $res = Main_softUtil::getInstance()->getUserCollection()->find([
+                    '_id'=>$account
+                ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
+                    Main_softUtil::USER_USING,Main_softUtil::USER_PASSWORD,Main_softUtil::USER_NAME,Main_softUtil::USER_AVT
+                ]));
+                if(!is_array($res) || !$res[0] || !count($res[0])){
+                    throw new Exception('账号还未注册');
                 }else{
-                    $username = Util::getInstance()->hasArr($arr,Main_softUtil::USER_NAME);
-                    if(!$username){
-                        $username = '';
-                    }
-                    $avt = Util::getInstance()->hasArr($arr,Main_softUtil::USER_AVT);
-                    $using = Util::getInstance()->hasArr($arr,Main_softUtil::USER_USING);
-                    $this->setSessionUser($account,$password);
-                    $this->setSessionUsing($using);
-                    if(!$using){
-                        $using = 0;
-                        $devices = '';
+                    $arr = @Util::getInstance()->object2array($res[0][0]);
+                    $pwd = Util::getInstance()->hasArr($arr,Main_softUtil::USER_PASSWORD);
+                    if($pwd != $password){
+                        throw new Exception('账号或密码有误');
                     }else{
-                        $devices = [];
-                        //get hasDeviceArr
-                        $res = Main_softUtil::getInstance()->getUserCollection()->find([
-                            '_id' => $account
-                        ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
-                            Main_softUtil::USER_HASDEVICES
-                        ]));
-                        $arr = @Util::getInstance()->object2array($res[0][0]);
-                        $hasDevices = Util::getInstance()->hasArr($arr,Main_softUtil::USER_HASDEVICES);
-                        foreach($hasDevices as $k => $v){
-                            if($v){
-                                $res = Main_softUtil::getInstance()->getUserCollection()->find([
-                                    '_id' => $account
-                                ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
-                                    join('.',[Main_softUtil::USER_DEVICES,$v,Main_softUtil::DEVICE_INFO])
-                                ]));
-                                $arr = @Util::getInstance()->object2array($res[0][0]);
-                                $devices[$v] =  $arr[Main_softUtil::USER_DEVICES][$v];
-                            }
+                        $username = Util::getInstance()->hasArr($arr,Main_softUtil::USER_NAME);
+                        if(!$username){
+                            $username = '';
                         }
+                        $avt = Util::getInstance()->hasArr($arr,Main_softUtil::USER_AVT);
+                        $using = Util::getInstance()->hasArr($arr,Main_softUtil::USER_USING);
+                        $this->setSessionUser($account,$password);
+                        $this->setSessionUsing($using);
+                        if(!$using){
+                            $using = 0;
+                            $devices = '';
+                        }else{
+                            $devices = [];
+                            //get hasDeviceArr
+                            $res = Main_softUtil::getInstance()->getUserCollection()->find([
+                                '_id' => $account
+                            ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
+                                Main_softUtil::USER_HASDEVICES
+                            ]));
+                            $arr = @Util::getInstance()->object2array($res[0][0]);
+                            $hasDevices = Util::getInstance()->hasArr($arr,Main_softUtil::USER_HASDEVICES);
+                            foreach($hasDevices as $k => $v){
+                                if($v){
+                                    $res = Main_softUtil::getInstance()->getUserCollection()->find([
+                                        '_id' => $account
+                                    ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
+                                        join('.',[Main_softUtil::USER_DEVICES,$v,Main_softUtil::DEVICE_INFO])
+                                    ]));
+                                    $arr = @Util::getInstance()->object2array($res[0][0]);
+                                    $devices[$v] =  $arr[Main_softUtil::USER_DEVICES][$v];
+                                }
+                            }
 
-                        $devices = json_encode($devices);
+                            $devices = json_encode($devices);
+                        }
+                        e(json_encode([self::CODE=>0,Main_softUtil::USER_NAME=>$username,Main_softUtil::USER_DEVICES=>$devices,Main_softUtil::USER_USING=>$using,Main_softUtil::USER_AVT=>$avt]));
                     }
-                    e(json_encode([self::CODE=>0,Main_softUtil::USER_NAME=>$username,Main_softUtil::USER_DEVICES=>$devices,Main_softUtil::USER_USING=>$using,Main_softUtil::USER_AVT=>$avt]));
                 }
             }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE => 1, self::MESSAGE => $e->getMessage()]));
         }
+        q();
     }
 
 //    public function actionRead_events(){

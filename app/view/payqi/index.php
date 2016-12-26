@@ -67,7 +67,7 @@
                         if(data[CODE] == 110){
                             Message.toast("请先登录",2);
                             setTimeout(function(){
-                                location.href = "http://123.207.243.228/html/test/highcharts/view/payqi/login.html";
+                                location.href = "../../../view/projects/payqi/login.html";
                             },2000);
                         }
                         if (data[CODE] == 0) {
@@ -99,7 +99,7 @@
                         if(data[CODE] == 110){
                             Message.toast("请先登录",2);
                             setTimeout(function(){
-                                location.href = "http://123.207.243.228/html/test/highcharts/view/payqi/login.html";
+                                location.href = "../../../view/projects/payqi/login.html";
                             },2000);
                         }
                         if (data[CODE] == 0) {

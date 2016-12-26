@@ -96,6 +96,9 @@ class AbstractApp {
      */
     public function setSESSION($SESSION)
     {
+        if($this->isIsSessionListenChange()){
+            $this->setIsSessionChange(true);
+        }
         $this->_SESSION = $SESSION;
     }
 

@@ -3,6 +3,7 @@ const APP_EVENT_BEGIN_LEFT_TO_RIGHT = 'APP_EVENT_BEGIN_LEFT_TO_RIGHT';
 const APP_EVENT_TRANSITION_END = 'APP_EVENT_TRANSITION_END';
 const APP_EVENT_LOGOUT = 'APP_EVENT_LOGOUT';
 const APP_EVENT_LOAD_SESSIONID = 'APP_EVENT_LOAD_SESSIONID';
+const APP_EVENT_CHANGE_SESSION = 'APP_EVENT_CHANGE_SESSION';
 var H5App = (function(_super){
     __extends(H5App, _super);
     function H5App(config){
@@ -17,23 +18,21 @@ var H5App = (function(_super){
         app.publish(APP_EVENT_ANIMATION_BEGIN);
     };
     H5App.prototype.doAnimation = function(nowActive,nextActive,isfirst){
+        console.log('doAnimation');
         var self = this;
         var wait = 50;
         if(nextActive == self.getJqModal(self.stacks[self.stacks.length-3])){
             setTimeout(function(){
                 app.publish(APP_EVENT_BEGIN_LEFT_TO_RIGHT);
-
-                //stacks - 2
                 self.stacks.pop();
                 self.stacks.pop();
             },wait);
         }else{
-
             if(nextActive == self.getJqModal('index_vue')){
                 wait = 800;
             }else{
                 if(isfirst){
-                    wait = 300;
+                    wait = 200;
                 }
             }
             setTimeout(function(){

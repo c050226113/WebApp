@@ -4,6 +4,7 @@ namespace server;
 
 
 use Exception;
+use FilesystemIterator;
 
 class ServerFactory {
     const MODEL_UTIL = 'util';
@@ -19,7 +20,11 @@ class ServerFactory {
 
     public function createServer(){
         $this->changeUser();
-        $this->includeLib();
+
+        $dirArr = [CORE_DIR.'include/',CORE_DIR.'lib/',CORE_DIR.'delegate/',ROOT_DIR.'app/model/'];
+        foreach($dirArr as $dir){
+            $this->includeFile($dir);
+        }
     }
 
     private function changeUser(){
@@ -28,23 +33,36 @@ class ServerFactory {
         posix_setgid($user['gid']);
     }
 
-    private function includeLib(){
-        $dirArr = [CORE_DIR.'include/',CORE_DIR.'lib/',CORE_DIR.'delegate/'];
-        $modelDir = ROOT_DIR.'app/model/';
-        $modelDirArr = scandir($modelDir);
-        $nameLength = count($modelDirArr);
-        for( $index = 2; $index<$nameLength; $index++){
-            if(is_dir($modelDir.$modelDirArr[$index]) && is_dir($modelDir.$modelDirArr[$index].'/'.self::MODEL_UTIL.'/')){
-                array_push($dirArr,$modelDir.$modelDirArr[$index].'/'.self::MODEL_UTIL.'/');
+
+
+    private function includeFile($dir){
+        $fileIterator = new FilesystemIterator($dir);
+        foreach($fileIterator as $fileInfo){
+            if(!$fileInfo->isDir()){
+                require_once($dir.$fileInfo->getFileName().'');
+            }else{
+                $this->includeFile($dir.$fileInfo->getFileName().'/');
             }
         }
 
-        foreach($dirArr as $dir){
-            $nameArr = scandir($dir);
-            $nameLength = count($nameArr);
-            for( $index = 2; $index<$nameLength; $index++)
-                require_once($dir.$nameArr[$index].'');
-        }
+//        $modelDir = ROOT_DIR.'app/model/';
+//        $modelDirArr = scandir($modelDir);
+//        $nameLength = count($modelDirArr);
+//        for( $index = 2; $index<$nameLength; $index++){
+//            if(is_dir($modelDir.$modelDirArr[$index]) && is_dir($modelDir.$modelDirArr[$index].'/'.self::MODEL_UTIL.'/')){
+//                array_push($dirArr,$modelDir.$modelDirArr[$index].'/'.self::MODEL_UTIL.'/');
+//            }
+//        }
+//        foreach($dirArr as $dir){
+//            $fileIterator = new FilesystemIterator($dir);
+//            foreach($fileIterator as $fileInfo){
+//                if(!$fileInfo->isDir()){
+//                    require_once(CORE_DIR.'include/'.$fileInfo->getFileName().'');
+//                }else{
+//                    $this->includeLib([]);
+//                }
+//            }
+//        }
     }
 
     public static function autoLoad($class)

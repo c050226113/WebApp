@@ -6,12 +6,12 @@
     <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width">
 
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css0/css.css">
-    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="css0/css.css">
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 
-<link rel="stylesheet" href="./css/nav.css">
+<link rel="stylesheet" href="css/nav.css">
 <div class="nav pos_r" id="nav">
     <div class="nav_main pos_r">
         <img class="h80 fl logo" :src="'./img/'+img.logo" />
@@ -38,14 +38,14 @@
                 </template>
             </li>
         </ul>
-        <img class="pull" src="./img/pull.svg" />
+        <img class="pull" src="img/pull.svg" />
     </div>
 </div>
 <div class="pos_r w100" style="height: 9px;background: #4F9DD3;">
-    <script src="./js0/App.js"></script>
-    <script src="./js0/PcApp.js"></script>
-    <script src="./js0/define.js"></script>
-    <script src="./js/translate.js"></script>
+    <script src="js0/App.js"></script>
+    <script src="js0/PcApp.js"></script>
+    <script src="js0/define.js"></script>
+    <script src="js/translate.js"></script>
     <script>
         var app = new PcApp({
             'isDebug' : true,
@@ -61,7 +61,7 @@
         app.API_URL = ((location.href.split(app.projectName)[0] == location.href)?'':location.href.split(app.projectName)[0]) + app.projectName+'/index.php';
         console.log(app.API_URL);
     </script>
-    <script src="./js/nav.js"></script>
+    <script src="js/nav.js"></script>
 
 <!--<link rel="stylesheet" href="./css/t-small_nav.css">-->
 <!--<div  id="small_nav" v-show="small_navShow">-->
@@ -69,22 +69,22 @@
 <!--</div>-->
 <!--<script src="./template/t-small_nav.js?a=4"></script>-->
 
-<link rel="stylesheet" href="./css/home_vue.css">
+<link rel="stylesheet" href="css/home_vue.css">
 <section id="home_vue" style="top: 0">
     <div class="pos_r">
         <div id="carousel" class="carousel pos_r">
-            <img class="w100" src="./img/lunbo1.jpg" />
+            <img class="w100" src="img/lunbo1.jpg" />
             <ul class="pos_a imgs t0 w100" title="1">
                 <li v-for="img in imgs" :class="($index)?'disn':''" :title="($index+1)"><img class="w100 h100" :src="'./img/'+img.name" /></li>
             </ul>
             <div class="pos_a points txtc">
-                <img v-for="img in imgs" :style="$index ? '':'background-color:#000'" @click="pointsClick($index+1)" src="./img/s.png" class="h30" />
+                <img v-for="img in imgs" :style="$index ? '':'background-color:#000'" @click="pointsClick($index+1)" src="img/s.png" class="h30" />
             </div>
             <div class="left h100 l0 t0 pos_a left-right" @click="leftClick()">
-                <img class="pos_a rotate180" src="./img/right.svg"/>
+                <img class="pos_a rotate180" src="img/right.svg"/>
             </div>
             <div class="right h100 r0 t0 pos_a left-right" @click="rightClick()">
-                <img class="pos_a" src="./img/right.svg"/>
+                <img class="pos_a" src="img/right.svg"/>
             </div>
         </div>
 
@@ -96,10 +96,10 @@
 
         <div id="product" class="product-show pos_r" style=" border-top: solid 1px #ddd;margin: 0 auto;margin-top: 11px;padding-top: 50px;width: 70%;height: auto;">
             <div class="left h100 l0 t0 pos_a" style="width: 12%;" @click="sliderMove(false)">
-                <img class="pos_a rotate180" src="./img/right.svg" style="height: 20%;top: 40%;z-index: 99999999;left: -60%;"/>
+                <img class="pos_a rotate180" src="img/right.svg" style="height: 20%;top: 40%;z-index: 99999999;left: -60%;"/>
             </div>
             <div class="right h100 r0 t0 pos_a" style="width: 12%;" @click="sliderMove(true)">
-                <img class="pos_a" src="./img/right.svg" style="height: 20%;top: 40%;z-index: 99999999;right: -60%;" />
+                <img class="pos_a" src="img/right.svg" style="height: 20%;top: 40%;z-index: 99999999;right: -60%;" />
             </div>
 
             <div class="h100" style="overflow: hidden;">

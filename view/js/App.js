@@ -28,13 +28,13 @@ const APP_EVENT_HASH_CHANGE = 'APP_EVENT_HASH_CHANGE';
 var App = (function(){
     function App(){}
     App.init = function(self,config){
-        self.defaultHash=config['defaultHash'] || 'index';
-        self.isDebug= config['isDebug'];
-        self.transitionTag = config['transitionTag']||'section';
+        self.defaultHash    = config['defaultHash'] || 'index';
+        self.isDebug        = config['isDebug'];
+        self.transitionTag  = config['transitionTag']||'section';
         self.transitionName = config['transitionName']||'all';
         self.transitionTime = config['transitionTime']||'0';
         self.transitionType = config['transitionType']||'ease';
-        self.projectName = config['projectName']||'webapp';
+        self.projectName    = config['projectName']||'webapp';
 
         App.reSetHash(self,'');
 
@@ -43,27 +43,29 @@ var App = (function(){
         App.initView(self);
     };
     App.initBind = function(child){
+        var self = child;
         $('body')[0].addEventListener("transitionend", function(event){
-            child.sectionTransitionEnd(event);
+            self.sectionTransitionEnd(event);
         });
 
-        child.subscribe(APP_EVENT_ANIMATION_END,function(){
-            if(child.oprationStacks.length){
-                console.log('opration modal : '+child.oprationStacks[0]);
+        self.subscribe(APP_EVENT_ANIMATION_END,function(){
+            if(self.oprationStacks.length){
+                console.log('opration modal : '+self.oprationStacks[0]);
                 setTimeout(function(){
-                    child.pull(child.oprationStacks[0]);
-                    child.oprationStacks.remove(0);
+                    self.pull(self.oprationStacks[0]);
+                    self.oprationStacks.remove(0);
                 },500);
             }
         });
     };
     App.initView = function(child){
+        var self = child;
         $(function(){
-            if(child.transitionName && child.transitionTime && child.transitionType){
-                var transition = child.transitionName + ' '
-                    + child.transitionTime + 's' + ' ' +
-                    child.transitionType;
-                $(child.transitionTag).css({
+            if(self.transitionName && self.transitionTime && self.transitionType){
+                var transition = self.transitionName + ' '
+                    + self.transitionTime + 's' + ' ' +
+                    self.transitionType;
+                $(self.transitionTag).css({
                     'transition':transition,
                     '-webkit-transition':transition
                 })
@@ -165,8 +167,8 @@ var App = (function(){
     App.prototype.subscribe = function(str,func){
         $('title').bind(str,func);
     };
-    App.prototype.publish = function(str){
-        $('title').trigger(str);
+    App.prototype.publish = function(str,param){
+        $('title').trigger(str,param);
     };
     App.prototype.unSubscribe = function(str){
         $('title').unbind(str);

@@ -17,8 +17,8 @@ use server\ServerFactory;
 
 $server = new swoole_server("0.0.0.0", 9501);
 $server->set(array(
-    'worker_num' => 1,
-    'daemonize' => false,
+    'worker_num' => 2,
+    'daemonize' => true,
     'max_request' => 300,
     'dispatch_mode' => 2,
     'package_max_length' => 4096,
@@ -38,7 +38,8 @@ $server->on('connect', function ($serv, $fd){
 $server->on('workerstart', function ($server, $worker_id) {
     define("ROOT_DIR",'/var/www/html/webapp/');
     define("CORE_DIR",ROOT_DIR."core/");
-    require_once('/var/www/html/webapp/server/ServerFactory.php');
+    require_once(ROOT_DIR.'server/ServerFactory.php');
+    require_once(CORE_DIR.'app.php');
     spl_autoload_register('server\ServerFactory::autoLoad');
     ServerFactory::getInstance()->createServer();
 });

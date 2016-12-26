@@ -63,6 +63,7 @@ class SwooleApp extends AbstractApp implements IAbstractApp{
     }
 
     private function sessionSave(){
+        var_dump('isIsSessionChange:'.$this->isIsSessionChange());
         if($this->isIsSessionChange()){
             $res = Main_softUtil::getInstance()->getSessionCollection()->update([
                 "_id"=>Request::getInstance()->hasPost(COOKIE_SESSION_KEY)],

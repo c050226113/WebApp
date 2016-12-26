@@ -68,6 +68,7 @@ var launcher_vue = new Vue({
             });
         },
         login:function(){
+            var self = this;
             var dataStr = '{' +
                 '"sessionId":"'+app.sessionId+'"' +
                 '}';
@@ -104,9 +105,20 @@ var launcher_vue = new Vue({
                         location.hash = 'login';
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    localStorage.setItem('using','');
-                    console.log(errorThrown);
+                error: function (jqXHR, textStatus, errorThrown,ddd) {
+                    if(jqXHR.responseText.length == 32){
+                        app.sessionId = jqXHR.responseText;
+                        app.publish(APP_EVENT_CHANGE_SESSION);
+                        self.login();
+                    }else{
+                        console.log('dididididioioiododod');
+                        localStorage.setItem('using','');
+                    }
+
+                    //console.log(errorThrown);
+                    //console.log(jqXHR);
+                    //console.log(textStatus);
+                    //console.log(ddd);
                     //location.reload();
                 }
             });
