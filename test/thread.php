@@ -19,15 +19,16 @@ class MyThread extends Thread {
     public function run() {
         while ($this->runing) {
 
-            if ($this->param != 0) {
-                $nt          = rand(1, 10);
-                echo "线程[{$this->name}]收到任务参数::{$this->param},需要{$nt}秒处理数据.\n";
-                $this->res   = rand(100, 999);
-                sleep($nt);
-                $this->lurl = $this->param;
+            if ($this->param) {
+//                $nt          = rand(1, 10);
+//                echo "线程[{$this->name}]收到任务参数::{$this->param},需要{$nt}秒处理数据.\n";
+//                $this->res   = rand(100, 999);
+//                sleep($nt);
+                echo "{$this->name}\n";
+//                $this->lurl = $this->param;
                 $this->param   = '';
             } else {
-                echo "线程[{$this->name}]等待任务..\n";
+
             }
             sleep(1);
         }
@@ -36,29 +37,32 @@ class MyThread extends Thread {
 }
 
 //这里创建线程池.
-$pool[] = new MyThread('a');
-$pool[] = new MyThread('b');
-$pool[] = new MyThread('c');
-
-//启动所有线程,使其处于工作状态
-foreach ($pool as $w) {
-    $w->start();
+$pool = [];
+for($i=0;$i<200;$i++){
+    $pool[$i] = new MyThread('a'.$i);
+    $pool[$i]->start();
 }
-
+//
+////启动所有线程,使其处于工作状态
+//foreach ($pool as $w) {
+//    $w->start();
+//}
+sleep(1);
 //派发任务给线程
-for ($i = 1; $i < 10; $i++) {
-    $worker_content = rand(10, 99);
-    while (true) {
-        foreach ($pool as $worker) {
-            //参数为空则说明线程空闲
-            if (!$worker->param) {
-                $worker->param = $worker_content;
-                echo "[{$worker->name}]线程空闲,放入参数{$worker_content},上次参数[{$worker->lurl}]结果[{$worker->res}].\n";
-                break 2;
-            }
-        }
-        sleep(1);
-    }
+for ($i = 0; $i < 200; $i++) {
+//    $worker_content = rand(10, 99);
+    $pool[$i]->param = 'aaa';
+//    while (true) {
+//        foreach ($pool as $worker) {
+//            //参数为空则说明线程空闲
+//            if (!$worker->param) {
+//                $worker->param = $worker_content;
+//                echo "[{$worker->name}]线程空闲,放入参数{$worker_content},上次参数[{$worker->lurl}]结果[{$worker->res}].\n";
+//                break 2;
+//            }
+//        }
+//        sleep(1);
+//    }
 }
 echo "所有线程派发完毕,等待执行完成.\n";
 
@@ -66,9 +70,9 @@ echo "所有线程派发完毕,等待执行完成.\n";
 while (count($pool)) {
     //遍历检查线程组运行结束
     foreach ($pool as $key => $threads) {
-        if ($threads->param=='') {
-            echo "[{$threads->name}]线程空闲,上次参数[{$threads->lurl}]结果[{$threads->res}].\n";
-            echo "[{$threads->name}]线程运行完成,退出.\n";
+        if (!$threads->param) {
+//            echo "[{$threads->name}]线程空闲,上次参数[{$threads->lurl}]结果[{$threads->res}].\n";
+//            echo "[{$threads->name}]线程运行完成,退出.\n";
             //设置结束标志
             $threads->runing = false;
             unset($pool[$key]);

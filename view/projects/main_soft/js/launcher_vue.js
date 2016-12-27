@@ -107,8 +107,7 @@ var launcher_vue = new Vue({
                 },
                 error: function (jqXHR, textStatus, errorThrown,ddd) {
                     if(jqXHR.responseText.length == 32){
-                        app.sessionId = jqXHR.responseText;
-                        app.publish(APP_EVENT_CHANGE_SESSION);
+                        app.publish(APP_EVENT_CHANGE_SESSION,jqXHR.responseText);
                         self.login();
                     }else{
                         console.log('dididididioioiododod');
@@ -139,6 +138,44 @@ var launcher_vue = new Vue({
                 console.log('login login');
                 location.hash = 'login';
             }
+        },
+        setLocationWithWifi:function(string){
+            var dataStr = '{' +
+                '"'+CODE+'":"'+string+'",' +
+                '"sessionId":"'+app.sessionId+'"' +
+                '}';
+            $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/get_position_with_wifi', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                success: function (data) {
+                    if (data[CODE] == 0) {
+                        index.userPlace = data[MESSAGE];
+                    } else {
+                        Message.toast(data[MESSAGE], 4);
+                        return false;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Message.toast(errorThrown, 2);
+                }
+            });
+        },
+        setLocationWithJiZhan:function(string){
+            var dataStr1 = '{' +
+                '"'+CODE+'":"'+string+'",' +
+                '"sessionId":"'+app.sessionId+'"' +
+                '}';
+            $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/get_position_with_baseStation', data: Helper.getJsonObj(dataStr1), dataType: 'json',
+                success: function (data) {
+                    if (data[CODE] == 0) {
+                        index.userPlace = data[MESSAGE];
+                    } else {
+                        Message.toast(data[MESSAGE], 4);
+                        return false;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Message.toast(errorThrown, 2);
+                }
+            });
         }
     }
 });

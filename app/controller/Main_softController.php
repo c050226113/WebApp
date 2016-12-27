@@ -11,8 +11,6 @@ use core\lib\Util;
 use Exception;
 use MongoDB\BSON\UTCDateTime;
 
-use app\model\tengjia\UserModel;
-
 class Main_softController extends Controller{
     private $account;
     private $password;
@@ -123,7 +121,6 @@ class Main_softController extends Controller{
         }catch (Exception $e){
             e(json_encode([self::CODE => 1, self::MESSAGE => $e->getMessage()]));
         }
-        q();
     }
 
 //    public function actionRead_events(){
@@ -152,76 +149,74 @@ class Main_softController extends Controller{
 //    }
 
     public function actionGet_last_position(){
-        if(Request::getInstance()->isPost()){
-            $using = $this->getSessionUsing();
+        try{
+            if(Request::getInstance()->isPost()){
+                $using = $this->getSessionUsing();
 
-            $filter = [
-                '_id'=>$this->getAccount()
-            ];
-            $arr = Main_softUtil::getInstance()->getUserCollection()->arr2need([
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_INFO,Main_softUtil::DEVICE_LON]),
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_INFO,Main_softUtil::DEVICE_LAT])
-            ]);
-            $res = Main_softUtil::getInstance()->getUserCollection()->find($filter,$arr);
-            $arr = @Util::getInstance()->object2array($res[0][0]);
+                $res = Main_softUtil::getInstance()->getUserCollection()->find([
+                    '_id'=>$this->getAccount()
+                ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
+                    join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_INFO,Main_softUtil::DEVICE_LON]),
+                    join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_INFO,Main_softUtil::DEVICE_LAT])
+                ]));
+                $arr = Util::getInstance()->object2array($res[0][0]);
 
-            $lon = @$arr[Main_softUtil::USER_DEVICES][$using][Main_softUtil::DEVICE_INFO][Main_softUtil::DEVICE_LON];
-            $lat = @$arr[Main_softUtil::USER_DEVICES][$using][Main_softUtil::DEVICE_INFO][Main_softUtil::DEVICE_LAT];
-            if(!$lon && !$lat){
-                e(json_encode([self::CODE=>1]));
-            }else{
-                e(json_encode([self::CODE=>0, self::MESSAGE=>$lon."|".$lat]));
+                $lon = $arr[Main_softUtil::USER_DEVICES][$using][Main_softUtil::DEVICE_INFO][Main_softUtil::DEVICE_LON];
+                $lat = $arr[Main_softUtil::USER_DEVICES][$using][Main_softUtil::DEVICE_INFO][Main_softUtil::DEVICE_LAT];
+                if(!$lon && !$lat){
+                    throw new Exception('');
+                }else{
+                    e(json_encode([self::CODE=>0, self::MESSAGE=>$lon."|".$lat]));
+                }
             }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1, self::MESSAGE=>$e->getMessage()]));
         }
     }
 
     public function actionGet_info(){
-        if(Request::getInstance()->isPost()){
-            if(!$this->getAccount()){
-                e(json_encode([self::CODE=>1]));
-                q();
-            }
+        try{
+            if(Request::getInstance()->isPost()){
+                if(!$this->getAccount())
+                    throw new Exception('no_account');
 
-            $filter = [
-                '_id'=>$this->getAccount()
-            ];
-            $arr = Main_softUtil::getInstance()->getUserCollection()->arr2need([
-                Main_softUtil::USER_USING,Main_softUtil::USER_NAME,Main_softUtil::USER_AVT
-            ]);
-            $res = Main_softUtil::getInstance()->getUserCollection()->find($filter,$arr);
-            $arr = @Util::getInstance()->object2array($res[0][0]);
-            $username = Util::getInstance()->hasArr($arr,Main_softUtil::USER_NAME)?:'';
-            $avt = Util::getInstance()->hasArr($arr,Main_softUtil::USER_AVT)?:'';
-            $using = Util::getInstance()->hasArr($arr,Main_softUtil::USER_USING)?:'';
-            if(!$using){
-                $devices = '';
-            }else{
-                $devices = [];
-                //get hasDeviceArr
                 $res = Main_softUtil::getInstance()->getUserCollection()->find([
                     '_id'=>$this->getAccount()
-                ],[
-                    Main_softUtil::USER_HASDEVICES
-                ]);
-                $arr = @Util::getInstance()->object2array($res[0][0]);
-                $hasDevices = Util::getInstance()->hasArr($arr,Main_softUtil::USER_HASDEVICES);
-                foreach($hasDevices as $k => $v){
-                    if($v){
-                        Main_softUtil::getInstance()->getUserCollection()->find([
-                            '_id'=>$this->getAccount()
-                        ],[
-                            join('.',[Main_softUtil::USER_DEVICES,$v,Main_softUtil::DEVICE_INFO])
-                        ]);
-                        $arr = @Util::getInstance()->object2array($res[0][0]);
-                        $devices[$v] =  $arr[Main_softUtil::USER_DEVICES][$v];
+                ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
+                    Main_softUtil::USER_USING,Main_softUtil::USER_NAME,Main_softUtil::USER_AVT
+                ]));
+                $arr = Util::getInstance()->object2array($res[0][0]);
+                $username = Util::getInstance()->hasArr($arr,Main_softUtil::USER_NAME)?:'';
+                $avt = Util::getInstance()->hasArr($arr,Main_softUtil::USER_AVT)?:'';
+                $using = Util::getInstance()->hasArr($arr,Main_softUtil::USER_USING)?:'';
+                if(!$using){
+                    $devices = '';
+                }else{
+                    $devices = [];
+                    $res = Main_softUtil::getInstance()->getUserCollection()->find([//get hasDeviceArr
+                        '_id'=>$this->getAccount()
+                    ],[
+                        Main_softUtil::USER_HASDEVICES
+                    ]);
+                    $arr = @Util::getInstance()->object2array($res[0][0]);
+                    $hasDevices = Util::getInstance()->hasArr($arr,Main_softUtil::USER_HASDEVICES);
+                    foreach($hasDevices as $k => $v){
+                        if($v){
+                            Main_softUtil::getInstance()->getUserCollection()->find([
+                                '_id'=>$this->getAccount()
+                            ],[
+                                join('.',[Main_softUtil::USER_DEVICES,$v,Main_softUtil::DEVICE_INFO])
+                            ]);
+                            $arr = @Util::getInstance()->object2array($res[0][0]);
+                            $devices[$v] =  $arr[Main_softUtil::USER_DEVICES][$v];
+                        }
                     }
+                    $devices = json_encode($devices);
                 }
-
-                $devices = json_encode($devices);
+                e(json_encode([self::CODE=>0,Main_softUtil::USER_NAME=>$username,Main_softUtil::USER_DEVICES=>$devices,Main_softUtil::USER_USING=>$using,Main_softUtil::USER_AVT=>$avt]));
             }
-            e(json_encode([self::CODE=>0,Main_softUtil::USER_NAME=>$username,Main_softUtil::USER_DEVICES=>$devices,Main_softUtil::USER_USING=>$using,Main_softUtil::USER_AVT=>$avt]));
-            q();
+        }catch (Exception $e){
+            $e->getMessage();
         }
     }
 
@@ -250,7 +245,6 @@ class Main_softController extends Controller{
                     join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_FAMILY])
                 ]);
                 $res = Main_softUtil::getInstance()->getUserCollection()->find($filter,$arr);
-
 
                 if(is_array($res)){
                     $arr =  @Util::getInstance()->object2array($res[0][0]);
@@ -316,77 +310,67 @@ class Main_softController extends Controller{
         }catch (Exception $e){
             e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
-        q();
     }
 
     public function actionGet_position_with_wifi(){
-        if(Request::getInstance()->isPost()){
-            $mac = Request::getInstance()->hasPost(self::CODE);
-            if(!$mac){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
-                q();
-            }
-
-            $res = file_get_contents('http://api.cellocation.com/wifi/?mac='.trim($mac).'&output=json');
-            $arr = null;
-            try{
+        try{
+            if(Request::getInstance()->isPost()){
+                if(!$mac = Request::getInstance()->hasPost(self::CODE))
+                    throw new Exception('数据有误');
+                $res = file_get_contents('http://api.cellocation.com/wifi/?mac='.trim($mac).'&output=json');
                 $arr = json_decode($res,true);
-            }catch (\Exception $e){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"获取位置信息有误"]));
-                q();
-            }
+                if(!is_array($arr))
+                    throw new Exception('获取位置信息有误');
 
-            if($arr && Util::getInstance()->hasArr($arr, "errcode") == 0){
-                e(json_encode([self::CODE=>0,self::MESSAGE=>$arr["address"]]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>Util::getInstance()->hasArr($arr, "errcode")]));
+                if(Util::getInstance()->hasArr($arr, "errcode") == 0){
+                    e(json_encode([self::CODE=>0,self::MESSAGE=>$arr["address"]]));
+                }else{
+                    throw new Exception(Util::getInstance()->hasArr($arr, "errcode"));
+                }
             }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
     }
 
     public function actionGet_position_with_baseStation(){
-        if(Request::getInstance()->isPost()){
-            $string = Request::getInstance()->hasPost(self::CODE);
-            if(!$string){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
-                q();
-            }
+        try{
+            if(Request::getInstance()->isPost()){
+                if(!$string = Request::getInstance()->hasPost(self::CODE))
+                    throw new Exception('数据有误');
 
-            $resArr = explode('|',$string);
-            $mcc = $resArr[0];
-            $mnc = $resArr[1];
-            $lac = $resArr[2];
-            $cid = $resArr[3];
+                $resArr = explode('|',$string);
+                $mcc = $resArr[0];
+                $mnc = $resArr[1];
+                $lac = $resArr[2];
+                $cid = $resArr[3];
 
-/**
-http://api.cellocation.com/cell/?mcc=460&mnc=1&lac=4301&ci=20986&output=json
-请求参数：
- * 460 1 9551 102289923
-名称	类型	必填	说明
-mcc	int	是	mcc国家代码：中国代码 460
-mnc	int	是	mnc网络类型：0移动，1联通(电信对应sid)，十进制
-lac	int	是	lac(电信对应nid)，十进制
-ci	int	是	cellid(电信对应bid)，十进制
-coord	string	否	坐标类型(wgs84/gcj02/bd09)，默认wgs84
-output	string	否	返回格式(csv/json/xml)，默认csv
- * {"errcode":0, "lat":"22.568832", "lon":"113.855133", "radius":"289", "address":"广东省深圳市宝安区西乡街道宝源二区13号楼"}
- */
-            $res = @file_get_contents("http://api.cellocation.com/cell/?mcc={$mcc}&mnc={$mnc}&lac={$lac}&ci={$cid}&output=json");
-            $arr = null;
-            try{
+                /**
+                http://api.cellocation.com/cell/?mcc=460&mnc=1&lac=4301&ci=20986&output=json
+                请求参数：
+                 * 460 1 9551 102289923
+                名称	类型	必填	说明
+                mcc	int	是	mcc国家代码：中国代码 460
+                mnc	int	是	mnc网络类型：0移动，1联通(电信对应sid)，十进制
+                lac	int	是	lac(电信对应nid)，十进制
+                ci	int	是	cellid(电信对应bid)，十进制
+                coord	string	否	坐标类型(wgs84/gcj02/bd09)，默认wgs84
+                output	string	否	返回格式(csv/json/xml)，默认csv
+                 * {"errcode":0, "lat":"22.568832", "lon":"113.855133", "radius":"289", "address":"广东省深圳市宝安区西乡街道宝源二区13号楼"}
+                 */
+                $res = @file_get_contents("http://api.cellocation.com/cell/?mcc={$mcc}&mnc={$mnc}&lac={$lac}&ci={$cid}&output=json");
                 $arr = json_decode($res,true);
-            }catch (\Exception $e){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"获取位置信息有误"]));
-                q();
-            }
+                if(!is_array($arr))
+                    throw new Exception('获取位置信息有误');
 
-            if($arr && Util::getInstance()->hasArr($arr, "errcode") == 0){
-                e(json_encode([self::CODE=>0,self::MESSAGE=>$arr["address"]]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>Util::getInstance()->hasArr($arr, "errcode")]));
+                if(Util::getInstance()->hasArr($arr, "errcode") == 0){
+                    e(json_encode([self::CODE=>0,self::MESSAGE=>$arr["address"]]));
+                }else {
+                    throw new Exception(Util::getInstance()->hasArr($arr, "errcode"));
+                }
             }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
     }
 
@@ -394,18 +378,16 @@ output	string	否	返回格式(csv/json/xml)，默认csv
     public function actionGet_events(){
         if(Request::getInstance()->isPost()){
             $using = $this->getSessionUsing();
-            $dayago = Request::getInstance()->hasPost(self::KEY);
-            if(!$dayago) {
+
+            if(!$dayago = Request::getInstance()->hasPost(self::KEY))
                 $dayago = 3;
-            }
             $timeFlag = time()-86400*$dayago;
 
             //using = using && shijian xiaodatui 3tianqiand
-            $filter = [
+            $res = Main_softUtil::getInstance()->getEventsCollection()->find([
                 Main_softUtil::USER_USING=>$using,
                 Main_softUtil::DEVICE_EVENT_INTTIME => ['$gt' => $timeFlag]
-            ];
-            $option = Main_softUtil::getInstance()->getEventsCollection()->arr2need([
+            ],Main_softUtil::getInstance()->getEventsCollection()->arr2need([
                 Main_softUtil::DEVICE_EVENT_STATUS,
                 Main_softUtil::DEVICE_EVENT_TYPE,
                 Main_softUtil::DEVICE_EVENT_TYPE_MESSAGE,
@@ -413,66 +395,60 @@ output	string	否	返回格式(csv/json/xml)，默认csv
                 Main_softUtil::DEVICE_EVENT_MESSAGE,
                 Main_softUtil::DEVICE_EVENT_ISRECIEVE,
                 Main_softUtil::DEVICE_EVENT_INTTIME
-            ]);
-            $res = Main_softUtil::getInstance()->getEventsCollection()->find($filter,$option);
-            $arr = $res[0];
-            if(is_array($arr) && $arr){
-                e(json_encode([self::CODE=>0,self::MESSAGE=>json_encode($arr)]));
-            }else{
+            ]));
+
+            if(is_array($res[0]) && $res[0])
+                e(json_encode([self::CODE=>0,self::MESSAGE=>json_encode($res[0])]));
+            else
                 e(json_encode([self::CODE=>1]));
-            }
-            q();
         }
     }
 
     public function actionSet_username(){
-        if(Request::getInstance()->isPost()){
-            $username = Request::getInstance()->hasPost(self::NAME);
+        try{
+            if(Request::getInstance()->isPost()){
+                $username = Request::getInstance()->hasPost(self::NAME);
+                if(!$username || strlen($username) > 15)
+                    throw new Exception('姓名格式错误');
 
-            if(!$username || strlen($username) > 15){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"姓名错误"]));
-                q();
+                $res = Main_softUtil::getInstance()->getUserCollection()->update([
+                    '_id' => $this->getAccount()
+                ], [
+                    Main_softUtil::USER_NAME => $username,
+                ],[false,false],'$set');
+
+                if(is_array($res))
+                    e(json_encode([self::CODE=>0]));
+                else
+                    e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
             }
-
-            $res = Main_softUtil::getInstance()->getUserCollection()->update([
-                '_id' => $this->getAccount()
-            ], [
-                Main_softUtil::USER_NAME => $username,
-            ],[false,false],'$set');
-
-            if(is_array($res)){
-                e(json_encode([self::CODE=>0]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
-            }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
     }
 
     public function actionFence_toggle(){
-        if(Request::getInstance()->isPost()){
-            $bool = Request::getInstance()->hasPost(self::TYPE);
-            $bool = $bool? 1:0;
+        try{
+            if(Request::getInstance()->isPost()){
+                $bool = Request::getInstance()->hasPost(self::TYPE)?1:0;
 
-            $using = $this->getSessionUsing();
-            $index = Request::getInstance()->hasPost(self::INDEX);
-            if(!$index){
-                $index = 0;
-            }
-            if($index!=0&&$index!=1&&$index!=2&&$index!=3&&$index!=4){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
-                q();
-            }
+                $using = $this->getSessionUsing();
+                if(!$index = Request::getInstance()->hasPost(self::INDEX))
+                    $index = 0;
 
-            $res = Main_softUtil::getInstance()->getUserCollection()->update(['_id'=>$this->getAccount()], [
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_FENCE,'i-'.$index,Main_softUtil::FENCE_STATUS]) => $bool,
-            ],[false,false],'$set');
-            if(is_array($res)){
-                e(json_encode([self::CODE=>0]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
+                if($index!=0&&$index!=1&&$index!=2&&$index!=3&&$index!=4)
+                    throw new Exception('数据有误');
+
+                $res = Main_softUtil::getInstance()->getUserCollection()->update(['_id'=>$this->getAccount()], [
+                    join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_FENCE,'i-'.$index,Main_softUtil::FENCE_STATUS]) => $bool,
+                ],[false,false],'$set');
+                if(is_array($res))
+                    e(json_encode([self::CODE=>0]));
+                else
+                    throw new Exception('数据出错');
             }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
     }
 
@@ -512,7 +488,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
         }catch (Exception $e){
             e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
-        q();
     }
 
     public function actionBind(){
@@ -726,70 +701,64 @@ output	string	否	返回格式(csv/json/xml)，默认csv
         }catch (Exception $e){
             e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
-        q();
     }
 
     public function actionGet_sports_data(){
         if(Request::getInstance()->isPost()){
             $using = $this->getSessionUsing();
-            $dayago = Request::getInstance()->hasPost(self::STARTH);
-            if(!$dayago) {
+            if(!$dayago = Request::getInstance()->hasPost(self::STARTH))
                 $dayago = 3;
-            }
+
             $timeFlag = time()-86400*$dayago;
 
             //using = using && shijian xiaodatui 3tianqiand
-            $filter = [
+            $res = Main_softUtil::getInstance()->getSportsCollection()->find([
                 Main_softUtil::USER_USING=>$using,
                 Main_softUtil::DEVICE_SPORTS_INTTIME => ['$gt' => $timeFlag]
-            ];
-            $option = Main_softUtil::getInstance()->getSportsCollection()->arr2need([
+            ],Main_softUtil::getInstance()->getSportsCollection()->arr2need([
                 Main_softUtil::DEVICE_SPORTS_INTTIME,
                 Main_softUtil::DEVICE_SPORTS_POWER,
                 Main_softUtil::DEVICE_SPORTS_STEPS
-            ]);
-            $res = Main_softUtil::getInstance()->getSportsCollection()->find($filter,$option);
-            $arr = $res[0];
-            if(is_array($arr) && $arr){
-                e(json_encode([self::CODE=>0,self::MESSAGE=>json_encode($arr)]));
+            ]));
+            if(is_array($res[0]) && $res[0]){
+                e(json_encode([self::CODE=>0,self::MESSAGE=>json_encode($res[0])]));
             }else{
                 e(json_encode([self::CODE=>1]));
             }
-            q();
         }
     }
 
     public function actionChange_using(){
-        if(Request::getInstance()->isPost()){
-            $code = Request::getInstance()->hasPost(self::CODE);
-            if(!$code){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
-                q();
-            }
+        try{
+            if(Request::getInstance()->isPost()){
+                if(!$code = Request::getInstance()->hasPost(self::CODE))
+                    throw new Exception('数据出错');
 
-            //是否有这个using
-            $res = Main_softUtil::getInstance()->getUserCollection()->find([
-                '_id'=>$this->getAccount()
-            ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
-                join('.',[Main_softUtil::USER_DEVICES,$code,Main_softUtil::DEVICE_INFO])
-            ]));
-            $arr = @Util::getInstance()->object2array($res[0][0]);
-            if(is_array($arr[Main_softUtil::USER_DEVICES][$code][Main_softUtil::DEVICE_INFO])){
-                $res = Main_softUtil::getInstance()->getUserCollection()->update([
+                //是否有这个using
+                $res = Main_softUtil::getInstance()->getUserCollection()->find([
                     '_id'=>$this->getAccount()
-                ], [
-                    Main_softUtil::USER_USING => $code
-                ],[false,false],'$set');
-                if(is_array($res)){
-                    $this->setSessionUsing($code);
-                    e(json_encode([self::CODE=>0]));
+                ],Main_softUtil::getInstance()->getUserCollection()->arr2need([
+                    join('.',[Main_softUtil::USER_DEVICES,$code,Main_softUtil::DEVICE_INFO])
+                ]));
+                $arr = Util::getInstance()->object2array($res[0][0]);
+                if(is_array($arr[Main_softUtil::USER_DEVICES][$code][Main_softUtil::DEVICE_INFO])){
+                    $res = Main_softUtil::getInstance()->getUserCollection()->update([
+                        '_id'=>$this->getAccount()
+                    ], [
+                        Main_softUtil::USER_USING => $code
+                    ],[false,false],'$set');
+                    if(is_array($res)){
+                        $this->setSessionUsing($code);
+                        e(json_encode([self::CODE=>0]));
+                    }else{
+                        throw new Exception($res);
+                    }
                 }else{
-                    e(json_encode([self::CODE=>1,self::MESSAGE=>$res]));
+                    throw new Exception('数据有误');
                 }
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>'数据有误']));
             }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
     }
 
@@ -819,7 +788,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
                 if(!$flag)
                     throw new Exception('数据出错');
 
-
                 //todo
                 $res = Main_softUtil::getInstance()->getUserCollection()->update([
                     '_id'=>$this->getAccount()
@@ -841,7 +809,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
         }catch (Exception $e){
             e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
-        q();
     }
 
     public function actionGet_setting(){
@@ -861,7 +828,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
                 $setting = $arr[Main_softUtil::USER_DEVICES][$using][Main_softUtil::DEVICE_SETTING];
                 e(json_encode([self::CODE=>0,Main_softUtil::DEVICE_SETTING=>json_encode($setting)]));
             }
-            q();
         }
     }
 
@@ -883,224 +849,222 @@ output	string	否	返回格式(csv/json/xml)，默认csv
                 $setting = $arr[Main_softUtil::USER_DEVICES][$using][Main_softUtil::DEVICE_FAMILY];
                 e(json_encode([self::CODE=>0,self::MESSAGE=>json_encode($setting)]));
             }
-            q();
         }
     }
 
-    public function actionClass_hide_toggle(){
-        if(Request::getInstance()->isPost()){
-            $bool = Request::getInstance()->hasPost(self::TYPE);
-            $bool = $bool? 1:0;
-
-            $using = $this->getSessionUsing();
-            $index = Request::getInstance()->hasPost('index');
-            if(!$index){
-                $index = 0;
-            }
-            if($index!=0&&$index!=1&&$index!=2){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
-                q();
-            }
-
-            $res = Main_softUtil::getInstance()->getUserCollection()->update([
-                '_id'=>$this->getAccount()
-            ],[
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_CLASS,'i-'.$index,Main_softUtil::SETTING_CLASS_STATUS]) => $bool,
-            ],[false,false],'$set');
-            if(is_array($res)){
-                e(json_encode([self::CODE=>0]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
-            }
-            q();
-        }
-    }
+//    public function actionClass_hide_toggle(){
+//        if(Request::getInstance()->isPost()){
+//            $bool = Request::getInstance()->hasPost(self::TYPE);
+//            $bool = $bool? 1:0;
+//
+//            $using = $this->getSessionUsing();
+//            $index = Request::getInstance()->hasPost('index');
+//            if(!$index){
+//                $index = 0;
+//            }
+//            if($index!=0&&$index!=1&&$index!=2){
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
+//                q();
+//            }
+//
+//            $res = Main_softUtil::getInstance()->getUserCollection()->update([
+//                '_id'=>$this->getAccount()
+//            ],[
+//                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_CLASS,'i-'.$index,Main_softUtil::SETTING_CLASS_STATUS]) => $bool,
+//            ],[false,false],'$set');
+//            if(is_array($res)){
+//                e(json_encode([self::CODE=>0]));
+//            }else{
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
+//            }
+//            q();
+//        }
+//    }
 
     public function actionSet_user_avt(){
-        if(Request::getInstance()->isPost()){
-            $str = Request::getInstance()->hasPost(self::IMG);
-            if(strlen($str)>20000){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"图片过大"]));
-                q();
-            }
+        try{
+            if(Request::getInstance()->isPost()){
+                $str = Request::getInstance()->hasPost(self::IMG);
+                if(strlen($str)>20000)
+                    throw new Exception('图片过大');
 
-            $res = Main_softUtil::getInstance()->getUserCollection()->update([
-                '_id'=>$this->getAccount()
-            ],[
-                Main_softUtil::USER_AVT => $str
-            ],[false,false],'$set');
-            if(is_array($res)){
-                e(json_encode([self::CODE=>0]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
+                $res = Main_softUtil::getInstance()->getUserCollection()->update([
+                    '_id'=>$this->getAccount()
+                ],[
+                    Main_softUtil::USER_AVT => $str
+                ],[false,false],'$set');
+                if(is_array($res))
+                    e(json_encode([self::CODE=>0]));
+                else
+                    throw new Exception('数据出错');
             }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
     }
 
     public function actionSet_avt(){
-        if(Request::getInstance()->isPost()){
-            $str = Request::getInstance()->hasPost(self::IMG);
-            if(strlen($str)>20000){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"图片过大"]));
-                q();
-            }
+        try{
+            if(Request::getInstance()->isPost()){
+                $str = Request::getInstance()->hasPost(self::IMG);
+                if(strlen($str)>20000)
+                    throw new Exception('图片过大');
 
-            $using = $this->getSessionUsing();
+                $using = $this->getSessionUsing();
 
-            $res = Main_softUtil::getInstance()->getUserCollection()->update([
-                '_id'=>$this->getAccount()
-            ],[
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_INFO,Main_softUtil::DEVICE_AVT]) => $str
-            ],[],'$set');
-            if(is_array($res)){
-                e(json_encode([self::CODE=>0]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
+                $res = Main_softUtil::getInstance()->getUserCollection()->update([
+                    '_id'=>$this->getAccount()
+                ],[
+                    join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_INFO,Main_softUtil::DEVICE_AVT]) => $str
+                ],[],'$set');
+                if(is_array($res))
+                    e(json_encode([self::CODE=>0]));
+                else
+                    throw new Exception('数据出错');
             }
-            q();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
     }
 
-    public function actionAdd_class_hide(){
-        if(Request::getInstance()->isPost()){
-            $using = $this->getSessionUsing();
-            $index = Request::getInstance()->hasPost(self::INDEX);
-            if(!$index){
-                $index = 0;
-            }
-            if($index!=0&&$index!=1&&$index!=2){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
-                q();
-            }
-            $week = (int)Request::getInstance()->hasPost(self::WEEK);
-            $start_h = (int)Request::getInstance()->hasPost(self::STARTH);
-            $start_m = (int)Request::getInstance()->hasPost(self::STARTM);
-            $end_h = (int)Request::getInstance()->hasPost(self::ENDH);
-            $end_m = (int)Request::getInstance()->hasPost(self::ENDM);
-            //判断参数
-            if(!is_numeric($week) ||!is_numeric($start_h) ||!is_numeric($start_m) ||!is_numeric($end_h) ||!is_numeric($end_m)){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"操作失败"]));
-                q();
-            }
-            if($start_h>23 || $end_h>23 || $start_m>60 || $end_m>60){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"时间设置有误"]));
-                q();
-            }
-            if($start_h>$end_h){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"时间设置有误"]));
-            }else if($start_h==$end_h){
-                if($start_m>=$end_m) {
-                    e(json_encode([self::CODE => 1, self::MESSAGE => "时间设置有误"]));
-                    q();
-                }
-            }
+//    public function actionAdd_class_hide(){
+//        if(Request::getInstance()->isPost()){
+//            $using = $this->getSessionUsing();
+//            $index = Request::getInstance()->hasPost(self::INDEX);
+//            if(!$index){
+//                $index = 0;
+//            }
+//            if($index!=0&&$index!=1&&$index!=2){
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
+//                q();
+//            }
+//            $week = (int)Request::getInstance()->hasPost(self::WEEK);
+//            $start_h = (int)Request::getInstance()->hasPost(self::STARTH);
+//            $start_m = (int)Request::getInstance()->hasPost(self::STARTM);
+//            $end_h = (int)Request::getInstance()->hasPost(self::ENDH);
+//            $end_m = (int)Request::getInstance()->hasPost(self::ENDM);
+//            //判断参数
+//            if(!is_numeric($week) ||!is_numeric($start_h) ||!is_numeric($start_m) ||!is_numeric($end_h) ||!is_numeric($end_m)){
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"操作失败"]));
+//                q();
+//            }
+//            if($start_h>23 || $end_h>23 || $start_m>60 || $end_m>60){
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"时间设置有误"]));
+//                q();
+//            }
+//            if($start_h>$end_h){
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"时间设置有误"]));
+//            }else if($start_h==$end_h){
+//                if($start_m>=$end_m) {
+//                    e(json_encode([self::CODE => 1, self::MESSAGE => "时间设置有误"]));
+//                    q();
+//                }
+//            }
+//
+//            $user = new UserModel(SESSION_DB);
+//            $res = $user->update($this->getAccount(), [
+//                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_CLASS,'i-'.$index]) => [
+//                    Main_softUtil::SETTING_CLASS_STATUS => 1,
+//                    Main_softUtil::SETTING_CLASS_WEEK => $week,
+//                    Main_softUtil::SETTING_CLASS_STARTH => $start_h,
+//                    Main_softUtil::SETTING_CLASS_STARTM => $start_m,
+//                    Main_softUtil::SETTING_CLASS_ENDH => $end_h,
+//                    Main_softUtil::SETTING_CLASS_ENDM => $end_m
+//                ]
+//            ],'$set');
+//            if(is_array($res)){
+//                $set = json_encode([
+//                    Main_softUtil::SETTING_CLASS_STATUS => 1,
+//                    Main_softUtil::SETTING_CLASS_WEEK => $week,
+//                    Main_softUtil::SETTING_CLASS_STARTH => $start_h,
+//                    Main_softUtil::SETTING_CLASS_STARTM => $start_m,
+//                    Main_softUtil::SETTING_CLASS_ENDH => $end_h,
+//                    Main_softUtil::SETTING_CLASS_ENDM => $end_m
+//                ]);
+//                e(json_encode([self::CODE=>0,self::MESSAGE=>$set]));
+//            }else{
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
+//            }
+//            q();
+//        }
+//    }
 
-            $user = new UserModel(SESSION_DB);
-            $res = $user->update($this->getAccount(), [
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_CLASS,'i-'.$index]) => [
-                    Main_softUtil::SETTING_CLASS_STATUS => 1,
-                    Main_softUtil::SETTING_CLASS_WEEK => $week,
-                    Main_softUtil::SETTING_CLASS_STARTH => $start_h,
-                    Main_softUtil::SETTING_CLASS_STARTM => $start_m,
-                    Main_softUtil::SETTING_CLASS_ENDH => $end_h,
-                    Main_softUtil::SETTING_CLASS_ENDM => $end_m
-                ]
-            ],'$set');
-            if(is_array($res)){
-                $set = json_encode([
-                    Main_softUtil::SETTING_CLASS_STATUS => 1,
-                    Main_softUtil::SETTING_CLASS_WEEK => $week,
-                    Main_softUtil::SETTING_CLASS_STARTH => $start_h,
-                    Main_softUtil::SETTING_CLASS_STARTM => $start_m,
-                    Main_softUtil::SETTING_CLASS_ENDH => $end_h,
-                    Main_softUtil::SETTING_CLASS_ENDM => $end_m
-                ]);
-                e(json_encode([self::CODE=>0,self::MESSAGE=>$set]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
-            }
-            q();
-        }
-    }
+//    public function actionInterval_shutdown_toggle(){
+//        if(Request::getInstance()->isPost()){
+//            $bool = Request::getInstance()->hasPost(self::TYPE);
+//            $bool = $bool? 1:0;
+//            $using = $this->getSessionUsing();
+//            $index = Request::getInstance()->hasPost(self::INDEX);
+//            if(!$index){
+//                $index = 0;
+//            }
+//            if($index!=0&&$index!=1){
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
+//                q();
+//            }
+//
+//            $user = new UserModel(SESSION_DB);
+//            $res = $user->update($this->getAccount(), [
+//                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_INTERVALSHUTDOWN,'i-'.$index,Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS]) => $bool,
+//            ],'$set');
+//            if(is_array($res)){
+//                e(json_encode([self::CODE=>0]));
+//            }else{
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
+//            }
+//            q();
+//        }
+//    }
 
-    public function actionInterval_shutdown_toggle(){
-        if(Request::getInstance()->isPost()){
-            $bool = Request::getInstance()->hasPost(self::TYPE);
-            $bool = $bool? 1:0;
-            $using = $this->getSessionUsing();
-            $index = Request::getInstance()->hasPost(self::INDEX);
-            if(!$index){
-                $index = 0;
-            }
-            if($index!=0&&$index!=1){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
-                q();
-            }
-
-            $user = new UserModel(SESSION_DB);
-            $res = $user->update($this->getAccount(), [
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_INTERVALSHUTDOWN,'i-'.$index,Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS]) => $bool,
-            ],'$set');
-            if(is_array($res)){
-                e(json_encode([self::CODE=>0]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
-            }
-            q();
-        }
-    }
-
-    public function actionInterval_shutdown_update(){
-        if(Request::getInstance()->isPost()){
-            $using = $this->getSessionUsing();
-            $start_h = (int)Request::getInstance()->hasPost(self::STARTH);
-            $start_m = (int)Request::getInstance()->hasPost(self::STARTM);
-            $end_h = (int)Request::getInstance()->hasPost(self::ENDH);
-            $end_m = (int)Request::getInstance()->hasPost(self::ENDM);
-            //判断参数
-            if(!is_numeric($start_h) ||!is_numeric($start_m) ||!is_numeric($end_h) ||!is_numeric($end_m)){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"操作失败"]));
-                q();
-            }
-            if($start_h>23 || $end_h>23 || $start_m>60 || $end_m>60){
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"时间设置有误"]));
-                q();
-            }
-
-            $user = new UserModel(SESSION_DB);
-            $res = $user->update($this->getAccount(), [
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_INTERVALSHUTDOWN,"i-0"]) => [
-                    Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS => 1,
-                    Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEH => $start_h,
-                    Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEM => $start_m
-                ],
-                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_INTERVALSHUTDOWN,"i-1"]) => [
-                    Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS => 1,
-                    Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEH => $end_h,
-                    Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEM => $end_m
-                ],
-            ],'$set');
-            if(is_array($res)){
-                $message = json_encode([
-                    'i-0'=> [
-                        Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS => 1,
-                        Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEH => $start_h,
-                        Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEM => $start_m
-                    ],
-                    'i-1'=>[
-                        Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS => 1,
-                        Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEH => $end_h,
-                        Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEM => $end_m
-                    ],
-                ]);
-                e(json_encode([self::CODE=>0,self::MESSAGE=>$message]));
-            }else{
-                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
-            }
-            q();
-        }
-    }
+//    public function actionInterval_shutdown_update(){
+//        if(Request::getInstance()->isPost()){
+//            $using = $this->getSessionUsing();
+//            $start_h = (int)Request::getInstance()->hasPost(self::STARTH);
+//            $start_m = (int)Request::getInstance()->hasPost(self::STARTM);
+//            $end_h = (int)Request::getInstance()->hasPost(self::ENDH);
+//            $end_m = (int)Request::getInstance()->hasPost(self::ENDM);
+//            //判断参数
+//            if(!is_numeric($start_h) ||!is_numeric($start_m) ||!is_numeric($end_h) ||!is_numeric($end_m)){
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"操作失败"]));
+//                q();
+//            }
+//            if($start_h>23 || $end_h>23 || $start_m>60 || $end_m>60){
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"时间设置有误"]));
+//                q();
+//            }
+//
+//            $user = new UserModel(SESSION_DB);
+//            $res = $user->update($this->getAccount(), [
+//                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_INTERVALSHUTDOWN,"i-0"]) => [
+//                    Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS => 1,
+//                    Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEH => $start_h,
+//                    Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEM => $start_m
+//                ],
+//                join('.',[Main_softUtil::USER_DEVICES,$using,Main_softUtil::DEVICE_SETTING,Main_softUtil::SETTING_INTERVALSHUTDOWN,"i-1"]) => [
+//                    Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS => 1,
+//                    Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEH => $end_h,
+//                    Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEM => $end_m
+//                ],
+//            ],'$set');
+//            if(is_array($res)){
+//                $message = json_encode([
+//                    'i-0'=> [
+//                        Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS => 1,
+//                        Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEH => $start_h,
+//                        Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEM => $start_m
+//                    ],
+//                    'i-1'=>[
+//                        Main_softUtil::SETTING_INTERVALSHUTDOWN_STATUS => 1,
+//                        Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEH => $end_h,
+//                        Main_softUtil::SETTING_INTERVALSHUTDOWN_TIMEM => $end_m
+//                    ],
+//                ]);
+//                e(json_encode([self::CODE=>0,self::MESSAGE=>$message]));
+//            }else{
+//                e(json_encode([self::CODE=>1,self::MESSAGE=>"数据出错"]));
+//            }
+//        }
+//    }
 
     public function actionSet_info(){
         try{
@@ -1166,7 +1130,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
         }catch (Exception $e){
             e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
-        q();
     }
 
     public function actionGet_fence(){
@@ -1184,7 +1147,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
             }else{
                 e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误"]));
             }
-            q();
         }
     }
 
@@ -1244,7 +1206,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
         }catch (Exception $e){
             e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
-        q();
     }
 
     public function actionGet_waypoint(){
@@ -1273,7 +1234,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
             }else{
                 e(json_encode([self::CODE=>1]));
             }
-            q();
         }
     }
 
@@ -1323,10 +1283,9 @@ output	string	否	返回格式(csv/json/xml)，默认csv
                     e(json_encode([self::CODE=>1,self::MESSAGE=>"数据有误h"]));
                 }
             }
-        }catch (Exception $e){
-            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
+        }catch (Exception $e) {
+            e(json_encode([self::CODE => 1, self::MESSAGE => $e->getMessage()]));
         }
-        q();
     }
 
     public function actionGet_pre_family(){
@@ -1367,7 +1326,6 @@ output	string	否	返回格式(csv/json/xml)，默认csv
         }catch (Exception $e){
             e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
-        q();
     }
 
     /**
@@ -1407,21 +1365,22 @@ output	string	否	返回格式(csv/json/xml)，默认csv
     }
 
     private function clientSendWithNoResult($arr){
-        //链接
-        $client = TcpClientFactory::getInstance()->getClient();
-        if (!$client->connect(TcpClientFactory::IP, TcpClientFactory::PORT, 0.5)){
-            e(json_encode([self::CODE=>1,self::MESSAGE=>"连接异常"]));
-            q();
+        try{
+            //链接
+            $client = TcpClientFactory::getInstance()->getClient();
+            if (!$client->connect(TcpClientFactory::IP, TcpClientFactory::PORT, 0.5))
+                throw new Exception('连接异常');
+            //组装
+            $body = chr(0x10).chr(0x04).TcpClientFactory::getInstance()->packMobileSocketData($arr);
+            //发送
+            $client->send(Main_softUtil::getInstance()->addHeader($body));
+            //接收
+            e($client->recv());
+            //关闭
+            $client->close();
+        }catch (Exception $e){
+            e(json_encode([self::CODE=>1,self::MESSAGE=>$e->getMessage()]));
         }
-        //组装
-        $body = chr(0x10).chr(0x04).TcpClientFactory::getInstance()->packMobileSocketData($arr);
-        //发送
-        $client->send(Main_softUtil::getInstance()->addHeader($body));
-        //接收
-        e($client->recv());
-        //关闭
-        $client->close();
-        q();
     }
 
     /**

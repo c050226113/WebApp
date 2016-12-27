@@ -25,6 +25,7 @@ var Cookie={setCookie:function(name,value,iDay){var cookieStr='';if(iDay==undefi
 const APP_EVENT_ANIMATION_END = 'APP_EVENT_ANIMATION_END';
 const APP_EVENT_ANIMATION_BEGIN = 'APP_EVENT_ANIMATION_BEGIN';
 const APP_EVENT_HASH_CHANGE = 'APP_EVENT_HASH_CHANGE';
+const APP_EVENT_IS_HAPPENNING = 'APP_EVENT_IS_HAPPENNING';
 var App = (function(){
     function App(){}
     App.init = function(self,config){
@@ -54,7 +55,7 @@ var App = (function(){
                 setTimeout(function(){
                     self.pull(self.oprationStacks[0]);
                     self.oprationStacks.remove(0);
-                },500);
+                },0);
             }
         });
     };
@@ -168,7 +169,13 @@ var App = (function(){
         $('title').bind(str,func);
     };
     App.prototype.publish = function(str,param){
-        $('title').trigger(str,param);
+        if(param){
+            try{
+                eval('app.isHappening(str,param)');
+            }catch (e){}
+        }
+
+        $('title').trigger(str);
     };
     App.prototype.unSubscribe = function(str){
         $('title').unbind(str);

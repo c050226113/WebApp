@@ -33,8 +33,6 @@ class ServerFactory {
         posix_setgid($user['gid']);
     }
 
-
-
     private function includeFile($dir){
         $fileIterator = new FilesystemIterator($dir);
         foreach($fileIterator as $fileInfo){
@@ -44,25 +42,6 @@ class ServerFactory {
                 $this->includeFile($dir.$fileInfo->getFileName().'/');
             }
         }
-
-//        $modelDir = ROOT_DIR.'app/model/';
-//        $modelDirArr = scandir($modelDir);
-//        $nameLength = count($modelDirArr);
-//        for( $index = 2; $index<$nameLength; $index++){
-//            if(is_dir($modelDir.$modelDirArr[$index]) && is_dir($modelDir.$modelDirArr[$index].'/'.self::MODEL_UTIL.'/')){
-//                array_push($dirArr,$modelDir.$modelDirArr[$index].'/'.self::MODEL_UTIL.'/');
-//            }
-//        }
-//        foreach($dirArr as $dir){
-//            $fileIterator = new FilesystemIterator($dir);
-//            foreach($fileIterator as $fileInfo){
-//                if(!$fileInfo->isDir()){
-//                    require_once(CORE_DIR.'include/'.$fileInfo->getFileName().'');
-//                }else{
-//                    $this->includeLib([]);
-//                }
-//            }
-//        }
     }
 
     public static function autoLoad($class)

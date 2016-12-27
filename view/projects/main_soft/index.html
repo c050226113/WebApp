@@ -35,46 +35,6 @@
 <script src="../../js/H5App.js"></script>
 <script src="../../js/define.js"></script>
 <script src="js/define.js"></script>
-<script>
-    var app = new H5App({
-        'isDebug' : true,
-        'projectName' : 'webapp',
-        'defaultHash' : 'launcher',
-        'transitionTag' : 'section',
-        'transitionName' : 'transform',
-        'transitionTime' : '0.3',
-        'transitionType' : 'ease-in-out'
-    });
-
-    app.API_URL = ((location.href.split(app.projectName)[0] == location.href)?'':location.href.split(app.projectName)[0]) + app.projectName+'/index.php';
-    console.log('app_API_URL:'+app.API_URL);
-
-    app.subscribe(APP_EVENT_CHANGE_SESSION,function(){
-        Cookie.setCookie("sessionId",app.sessionId,3600*1000);
-    });
-    app.subscribe(APP_EVENT_LOAD_SESSIONID,function(){
-        Cookie.removeCookie('sessionId');
-        $.ajax({type: 'get', url: app.API_URL, dataType: 'text',
-            success: function (data) {
-                if(data.length==32){
-                    app.sessionId = data;
-                    app.publish(APP_EVENT_CHANGE_SESSION);
-                }else{
-                    location.reload();
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                location.reload();
-            }
-        });
-    });
-    if(!(app.sessionId = Cookie.getCookie("sessionId"))){
-        console.log('has not sessionId');
-        app.publish(APP_EVENT_LOAD_SESSIONID)
-    }else{
-        console.log('has the sessionId');
-    }
-</script>
 
 <section id="login_vue">
     <div>
@@ -709,9 +669,44 @@
         ])
     });
 
-    //初始化 需要的变量和方法
-    app.maxZindex = 99;
-    app.subscribe(APP_EVENT_ANIMATION_BEGIN, function(){
+    var app = new H5App({
+        'isDebug' : true,
+        'projectName' : 'webapp',
+        'defaultHash' : 'launcher',
+        'transitionTag' : 'section',
+        'transitionName' : 'transform',
+        'transitionTime' : '0.3',
+        'transitionType' : 'ease-in-out'
+    });
+
+    app.isHappening = function(str,param){
+        switch (str){
+            case APP_EVENT_CHANGE_SESSION:
+                this.sessionId = param;
+                break;
+            default :
+                break;
+        }
+    };
+    app.subscribe(APP_EVENT_CHANGE_SESSION,function(){
+        Cookie.setCookie("sessionId",app.sessionId,3600*1000);
+    });
+    app.subscribe(APP_EVENT_LOAD_SESSIONID,function(){
+        Cookie.removeCookie('sessionId');
+        $.ajax({type: 'get', url: app.API_URL, dataType: 'text',
+            success: function (data) {
+                if(data.length==32){
+                    app.publish(APP_EVENT_CHANGE_SESSION,data);
+                }else{
+                    location.reload();
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                location.reload();
+            }
+        });
+    });
+    app.subscribe(APP_EVENT_ANIMATION_BEGIN, function(){//APP_EVENT_ANIMATION_BEGIN => will move
         var nextActive = app.getJqModal(app.stacks[app.stacks.length-1]);
         if(nextActive.attr('data-isActive') != 1){//下一个active 不在 stacks中 说明 是 right2left
             nextActive.css('z-index',++app.maxZindex);
@@ -751,42 +746,45 @@
         app.sessionId = '';
         localStorage.setItem('using','');
     });
+
+    //初始化 需要的变量
+    app.maxZindex = 99;
+    app.API_URL = ((location.href.split(app.projectName)[0] == location.href)?'':location.href.split(app.projectName)[0]) + app.projectName+'/index.php';
+    console.log('app_API_URL:'+app.API_URL);
+    if(!(app.sessionId = Cookie.getCookie("sessionId"))){
+        console.log('has not sessionId');
+        app.publish(APP_EVENT_LOAD_SESSIONID)
+    }else{
+        console.log('has the sessionId');
+    }
+
     app.loadJs([
         "../../js/util.js"
     ],function(){
-        app.publish(BEGIN_DOWNLOAD_RESOURCE);
-        app.unSubscribe(BEGIN_DOWNLOAD_RESOURCE);
-        var timer = setInterval(function(){
-            if(app.sessionId){
-                clearInterval(timer);
-                console.log('app run with:' + app.sessionId);
-                app.run();
-            }
-        },100);
-//        var includeFile;
-//        if(Helper.isWeChat()){
-//            includeFile = 'WechatBrowser';
-//        }else if(Helper.isIos()){
-//            includeFile = 'IosBrowser';
-//        }else if(Helper.isAndroid()){
-//            includeFile = 'AndroidBrowser';
-//        }else{
-//            includeFile = 'Browser';
-//        }
-//        app.loadJs([
-//            "./js/browser/"+includeFile+".js"
-//        ],function(){
-//            app.publish(BEGIN_DOWNLOAD_RESOURCE);
-//            app.unSubscribe(BEGIN_DOWNLOAD_RESOURCE);
-//            var timer = setInterval(function(){
-//                if(app.sessionId){
-//                    clearInterval(timer);
-//                    timer = null;
-//                    console.log('app run with:' + app.sessionId);
-//                    app.run();
-//                }
-//            },100);
-//        });
+        var includeFile;
+        if(Helper.isWeChat()){
+            includeFile = 'WechatBrowser';
+        }else if(Helper.isIos()){
+            includeFile = 'IosBrowser';
+        }else if(Helper.isAndroid()){
+            includeFile = 'AndroidBrowser';
+        }else{
+            includeFile = 'Browser';
+        }
+        app.loadJs([
+            "./js/browser/"+includeFile+".js"
+        ],function(){
+            app.browser = new Browser();
+            var timer = setInterval(function(){
+                if(app.sessionId){
+                    clearInterval(timer);
+                    console.log('app run with:' + app.sessionId);
+                    app.run();
+                    app.publish(BEGIN_DOWNLOAD_RESOURCE);
+                    app.unSubscribe(BEGIN_DOWNLOAD_RESOURCE);
+                }
+            },100);
+        });
     });
 </script>
 <script src="http://api.map.baidu.com/api?v=2.0&ak=CtM9CGo4kL1epE2FGH4DXa10vNFhM38W"></script>

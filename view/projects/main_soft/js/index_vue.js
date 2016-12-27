@@ -697,7 +697,7 @@ var index_vue = new Vue({
 
             setTimeout(function(){
                 //定位
-                app.functionApi('getUserPosition','app.setUserPosition');
+                app.functionApi('getUserPosition','app.browser.setUserPosition');
 
                 //initView
                 $("#launcher").remove();
