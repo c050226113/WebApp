@@ -25,7 +25,6 @@ var Cookie={setCookie:function(name,value,iDay){var cookieStr='';if(iDay==undefi
 const APP_EVENT_ANIMATION_END = 'APP_EVENT_ANIMATION_END';
 const APP_EVENT_ANIMATION_BEGIN = 'APP_EVENT_ANIMATION_BEGIN';
 const APP_EVENT_HASH_CHANGE = 'APP_EVENT_HASH_CHANGE';
-const APP_EVENT_IS_HAPPENNING = 'APP_EVENT_IS_HAPPENNING';
 var App = (function(){
     function App(){}
     App.init = function(self,config){
@@ -180,10 +179,6 @@ var App = (function(){
     App.prototype.unSubscribe = function(str){
         $('title').unbind(str);
     };
-
-    App.prototype.doPull = null;
-    App.prototype.hashChange = null;
-    App.prototype.sectionTransitionEnd = null;
     return App;
 }());
 var IApp = ['init', 'doPull', 'hashChange', 'sectionTransitionEnd'];

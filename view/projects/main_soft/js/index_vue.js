@@ -758,9 +758,13 @@ var index_vue = new Vue({
                     ctx.fillRect(0,0,canvas.width, canvas.height);
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 将图像绘制到canvas上
                     var data1 = canvas.toDataURL("image/jpeg");
-                    setTimeout(function(){
-                        self.uploadImg(data1,input);
-                    },100);
+                    //alert(data1);
+                    //alert(data1.length);
+                    if(data1.length>1204){
+                        setTimeout(function(){
+                            self.uploadImg(data1,input);
+                        },100);
+                    }
                 };
                 setTimeout(function(){
                     FR.readAsDataURL(f);//先注册onload，再读取文件内容，否则读取内容是空的

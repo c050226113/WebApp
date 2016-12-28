@@ -321,7 +321,6 @@ class Main_softController extends Controller{
                 $arr = json_decode($res,true);
                 if(!is_array($arr))
                     throw new Exception('获取位置信息有误');
-
                 if(Util::getInstance()->hasArr($arr, "errcode") == 0){
                     e(json_encode([self::CODE=>0,self::MESSAGE=>$arr["address"]]));
                 }else{

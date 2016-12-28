@@ -140,20 +140,24 @@ var launcher_vue = new Vue({
             }
         },
         setLocationWithWifi:function(string){
+            //alert(string);
             var dataStr = '{' +
                 '"'+CODE+'":"'+string+'",' +
                 '"sessionId":"'+app.sessionId+'"' +
                 '}';
             $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/get_position_with_wifi', data: Helper.getJsonObj(dataStr), dataType: 'json',
                 success: function (data) {
+                    //alert(JSON.stringify(data));
+                    //alert(data[CODE]);
                     if (data[CODE] == 0) {
-                        index.userPlace = data[MESSAGE];
+                        index_vue.userPlace = data[MESSAGE];
                     } else {
                         Message.toast(data[MESSAGE], 4);
                         return false;
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    //alert(jqXHR);
                     Message.toast(errorThrown, 2);
                 }
             });
@@ -166,7 +170,7 @@ var launcher_vue = new Vue({
             $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/get_position_with_baseStation', data: Helper.getJsonObj(dataStr1), dataType: 'json',
                 success: function (data) {
                     if (data[CODE] == 0) {
-                        index.userPlace = data[MESSAGE];
+                        index_vue.userPlace = data[MESSAGE];
                     } else {
                         Message.toast(data[MESSAGE], 4);
                         return false;

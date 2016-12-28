@@ -1,5 +1,5 @@
 <?php
-if (true){
+if (false){
     echo 'dddd'.PHP_EOL;
     echo 'dddd'.PHP_EOL;
     echo 'dddd'.PHP_EOL;
