@@ -6,6 +6,7 @@
 @media screen and (min-width: 1000px) {html{font-size: 9px}}
 
 table.navigation{position: relative;background-color: #0098FB;height: 7%;width: 100%;}
+/*table.navigation{position: relative;background-color: #000;height: 7%;width: 100%;}*/
 table.navigation td img{width: 1.4rem;margin-top: -3px;}
 table.navigation td{color: white;text-align: center;}
 table.navigation td:nth-of-type(1){font-size: 1.4rem;width: 25%;padding-right: 5%;}

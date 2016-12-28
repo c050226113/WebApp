@@ -29,12 +29,13 @@ var H5App = (function(_super){
             },wait);
         }else{
             if(nextActive == self.getJqModal('index_vue')){
-                wait = 800;
+                wait = 1500;
             }else{
                 if(isfirst){
                     wait = 200;
                 }
             }
+            console.log('wait:'+wait);
             setTimeout(function(){
                 app.publish(APP_EVENT_BEGIN_RIGHT_TO_LEFT);
             },wait);

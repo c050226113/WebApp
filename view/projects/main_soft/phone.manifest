@@ -1,41 +1,6 @@
 CACHE MANIFEST
-#change 6
-./browser/AndroidBrowser.js
-./browser/Browser.js
-./browser/IosBrowser.js
-./browser/WechatBrowser.js
-./js/alarm_vue.js
-./js/bind_vue.js
-./js/choose_vue.js
-./js/class_hide_vue.js
-./js/define.js
-./js/fence_vue.js
-./js/index.js
-./js/info.js
-./js/interval_shutdown.js
-./js/launcher.js
-./js/locationP.js
-./js/login_vue.js
-./js/pickmeup.js
-./js/register.js
-./js/setting.js
-./js/sports.js
-../js/canvas.js
-../js/cookie.js
-../js/H5App.js
-../js/head.load.min.js
-../js/highcharts.js
-../js/jquery.min.js
-../js/map.js
-../js/md5.js
-../js/modernizr.js
-../js/util.js
-../js/vue.min.js
-./css/nav.css
-./css/pickmeup.css
-../css/bootstrap.min.css
-../css/css.css
-../css/foundation.min.css
+#change 204
+./index.html
 ./img/add.svg
 ./img/alarm.svg
 ./img/baby.svg
@@ -53,6 +18,7 @@ CACHE MANIFEST
 ./img/discovery_normal.svg
 ./img/discovery_pressed.svg
 ./img/doctor.png
+./img/event-c.svg
 ./img/family.svg
 ./img/fence.svg
 ./img/fence_area.svg
@@ -60,9 +26,12 @@ CACHE MANIFEST
 ./img/fence_area_pressed.svg
 ./img/fence_back.svg
 ./img/foot.svg
+./img/hello.jpg
 ./img/home_work.svg
 ./img/interval_close.svg
 ./img/kaluli.svg
+./img/launcher.png
+./img/locating.svg
 ./img/location.png
 ./img/location.svg
 ./img/location_fff.svg
@@ -71,12 +40,15 @@ CACHE MANIFEST
 ./img/me_normal.svg
 ./img/me_pressed.svg
 ./img/nodata.svg
+./img/notice.svg
 ./img/notice_normal.svg
 ./img/notice_pressed.svg
+./img/opts.svg
 ./img/phone.svg
 ./img/right.svg
 ./img/s.png
 ./img/setting.svg
+./img/shutdown.svg
 ./img/sports.svg
 ./img/square.svg
 ./img/tel_teacher.svg
@@ -84,5 +56,6 @@ CACHE MANIFEST
 ./img/watch.svg
 ./img/zhuye_normal.svg
 ./img/zhuye_pressed.svg
+
 NETWORK:
 *
