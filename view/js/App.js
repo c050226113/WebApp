@@ -142,19 +142,22 @@ var App = (function(){
     App.prototype.loadModal = function(modal){
         var self = this;
         var isFirst = false;
+
         try{
             if(!eval(modal+".$el")){
                 throw new SQLException;
+            }else{
+                try{
+                    eval(modal+".init()");
+                }catch (e){}
             }
         }catch (e){
             isFirst = true;
+            try{
+                eval('new '+modal+'()');
+            }catch (e){}
         }
-        try{
-            eval(modal+".init()");
-        }catch (e){}
-        this.loadJs(["./js/"+modal+".js"],function(){
-            self.doAnimation(self.getJqModal(self.stacks[self.stacks.length-2]),self.getJqModal(self.stacks[self.stacks.length-1]),isFirst);
-        });
+        self.doAnimation(self.getJqModal(self.stacks[self.stacks.length-2]),self.getJqModal(self.stacks[self.stacks.length-1]),isFirst);
     };
     App.prototype.log = function(str){
         if(this.isDebug){

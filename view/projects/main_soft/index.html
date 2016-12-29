@@ -652,32 +652,6 @@
                 $(this).attr('src',src);
             }
         });
-        //插件的样式
-        app.loadCss([
-            './css/app.css',
-            './css/index_vue.css',
-            './css/login_vue.css',
-            './css/alarm_vue.css',
-            './css/bind_vue.css',
-            './css/choose_vue.css',
-            './css/class_hide_vue.css',
-            './css/family_vue.css',
-            './css/fence_vue.css',
-            './css/info_vue.css',
-            './css/interval_shutdown_vue.css',
-            './css/locationP_vue.css',
-            './css/register_vue.css',
-            './css/setting_vue.css',
-            './css/pickmeup.css',
-            './css/sports_vue.css'
-        ]);
-        app.loadJs([
-            "../../js/canvas.js",
-            "../../js/md5.js",
-            "../../js/map.js",
-            "./js/pickmeup.js",
-            "../../js/highcharts.js"
-        ])
     });
 
     app.isHappening = function(str,param){
@@ -710,11 +684,11 @@
     app.subscribe(APP_EVENT_ANIMATION_BEGIN, function(){//APP_EVENT_ANIMATION_BEGIN => will move
         var nextActive = app.getJqModal(app.stacks[app.stacks.length-1]);
         if(nextActive.attr('data-isActive') != 1){//下一个active 不在 stacks中 说明 是 right2left
+            console.log('r2l');
             nextActive.css('z-index',++app.maxZindex);
         }
     });
     app.subscribe(APP_EVENT_BEGIN_RIGHT_TO_LEFT,function(){
-        console.log(APP_EVENT_BEGIN_RIGHT_TO_LEFT);
         var nextActive = app.getJqModal(app.stacks[app.stacks.length-1]);
         var nowActive = app.getJqModal(app.stacks[app.stacks.length-2]);
         if(nowActive){
@@ -760,7 +734,10 @@
     }
 
     app.loadJs([
-        "../../js/util.js"
+        "../../js/util.js",
+        "./js/launcher_vue.js",
+        "./js/login_vue.js",
+        "./js/index_vue.js"
     ],function(){
         var includeFile;
         if(Helper.isWeChat()){
@@ -784,7 +761,37 @@
                     app.publish(BEGIN_DOWNLOAD_RESOURCE);
                     app.unSubscribe(BEGIN_DOWNLOAD_RESOURCE);
                 }
-            },100);
+            },600);
         });
     });
 </script>
+<link rel="stylesheet" href="./css/app.css">
+<link rel="stylesheet" href="./css/index_vue.css">
+<link rel="stylesheet" href="./css/login_vue.css">
+<link rel="stylesheet" href="./css/alarm_vue.css">
+<link rel="stylesheet" href="./css/bind_vue.css">
+<link rel="stylesheet" href="./css/choose_vue.css">
+<link rel="stylesheet" href="./css/class_hide_vue.css">
+<link rel="stylesheet" href="./css/family_vue.css">
+<link rel="stylesheet" href="./css/fence_vue.css">
+<link rel="stylesheet" href="./css/info_vue.css">
+<link rel="stylesheet" href="./css/interval_shutdown_vue.css">
+<link rel="stylesheet" href="./css/locationP_vue.css">
+<link rel="stylesheet" href="./css/register_vue.css">
+<link rel="stylesheet" href="./css/setting_vue.css">
+<link rel="stylesheet" href="./css/pickmeup.css">
+<link rel="stylesheet" href="./css/sports_vue.css">
+<script src="../../js/canvas.js"></script>
+<script src="../../js/md5.js"></script>
+<script src="../../js/map.js"></script>
+<script src="./js/pickmeup.js"></script>
+<script src="../../js/highcharts.js"></script>
+<script src="./js/alarm_vue.js"></script>
+<script src="./js/bind_vue.js"></script>
+<script src="./js/choose_vue.js"></script>
+<script src="./js/class_hide_vue.js"></script>
+<script src="./js/family_vue.js"></script>
+<script src="./js/fence_vue.js"></script>
+<script src="./js/info_vue.js"></script>
+<script src="./js/register_vue.js"></script>
+<script src="./js/sports_vue.js"></script>

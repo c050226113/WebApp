@@ -551,274 +551,276 @@ Vue.component('child',{
     }
 });
 var locationP_vue;
-var index_vue = new Vue({
-    el: '#index_vue',
-    created:function () {
-        this.launcher_vue = launcher_vue;
-    },
-    compiled:function () {
-        setTimeout(function(){
-            locationP_vue = index_vue.$children[0];
-            locationP_vue.initView();
-            locationP_vue.initBind();
-        },100);
-
-        launcher_vue.makeSureHeight(this.$el);
-        this.initView();
-        this.initBind();
-    },
-
-    data: {
-        DEVICE_INFO:DEVICE_INFO,
-        DEVICE_AVT:DEVICE_AVT,
-        title_left:'',
-        title_right:'切换宝宝',
-        title:'关爱未来',
-        nowFootIndex:0,
-        pages:[
-            {
-                footer_img_pressed:'zhuye_pressed',
-                footer_img_normal:'zhuye_normal',
-                footer_text:'我的宝贝',
-                opt:[
-                    {img:'class_table',text:"课程表"},
-                    {img:'home_work',text:"作业"},
-                    {img:'baby_notice',text:"宝贝消息"},
-                    {img:'tel_teacher',text:"联系老师"}
-                ],
-                place:'',
-                title:'关爱未来',
-                title_left:'',
-                title_right:'切换宝宝'
-            },
-            {
-                footer_img_pressed:'notice_pressed',
-                footer_img_normal:'notice_normal',
-                footer_text:'通知',
-                title:'通知',
-                title_left:'',
-                title_right:''
-            },
-            {
-                footer_img_pressed:'discovery_pressed',
-                footer_img_normal:'discovery_normal',
-                footer_text:'发现',
-                title:'发现',
-                title_left:'',
-                title_right:''
-            },
-            {
-                footer_img_pressed:'me_pressed',
-                footer_img_normal:'me_normal',
-                footer_text:'个人中心',
-                title:'个人中心',
-                title_left:'',
-                title_right:''
-            }
-        ],
-        pagesObj:$("#index_vue .page"),
-        DEVICE_NAME:DEVICE_NAME,
-        userPlace:''
-    },
-    methods: {
-        init:function(){
-            if( app.isLogingout ){
-                app.isLogingout = false;
-                this.initView();
-            }
+var index_vue = function(){
+    index_vue = new Vue({
+        el: '#index_vue',
+        created:function () {
+            this.launcher_vue = launcher_vue;
         },
-        initPlaceInfo:function(){
-            var self = this;
-            var babyLon,babyLat;
-            babyLon = launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LON];
-            babyLat = launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LAT];
-            if(babyLon && babyLat){
-                console.log('get baby PlaceInfo');
-                console.log('babyLon:'+babyLon+' && babyLat:'+babyLat);
-                setTimeout(function(){
-                    map.getPlaceByLatLon(babyLon, babyLat, self, 0);
-                },0);
-            }else{
-                this.setPlaceInfo('');
-            }
-        },
-        setPlaceInfo:function(str){
-            console.log('set baby place info');
-            var obj = $('#index_one-info');
-            var oldText = obj.find('.s2').text();
-            var newText = '此刻位置：'+str;
-            if(oldText != newText){
-                obj.find('.s2').text(newText);
-            }
-        },
-        getPlaceByLatLon_CallBack:function(addComp){
-            if(addComp){
-                var placeInfo = addComp.province + " " + addComp.city + " " + addComp.district + " " + addComp.street + " " + addComp.streetNumber;
-                this.setPlaceInfo(placeInfo)
-            }else{
-                Message.toast('error', 2);
-            }
-        },
-        footer_press:function(eq){
-            var i;
-            for(i=0;i<this.pages.length;i++){
-                var item = $(".footItem").eq(i);
-                var imgName;
-                var color;
-                if(eq == i){
-                    imgName = this.pages[i].footer_img_pressed;
-                    color = '#0098FB';
-                    this.nowFootIndex = i;
-                    this.pagesObj.eq(i).show();
-                    this.pagesObj.eq(i).css('z-index','2');
-                }else{
-                    imgName = this.pages[i].footer_img_normal;
-                    color = '#000';
-                    this.pagesObj.eq(i).css('z-index','1');
-                }
-                item.find('img').attr('src','./img/'+imgName+'.svg');
-                item.find('span').css('color',color);
-            }
-        },
-        logout:function(){
-            app.publish(APP_EVENT_LOGOUT);
-        },
-        initView:function(){
-            this.pagesObj.eq(1).hide();
-            this.pagesObj.eq(2).hide();
-            this.pagesObj.eq(3).hide();
-            this.footer_press(0);
-
-            if(launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_AVT].length>100){
-                $("#deviceHead").attr("src",launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_AVT]);
-            }
-
-            this.initPlaceInfo();
-
+        compiled:function () {
             setTimeout(function(){
-                //定位
-                app.functionApi('getUserPosition','app.browser.setUserPosition');
+                locationP_vue = index_vue.$children[0];
+                locationP_vue.initView();
+                locationP_vue.initBind();
+            },100);
 
-                //initView
-                $("#launcher").remove();
-            },1000);
+            launcher_vue.makeSureHeight(this.$el);
+            this.initView();
+            this.initBind();
         },
-        uploadImg:function(data1,input){
-            var self = this;
-            var method = input.attr('title');
-            var dataStr = '{' +
-                '"'+IMG+'":"'+data1+'",' +
-                '"sessionId":"'+app.sessionId+'"' +
-                '}';
-            $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/'+method, data: Helper.getJsonObj(dataStr), dataType: 'json',
-                success: function (data) {
-                    if (data[CODE] != 0) {
-                        Message.toast(data[MESSAGE], 2);
-                        return false
-                    } else {
-                        input.prev().attr('src',data1);
-                        if(method == 'set_avt'){
-                            launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_AVT] = data1;
-                            var str = JSON.stringify(launcher_vue.devices_);
-                            launcher_vue.devices_ = JSON.parse(str);
-                            localStorage.setItem('devices',str);
-                            localStorage.setItem('devices',data[USER_DEVICES]);
-                        }else{
-                            launcher_vue.useravt = data1;
-                            localStorage.setItem('useravt',data1);
-                        }
 
-                        Message.toast('更新成功', 2);
-                    }
+        data: {
+            DEVICE_INFO:DEVICE_INFO,
+            DEVICE_AVT:DEVICE_AVT,
+            title_left:'',
+            title_right:'切换宝宝',
+            title:'关爱未来',
+            nowFootIndex:0,
+            pages:[
+                {
+                    footer_img_pressed:'zhuye_pressed',
+                    footer_img_normal:'zhuye_normal',
+                    footer_text:'我的宝贝',
+                    opt:[
+                        {img:'class_table',text:"课程表"},
+                        {img:'home_work',text:"作业"},
+                        {img:'baby_notice',text:"宝贝消息"},
+                        {img:'tel_teacher',text:"联系老师"}
+                    ],
+                    place:'',
+                    title:'关爱未来',
+                    title_left:'',
+                    title_right:'切换宝宝'
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                    self.logout();
+                {
+                    footer_img_pressed:'notice_pressed',
+                    footer_img_normal:'notice_normal',
+                    footer_text:'通知',
+                    title:'通知',
+                    title_left:'',
+                    title_right:''
+                },
+                {
+                    footer_img_pressed:'discovery_pressed',
+                    footer_img_normal:'discovery_normal',
+                    footer_text:'发现',
+                    title:'发现',
+                    title_left:'',
+                    title_right:''
+                },
+                {
+                    footer_img_pressed:'me_pressed',
+                    footer_img_normal:'me_normal',
+                    footer_text:'个人中心',
+                    title:'个人中心',
+                    title_left:'',
+                    title_right:''
                 }
-            });
+            ],
+            pagesObj:$("#index_vue .page"),
+            DEVICE_NAME:DEVICE_NAME,
+            userPlace:''
         },
-        initBind:function(){
-            var self = this;
-            var $obj = $(this.$el);
-            $obj.find(".imgUpload").change(function(e){
-                var f = e.target.files[0];//一次只上传1个文件，其实可以上传多个的
-                var FR = new FileReader();
-                var input = $(this);
-                FR.onload = function(f){
-                    if(!this.result)return;
-                    var canvas = document.createElement('canvas');
-                    var img = new Image();
-                    img.src = this.result;
-                    var ctx = canvas.getContext("2d");
-                    canvas.width = 120;
-                    //canvas.height = img.height;
-                    canvas.height = 120;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = 'rgba(255, 255, 255, 1)';
-                    ctx.fillRect(0,0,canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 将图像绘制到canvas上
-                    var data1 = canvas.toDataURL("image/jpeg");
-                    //alert(data1);
-                    //alert(data1.length);
-                    if(data1.length>1204){
-                        setTimeout(function(){
-                            self.uploadImg(data1,input);
-                        },100);
-                    }
-                };
-                setTimeout(function(){
-                    FR.readAsDataURL(f);//先注册onload，再读取文件内容，否则读取内容是空的
-                },500);
-            });
-
-            $obj.find(".username").blur(function(){self.save_name($(this))});
-        },
-        save_name:function(obj){
-            var self = this;
-            launcher_vue.username = obj.text();
-            if(launcher_vue.username){
-                if(launcher_vue.username.length > 12){
-                    Message.toast("输入的名字过长",2);
-                    launcher_vue.username = "";
-                    return false;
+        methods: {
+            init:function(){
+                if( app.isLogingout ){
+                    app.isLogingout = false;
+                    this.initView();
+                }
+            },
+            initPlaceInfo:function(){
+                var self = this;
+                var babyLon,babyLat;
+                babyLon = launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LON];
+                babyLat = launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LAT];
+                if(babyLon && babyLat){
+                    console.log('get baby PlaceInfo');
+                    console.log('babyLon:'+babyLon+' && babyLat:'+babyLat);
+                    setTimeout(function(){
+                        map.getPlaceByLatLon(babyLon, babyLat, self, 0);
+                    },0);
                 }else{
-                    var dataStr = '{' +
-                        '"'+NAME+'":"'+launcher_vue.username+'",' +
-                        '"sessionId":"'+app.sessionId+'"' +
-                        '}';
-                    $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/set_username', data: Helper.getJsonObj(dataStr), dataType: 'json',
-                        success: function (data) {
-                            if (data[CODE] != 0) {
-                                Message.toast(data[MESSAGE], 2);
-                                return false;
-                            } else {
-                                Message.toast('更新成功', 2);
+                    this.setPlaceInfo('');
+                }
+            },
+            setPlaceInfo:function(str){
+                console.log('set baby place info');
+                var obj = $('#index_one-info');
+                var oldText = obj.find('.s2').text();
+                var newText = '此刻位置：'+str;
+                if(oldText != newText){
+                    obj.find('.s2').text(newText);
+                }
+            },
+            getPlaceByLatLon_CallBack:function(addComp){
+                if(addComp){
+                    var placeInfo = addComp.province + " " + addComp.city + " " + addComp.district + " " + addComp.street + " " + addComp.streetNumber;
+                    this.setPlaceInfo(placeInfo)
+                }else{
+                    Message.toast('error', 2);
+                }
+            },
+            footer_press:function(eq){
+                var i;
+                for(i=0;i<this.pages.length;i++){
+                    var item = $(".footItem").eq(i);
+                    var imgName;
+                    var color;
+                    if(eq == i){
+                        imgName = this.pages[i].footer_img_pressed;
+                        color = '#0098FB';
+                        this.nowFootIndex = i;
+                        this.pagesObj.eq(i).show();
+                        this.pagesObj.eq(i).css('z-index','2');
+                    }else{
+                        imgName = this.pages[i].footer_img_normal;
+                        color = '#000';
+                        this.pagesObj.eq(i).css('z-index','1');
+                    }
+                    item.find('img').attr('src','./img/'+imgName+'.svg');
+                    item.find('span').css('color',color);
+                }
+            },
+            logout:function(){
+                app.publish(APP_EVENT_LOGOUT);
+            },
+            initView:function(){
+                this.pagesObj.eq(1).hide();
+                this.pagesObj.eq(2).hide();
+                this.pagesObj.eq(3).hide();
+                this.footer_press(0);
+
+                if(launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_AVT].length>100){
+                    $("#deviceHead").attr("src",launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_AVT]);
+                }
+
+                this.initPlaceInfo();
+
+                setTimeout(function(){
+                    //定位
+                    app.functionApi('getUserPosition','app.browser.setUserPosition');
+
+                    //initView
+                    $("#launcher").remove();
+                },1000);
+            },
+            uploadImg:function(data1,input){
+                var self = this;
+                var method = input.attr('title');
+                var dataStr = '{' +
+                    '"'+IMG+'":"'+data1+'",' +
+                    '"sessionId":"'+app.sessionId+'"' +
+                    '}';
+                $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/'+method, data: Helper.getJsonObj(dataStr), dataType: 'json',
+                    success: function (data) {
+                        if (data[CODE] != 0) {
+                            Message.toast(data[MESSAGE], 2);
+                            return false
+                        } else {
+                            input.prev().attr('src',data1);
+                            if(method == 'set_avt'){
+                                launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_AVT] = data1;
+                                var str = JSON.stringify(launcher_vue.devices_);
+                                launcher_vue.devices_ = JSON.parse(str);
+                                localStorage.setItem('devices',str);
+                                localStorage.setItem('devices',data[USER_DEVICES]);
+                            }else{
+                                launcher_vue.useravt = data1;
+                                localStorage.setItem('useravt',data1);
                             }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            console.log(errorThrown);
-                            self.logout();
+
+                            Message.toast('更新成功', 2);
                         }
-                    });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                        self.logout();
+                    }
+                });
+            },
+            initBind:function(){
+                var self = this;
+                var $obj = $(this.$el);
+                $obj.find(".imgUpload").change(function(e){
+                    var f = e.target.files[0];//一次只上传1个文件，其实可以上传多个的
+                    var FR = new FileReader();
+                    var input = $(this);
+                    FR.onload = function(f){
+                        if(!this.result)return;
+                        var canvas = document.createElement('canvas');
+                        var img = new Image();
+                        img.src = this.result;
+                        var ctx = canvas.getContext("2d");
+                        canvas.width = 120;
+                        //canvas.height = img.height;
+                        canvas.height = 120;
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+                        ctx.fillRect(0,0,canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 将图像绘制到canvas上
+                        var data1 = canvas.toDataURL("image/jpeg");
+                        //alert(data1);
+                        //alert(data1.length);
+                        if(data1.length>1204){
+                            setTimeout(function(){
+                                self.uploadImg(data1,input);
+                            },100);
+                        }
+                    };
+                    setTimeout(function(){
+                        FR.readAsDataURL(f);//先注册onload，再读取文件内容，否则读取内容是空的
+                    },500);
+                });
+
+                $obj.find(".username").blur(function(){self.save_name($(this))});
+            },
+            save_name:function(obj){
+                var self = this;
+                launcher_vue.username = obj.text();
+                if(launcher_vue.username){
+                    if(launcher_vue.username.length > 12){
+                        Message.toast("输入的名字过长",2);
+                        launcher_vue.username = "";
+                        return false;
+                    }else{
+                        var dataStr = '{' +
+                            '"'+NAME+'":"'+launcher_vue.username+'",' +
+                            '"sessionId":"'+app.sessionId+'"' +
+                            '}';
+                        $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/set_username', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                            success: function (data) {
+                                if (data[CODE] != 0) {
+                                    Message.toast(data[MESSAGE], 2);
+                                    return false;
+                                } else {
+                                    Message.toast('更新成功', 2);
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(errorThrown);
+                                self.logout();
+                            }
+                        });
+                    }
+                }else{
+                    $(this).text("请输入您的名字");
                 }
-            }else{
-                $(this).text("请输入您的名字");
+            },
+            test:function(){
+                var dataStr = '{' +
+                    '"sessionId":"'+app.sessionId+'"' +
+                    '}';
+                $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/test', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
             }
-        },
-        test:function(){
-            var dataStr = '{' +
-                '"sessionId":"'+app.sessionId+'"' +
-                '}';
-            $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/test', data: Helper.getJsonObj(dataStr), dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                }
-            });
         }
-    }
-});
+    });
+};

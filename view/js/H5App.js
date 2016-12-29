@@ -18,7 +18,6 @@ var H5App = (function(_super){
         app.publish(APP_EVENT_ANIMATION_BEGIN);
     };
     H5App.prototype.doAnimation = function(nowActive,nextActive,isfirst){
-        console.log('doAnimation');
         var self = this;
         var wait = 50;
         if(nextActive == self.getJqModal(self.stacks[self.stacks.length-3])){
@@ -29,7 +28,7 @@ var H5App = (function(_super){
             },wait);
         }else{
             if(nextActive == self.getJqModal('index_vue')){
-                wait = 1500;
+                wait = 800;
             }else{
                 if(isfirst){
                     wait = 200;
