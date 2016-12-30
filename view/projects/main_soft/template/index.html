@@ -1,0 +1,1027 @@
+<style>
+    #location_mapOpt{bottom: 0;position: absolute;height: 20%;transition: all 0.3s ease-in-out;-webkit-transform:translateY(0%)}
+    #locationP_fence_toolBar{bottom: 0;position: absolute;height: 20%;transition: all 0.3s ease-in-out;-webkit-transform:translateY(100%)}
+    #locationP_waypoint_toolBar{bottom: 0;position: absolute;height: 20%;transition: all 0.3s ease-in-out;-webkit-transform:translateY(100%)}
+    #location_mapOpt li>div{width: 52px;height: 52px;border-radius: 50%; border:solid 1px deepskyblue;}
+    #location_mapOpt li div.cover{border-radius: 50%;opacity: .8;background: #fff}
+    #location_aMap{height: 93%;}
+    #location_aMap{height: 100%;}
+    #locationP_vue{background: url('./img/mapBackground.png') no-repeat;background-size: 100% 100%;}
+    #locationP_fence_toolBar li img.cover,#locationP_waypoint_toolBar li img.cover{left: 10%;background: #fff;border-radius: 50%;border: solid 1px deepskyblue;bottom: -13%;width: 80%;}
+
+    #index_vue .one-{position: relative;width: 100%;background: #fff}
+    #index_vue .page{height: 84%;position: absolute;width:100%;}
+    #index_one-slide img{width: 100%;height: 100%;}
+    #index_one-info{position: absolute;top: 81%;height: 19%;}
+    #deviceHead{height: 70%;margin: auto auto auto 5%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
+    #index_vue .imgUpload{opacity:0;z-index:999;margin: auto auto auto 5%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;z-index: 999;width: 24%;}
+    #index_one-info img.loc{height: 65%;margin: auto auto auto 9%;}
+    #index_one-info strong{font-size: 13px;padding-right: 8px;text-align: right;height: 33px;line-height: 30px;width: 100px;display: block;border-radius: 15px;border: solid 1px #0098FB;margin: auto 5% auto auto;}
+    #index_one-info span.s1{font-weight: 600;font-size: 18px;width: 45%;height: 18px;line-height: 1;}
+    #index_one-info span.s2{font-size: 13px;width: 45%;height: 13px;line-height: 1;}
+    #index_one-opt li{position: relative;list-style: none;float: left;width: 25%;height: 100%;}
+    #index_one-opt img{margin: auto auto 8% auto;height: 50%;}
+    #index_four{background-color: #f5f5f5;}
+    #index_four_person_info{background:url("./img/doctor.png") no-repeat;background-size: 100% 100%;height:45%}
+    #index_four_person_info img{height: 28%;margin: 15% auto auto auto;}
+    #index_four_person_info strong{color: #0088e4;font-size: 120%;top:57%;width: 80%;left: 10%;}
+    #index_four_person_info div.relation{top:70%;width: 80%;left: 10%;}
+    #index_four_person_info h1{padding-left: 9%;background:url("./img/location_fff.svg") no-repeat;background-size: auto 100%;font-size: 96%;top: 65%;width: 80%;left: 10%;}
+    #index_four h3{box-shadow: 1px 1px 1px #ccc;position: relative;margin-top: 3%;background-color: #fff;width: 92%;left: 4%;font-size: 14px;padding-left: 50px;height: 45px;border-radius: 6px;line-height: 45px;}
+    #index_four .h3:active{background-color:#dfdfdf}
+    #index_four p{border-radius: 6px;font-size: 14px;width: 100%;position: relative;line-height: 45px;height: 45px;margin: 0;}
+    #index_four p > span{padding-left: 36px;display: inline-block;position: relative;width: 92%;height: 100%;left:4%;}
+    /*#index_footer_table td:active{background-color:#dfdfdf}*/
+    #index_vue #school-class{height: 21%;width: 100%;background-color: #f5f5f5;bottom: 0;position: absolute;}
+    #index_vue #school-class span{font-size: 1.2rem}
+    #index_vue .user-avt{height: 28%;margin: 15% auto auto auto;}
+    #index_vue #user-name-box{top:56%;position:absolute;width: 100%;text-align:center;}
+    #index_vue #index_footer_table{    background: #fff;
+        height: 9%;
+        width: 100%;
+        border-top: solid 1px #bbb;
+        bottom: 0;
+        position: absolute;}
+    #index_vue #index_footer_table span{font-size: 0.9rem}
+    #index_vue #index_footer_table img{width: 25%;}
+</style>
+
+<template id="child-template">
+    <div id="location_aMap" class="w100"></div>
+    <ul id="location_mapOpt" class="w100">
+        <li class="fl h100 w20 pos_r" @click="fence_init()">
+            <div class="c">
+                <div class="cover w100 h100 pos_a"></div>
+                <img class="c w50" src="img/fence.svg" />
+            </div>
+        </li>
+        <li class="fl h100 w20 pos_r" @click="waypoint_init()">
+            <div class="c">
+                <div class="cover w100 h100 pos_a"></div>
+                <img class="c w50" src="img/foot.svg" />
+            </div>
+        </li>
+        <li class="fl h100 w20 pos_r" onclick="location.hash='alarm'">
+            <div class="c">
+                <div class="cover w100 h100 pos_a"></div>
+                <img class="c w50" src="img/alarm.svg" />
+            </div>
+        </li>
+        <li class="fl h100 w20 pos_r" id="index_vue_opts" @click="showOpts()">
+            <div class="c opt" style="opacity: 0;transform: scale(0.8) translate(0px,0px);transition: all .4s ease" @click="locating()">
+                <div class="cover w100 h100 pos_a"></div>
+                <img class="c w50" src="img/locating.svg" />
+            </div>
+            <div class="c opt" style="opacity: 0;transform: scale(0.8) translate(0px,0px);transition: all .4s ease" @click="shutdown()">
+                <div class="cover w100 h100 pos_a"></div>
+                <img class="c w50" src="img/shutdown.svg" />
+            </div>
+            <div class="c">
+                <div class="cover w100 h100 pos_a"></div>
+                <img class="c w50" src="img/opts.svg" />
+            </div>
+        </li>
+        <li class="fl h100 w20 pos_r" onclick="location.hash='sports'">
+            <div class="c">
+                <div class="cover w100 h100 pos_a"></div>
+                <img class="c w50" src="img/sports.svg" />
+            </div>
+        </li>
+    </ul>
+    <ul id="locationP_fence_toolBar" class="w100">
+        <li class="fl h100 pos_r" v-for="item in locationP_fence_toolBar" style="width: 16%" onclick="{{(item.eq==0)? 'locationP_vue.fence_back()':'locationP_vue.fenceKey = locationP_vue.key'+(item.eq-1)}}" >
+            <div class="w100 h50 pos_r">
+                <img class="cover pos_a" src="img/s.png"/>
+                <img class="w50 pos_a b0" :src="'./img/'+item.img" style="left: 25%"/>
+            </div>
+            <div class="w100 h10"></div>
+            <div class="w100 h40 txtc" style="font-size: 80%">
+                {{item.text}}
+            </div>
+        </li>
+    </ul>
+    <ul id="locationP_waypoint_toolBar" class="w100">
+        <li class="fl h100 pos_r" v-for="item in locationP_waypoint_toolBar" style="width: 16%" onclick="{{(item.eq==0)? 'locationP_vue.waypoint_back()':'locationP_vue.waypoint_openFence()'}}" >
+            <div class="w100 h50 pos_r">
+                <img class="cover pos_a" src="img/s.png"/>
+                <img class="w50 pos_a b0" :src="'./img/'+item.img" style="left: 25%"/>
+            </div>
+            <div class="w100 h10"></div>
+            <div class="w100 h40 txtc" style="font-size: 80%">
+                {{item.text}}
+            </div>
+        </li>
+    </ul>
+    <div id="date_picker" class="pos_a w100 h100" style="opacity: 0;top: 0%;-webkit-transform: translateY(-2px);transition: all 0.3s ease-in-out;">
+        <div class="single" style="background: #000;"></div>
+        <div class="pos_a t0 w100" style="height: 55px"></div>
+        <div class="pos_a t0 l0 w20" style="height: 55px" @click="waypoint_prevMonth()"></div>
+        <div class="pos_a t0 r0 w20" style="height: 55px" @click="waypoint_nextMonth()"></div>
+        <div class="cover h100 w100 pos_r" onclick="locationP_vue.right_btn()"></div>
+    </div>
+</template>
+<section id="index_vue" class="mh">
+    <table class="navigation mh">
+        <tr>
+            <td onclick="location.hash = 'choose';">切换宝宝</td>
+            <td>关爱未来</td>
+            <td onclick="locationP_vue.right_btn()">刷新</td>
+        </tr>
+    </table>
+    <div class="page mh">
+        <!--<ul id="index_one-slide" class="one-">-->
+        <!--<img data-src="./img/doctor.png" class="h60 w100 pos_a" />-->
+        <!--</ul>-->
+
+        <div style="height: 81%" class="w100 pos_a" id="locationP_vue" style="background-color: #0088e4;overflow: hidden;">
+            <child></child>
+        </div>
+
+        <div id="index_one-info" class="one-">
+            <img id="deviceHead" :src="(launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_AVT].length>3)?launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_AVT]:'./img/nodata.svg'" style="border-radius: 50%">
+            <input type="file" title="set_avt" class="imgUpload" accept="image/*">
+            <div class="c h60 w100">
+                <div class="fl w100 h50 pos_r"><span class="c s1">{{ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_NAME] }}</span></div>
+                <div class="fl w100 h50 pos_r"><span class="c s2"></span></div>
+            </div>
+            <img src="./img/hello.jpg" class="r0 pos_a h100" />
+            <!--<strong class="location c" onclick="location.hash='locationP'">-->
+            <!--<img class="c loc" data-src="./img/location.svg">-->
+            <!--定位追踪-->
+            <!--</strong>-->
+        </div>
+        <!--<table id="school-class">-->
+        <!--<tr>-->
+        <!--<td v-for="item in pages[0].opt" class="txtc">-->
+        <!--<img class="w40" :src="'img/'+item.img+'.svg'" />-->
+        <!--<br/>-->
+        <!--<span>{{item.text}}</span>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--</table>-->
+    </div>
+    <div class="page mh">
+        <iframe src="http://m.bilibili.com/index.html" style="border: 0" class="w100 h100">
+
+        </iframe>
+    </div>
+    <div class="page mh">
+        <iframe src="http://www.baidu.com" style="border: 0" class="w100 h100">
+
+        </iframe>
+    </div>
+    <div id="index_four" class="page mh">
+        <div id="index_four_person_info" class="w100 pos_r">
+            <img :src="launcher_vue.useravt? launcher_vue.useravt:'./img/nodata.svg' " class="c bor_r50">
+            <input title="set_user_avt" type="file" class="imgUpload user-avt" accept="image/*">
+            <div id="user-name-box">
+                <strong class="clwh username" contenteditable="true">{{ launcher_vue.username? launcher_vue.username : '请输入您的姓名' }}</strong>
+            </div>
+            <!--<div class="txtc clwh pos_a relation"></div>-->
+            <h1 class="txtc clwh pos_a user_position">{{userPlace}}</h1>
+        </div>
+        <!--<h3 class="h3" onclick="location.hash='setting'"><img class="c h60" style="margin:auto auto auto 4%" data-src="img/watch.svg">手表基础设置</h3>-->
+        <h3 style="height: 90px;padding-left: 0;">
+            <p class="h3" onclick="location.hash='info'"><span style="border-bottom: 1px solid #ddd"><img class="c h60" style="margin:auto auto auto 0" data-src="img/baby.svg">宝贝信息<img class="c h40" style="margin:auto 0 auto auto" data-src="img/right.svg"></span></p>
+            <p class="h3" onclick="location.hash='family'"><span><img class="c h60" style="margin:auto auto auto 0" data-src="img/family.svg">家庭成员<img class="c h40" style="margin:auto 0 auto auto" data-src="img/right.svg"></span></p>
+        </h3>
+        <h3 @click="logout()" class="h3"><img class="c h60" style="margin:auto auto auto 4%" data-src="./img/close.svg">退出当前账号</h3>
+    </div>
+    <table id="index_footer_table">
+        <tr>
+            <td v-for="page in pages" @click="footer_press($index)" class="txtc footItem">
+                <img :src="'./img/'+page.footer_img_normal+'.svg'" />
+                <br/>
+                <span>{{page.title}}</span>
+            </td>
+        </tr>
+    </table>
+</section>
+<script>
+
+    var locationP_vue;
+    var index_vue = function(){
+        Vue.component('child',{
+            template:'#child-template',
+            created: function () {
+                this.launcher_vue = launcher_vue;
+            },
+            compiled: function () {
+            },
+            data:function(){
+                return {
+                    mapType:'location',
+                    maker:null,
+                    circle:null,
+                    map:null,
+                    mapJq:null,
+                    fence:{},
+                    key0:'i-0',
+                    key1:'i-1',
+                    key2:'i-2',
+                    key3:'i-3',
+                    key4:'i-4',
+                    fk:'',
+                    fence_clickListener:null,
+                    locationP_fence_toolBar:[
+                        {eq:0,img:'fence_back.svg',text:'返回'},
+                        {eq:1,img:'fence_area.svg',text:'区域1'},
+                        {eq:2,img:'fence_area.svg',text:'区域2'},
+                        {eq:3,img:'fence_area.svg',text:'区域3'},
+                        {eq:4,img:'fence_area.svg',text:'区域4'},
+                        {eq:5,img:'fence_area.svg',text:'区域5'}
+                    ],
+                    waypoints:{},
+                    locationP_waypoint_toolBar:[
+                        {eq:0,img:'fence_back.svg',text:'返回'}
+                        //,
+                        //{eq:1,img:'fence.svg',text:'电子围栏'}
+                    ],
+                    isOptsShow:false
+                };
+            },
+            computed: {
+                fenceKey:{
+                    set:function(val){
+                        this.fk = val;
+                        //设置ui
+                        var lis = $('#locationP_fence_toolBar li');
+                        lis.find('img.cover').css('border','1px solid deepskyblue');
+                        lis.find('img.cover').eq(parseInt(Helper.getLastChar(val))+1).css('border','1px solid red');
+                        //设置地图
+                        var fenceObj = launcher_vue.devices[launcher_vue.using][DEVICE_FENCE];
+                        this.fence_position = [fenceObj[val][FENCE_LON],fenceObj[val][FENCE_LAT],fenceObj[val][FENCE_RADIUS]];
+                    },
+                    get:function(){
+                        return this.fk;
+                    }
+                },
+                position:{
+                    get:function(){
+                        return [launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_LON],launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_LAT]];
+                    },
+                    set:function(position){
+                        this.map.clearOverlays();//清除地图
+                        console.log(position);
+                        if(position[0] && position[1]){
+                            launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_LON] = position[0];
+                            launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_LAT] = position[1];
+                            //设置中心
+                            var point = new BMap.Point(position[0], position[1]);
+                            this.map.centerAndZoom(point, 15);
+                            //设置marker
+                            var marker = new BMap.Marker(point);
+                            this.map.addOverlay(marker);
+                            //设置circle
+                            var radius;
+                            if(isNaN(parseInt(launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_RADIUS]))){
+                                radius = 500;
+                            }else{
+                                radius = launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_RADIUS];
+                            }
+                            var circle = new BMap.Circle(point,radius,{strokeColor:"blue", strokeWeight:1, strokeOpacity:0.5});
+                            this.map.addOverlay(circle);
+
+                            index_vue.initPlaceInfo();
+                        }
+                    }
+                },
+                fence_position:{
+                    set:function(arr){
+                        var position = [arr[0],arr[1]];
+                        var radius = arr[2];
+                        this.map.clearOverlays();//清除地图
+                        if(position[0] && position[1]){
+                            //设置中心
+                            var point = new BMap.Point(position[0], position[1]);
+                            this.map.centerAndZoom(point, 15);
+                            //设置marker
+                            var marker = new BMap.Marker(point);
+                            this.map.addOverlay(marker);
+                            //设置circle
+                            var circle = new BMap.Circle(point,radius,{strokeColor:"blue", strokeWeight:1, strokeOpacity:0.5});
+                            this.map.addOverlay(circle);
+                        }
+                    }
+                },
+                locationShow:{
+                    set:function(val){
+                        if(this.isOptsShow){
+                            this.showOpts();
+                        }
+                        var self = this;
+                        if(val){
+                            this.mapType = 'location';
+                            var $el = $(index_vue.$el);
+                            $el.find('td:eq(1)').text('关爱未来');
+                            $el.find('td:eq(2)').text('刷新');
+                            this.right_btn = function(){
+                                this.refresh();
+                            };
+                            $("#location_mapOpt").css('transform','translateY(0px)');
+                            setTimeout(function(){
+                                self.refresh();
+                            },500);
+                        }else{
+                            this.map.clearOverlays();//清除地图
+                            $("#location_mapOpt").css('transform','translateY(100%)');
+                        }
+                    }
+                },
+                fenceShow:{
+                    set:function(val){
+                        if(this.isOptsShow){
+                            this.showOpts();
+                        }
+                        var self = this;
+                        console.log(val);
+                        if(val){
+                            this.mapType = 'fence';
+                            var $el = $(index_vue.$el);
+                            $el.find('td:eq(1)').text('围栏');
+                            $el.find('td:eq(2)').text('设置');
+                            this.right_btn = function(){
+                                location.hash = 'fence';
+                            };
+
+                            $("#locationP_fence_toolBar").css('transform','translateY(0px)');
+                            console.log('fence area one will be clicked');
+                            setTimeout(function(){
+                                console.log('fence area one will be clicking');
+                                $("#locationP_fence_toolBar li").eq(1).trigger('click');
+                            },500);
+                            this.map.clearOverlays();//清除地图
+
+                            this.fence_clickListener = function (e) {
+                                var lon,lat;
+                                lon = e.point.lng;
+                                lat = e.point.lat;
+
+                                var message = "你想要设置"+lon+','+lat+"为范围中心吗?";
+                                Message.dialog('提示', message, '确定', '取消',function(){
+                                    Message.removeDialog();
+                                    var fenceObj = launcher_vue.devices[launcher_vue.using][DEVICE_FENCE];
+                                    fenceObj[self.fenceKey][FENCE_LON] = lon;
+                                    fenceObj[self.fenceKey][FENCE_LAT] = lat;
+                                    fenceObj[self.fenceKey][FENCE_RADIUS] = 300;
+
+                                    self.fence_save();
+                                },function(){
+                                    Message.removeDialog();
+                                });
+                            };
+
+                            this.map.addEventListener("click", this.fence_clickListener, false);
+                        }else{
+                            this.map.clearOverlays();//清除地图
+                            $("#locationP_fence_toolBar").css('transform','translateY(100%)');
+                            this.map.removeEventListener("click", this.fence_clickListener, false);
+                        }
+                    }
+                },
+                wayPointShow:{
+                    set:function(val){
+                        var date_picker = $("#date_picker");
+                        if(val){
+                            this.mapType = 'waypoint';
+                            var $el = $(index_vue.$el);
+                            $el.find('td:eq(1)').text('历史轨迹');
+                            $el.find('td:eq(2)').text('日期选择');
+                            this.right_btn = function(){
+                                if(date_picker.css('display') == 'none'){
+                                    date_picker.css('display','block');
+                                    setTimeout(function(){
+                                        date_picker.css('opacity',1);
+                                    },22);
+                                }else{
+                                    date_picker.css('opacity',0);
+                                    setTimeout(function(){
+                                        date_picker.css('display','none');
+                                    },300);
+                                }
+                            };
+                            $("#locationP_waypoint_toolBar").css('transform','translateY(0px)');
+                        }else{
+                            this.map.clearOverlays();//清除地图
+                            date_picker.css('opacity',0);
+                            setTimeout(function(){
+                                date_picker.css('display','none');
+                            },300);
+                            $("#locationP_waypoint_toolBar").css('transform','translateY(100%)');
+                        }
+                    }
+                }
+            },
+            methods: {
+                init:function(){
+                    if(this.mapType == 'location'){
+                        this.refresh();
+                    }
+                },
+                initBind:function(){
+
+                },
+                initView:function(){
+                    var self = this;
+                    this.mapJq = $("#location_aMap");
+                    self.map = new BMap.Map("location_aMap");
+                    self.position = [
+                        launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LON],
+                        launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LAT]
+                    ];
+                    //self.mapJq.hide();
+                    pickmeup('.single', {flat : true});
+                    $("#date_picker").hide();
+                    //var timer = setInterval(function(){
+                    //    if(app.isDoingAnimation){
+                    //        clearInterval(timer);
+                    //        self.mapJq.show();
+                    //        self.map = new BMap.Map("location_aMap");
+                    //        self.position = [
+                    //            launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LON],
+                    //            launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LAT]
+                    //        ];
+                    //    }
+                    //},1000);
+                },
+                refresh:function(){
+                    var self = this;
+                    //get position data
+                    var dataStr = '{' +
+                            '"sessionId":"'+app.sessionId+'"' +
+                            '}';
+                    $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/get_last_position', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                        success: function (data) {
+                            if (data[CODE] != 0) {
+                                this.map.clearOverlays();//清除地图
+                                Message.toast('暂无最新数据', 2);
+                                return false;
+                            } else {
+                                var res = data[MESSAGE];
+                                var arr = res.split('|');
+                                launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LON] = arr[0];
+                                launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LAT] = arr[1];
+                                launcher_vue.devices_ = JSON.parse(JSON.stringify(launcher_vue.devices_));
+
+                                //update ui
+                                self.position = [launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_LON],launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_LAT]];
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            index_vue.logout();
+                        }
+                    });
+                },
+                right_btn:function(){
+                    this.refresh();
+                },
+                fence_back:function(){
+                    var self = this;
+                    this.fenceShow = false;
+                    setTimeout(function(){
+                        self.locationShow = true;
+                    },300);
+                },
+                fence_initView:function(){
+                    var self = this;
+                    this.locationShow = false;
+                    setTimeout(function(){
+                        console.log('self.fenceShow = true');
+                        self.fenceShow = true;
+                    },300);
+                },
+                fence_init:function(){
+                    var self = this;
+                    try{
+                        if(Helper.hasObjKey(launcher_vue.devices_[launcher_vue.using][DEVICE_FENCE])){
+                            self.fence_initView()
+                        }else{
+                            throw new EventException()
+                        }
+                    }catch (err){
+                        var dataStr = '{' +
+                                '"sessionId":"'+app.sessionId+'"' +
+                                '}';
+                        $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/get_fence', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                            success: function (data) {
+                                if (data[CODE] != 0) {
+                                    Message.toast(data[MESSAGE], 2);
+                                    return false
+                                } else {
+                                    launcher_vue.devices_[launcher_vue.using][DEVICE_FENCE] =  Helper.getJsonObj(data[MESSAGE]);
+                                    launcher_vue.devices_ = JSON.parse(JSON.stringify(launcher_vue.devices_));
+                                    self.fence_initView()
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(errorThrown);
+                                app.publish(APP_EVENT_LOGOUT);
+                            }
+                        });
+                    }
+                },
+                fence_save:function(){
+                    var self = this;
+                    //保存 fenceKey
+                    var fenceObj = launcher_vue.devices[launcher_vue.using][DEVICE_FENCE];
+                    var dataStr = '{' +
+                            '"'+NAME+'":"'+fenceObj[self.fenceKey][FENCE_NAME]+'",' +
+                            '"'+LON+'":"'+fenceObj[self.fenceKey][FENCE_LON]+'",' +
+                            '"'+LAT+'":"'+fenceObj[self.fenceKey][FENCE_LAT]+'",' +
+                            '"'+RADIUS+'":"'+fenceObj[self.fenceKey][FENCE_RADIUS]+'",' +
+                            '"'+KEY+'":"'+self.fenceKey+'",' +
+                            '"'+TYPE+'":"'+fenceObj[self.fenceKey][FENCE_ISDANGER]+'",' +
+                            '"'+STATUS+'":"'+fenceObj[self.fenceKey][FENCE_STATUS]+'",' +
+                            '"sessionId":"'+app.sessionId+'"' +
+                            '}';
+                    $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/save_fence', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                        success: function (data) {
+                            if (data[CODE] != 0) {
+                                Message.toast(data[MESSAGE], 2);
+                                return false
+                            } else {
+                                Message.toast('设置成功', 2);
+                                launcher_vue.devices_[launcher_vue.using][DEVICE_FENCE][self.fenceKey] = Helper.getJsonObj(data[MESSAGE]);
+                                launcher_vue.devices_ = JSON.parse(JSON.stringify(launcher_vue.devices_));
+                                //ui
+                                self.fenceKey = self.fenceKey;
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                        }
+                    });
+                },
+                waypoint_initView:function(){
+                    var self = this;
+                    this.locationShow = false;
+                    setTimeout(function(){
+                        self.wayPointShow = true;
+                    },300);
+                    this.waypoint_initData();
+                },
+                waypoint_initData:function(){
+                    this.waypoint = {
+                        markers:[],
+                        lineArr:[],
+                        currentMonth:null,
+                        thisYear:(new Date).getFullYear()+'',
+                        thisMonth:((new Date).getMonth()+1+'').length>=2? ((new Date).getMonth()+1)+'':'0'+((new Date).getMonth()+1),
+                        thisDate:((new Date).getDate()+'').length>=2? (new Date).getDate()+'':'0'+(new Date).getDate(),
+                        actNow:''
+                    };
+                    this.waypoint.actNow = this.waypoint.thisYear+this.waypoint.thisMonth+this.waypoint.thisDate;
+                },
+                waypoint_isCanClick:function(date){
+                    var day = (new Date(date)).getDate()+'';
+                    day = day.length>=2? day+'':'0'+day;
+                    var month = (new Date(date)).getMonth()+1+'';
+                    month = month.length>=2? month+'':'0'+month;
+                    var year = (new Date(date)).getFullYear()+'';
+                    var key = year+month+day;//20161010
+                    var earlestDay = '';
+                    for(var i in this.waypoints[launcher_vue.using]){
+                        earlestDay = i.substr(1,i.length-1);
+                        break;
+                    }
+                    if(parseInt(key)>parseInt(this.waypoint.actNow)){//日期过大
+                        return false;
+                    }
+                    if(parseInt(key) < parseInt(earlestDay)){ //日期过早
+                        Message.toast('日期选择过早',2);
+                        return false;
+                    }
+                    if(!Helper.hasObjKey(this.waypoints[launcher_vue.using]['i'+key])){  //没有轨迹
+                        Message.toast('改日期没有轨迹',2);
+                        return false;
+                    }
+                    this.waypoint_paint(this.waypoints[launcher_vue.using]['i'+key]);
+                },
+                waypoint_paint:function(arr){//[{time:,point[lon,lat]},{},{}]
+                    this.map.clearOverlays();//清除地图
+                    this.waypoint.markers = [];
+                    this.waypoint.lineArr = [];
+
+                    for(var i=0;i<arr.length;i++){
+                        var val = arr[i];
+                        var point = new BMap.Point(val['point'][0], val['point'][1]);
+                        var marker = new BMap.Marker(point);//设置marker
+                        this.map.addOverlay(marker);
+
+                        this.waypoint.markers.push(marker);
+                        this.waypoint.lineArr.push(point);
+                    }
+
+                    if(this.waypoint.lineArr.length > 1){
+                        var polyline = new BMap.Polyline(this.waypoint.lineArr
+                                , {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});
+                        this.map.addOverlay(polyline);
+                    }
+
+                    this.map.centerAndZoom(point, 15);
+                },
+                waypoint_init:function(){
+                    var self = this;
+                    try{
+                        if(this.waypoints[launcher_vue.using]){
+                            this.waypoint_initView();
+                        }else{
+                            throw new SQLException;
+                        }
+                    }catch (err){
+                        var dataStr = '{' +
+                                '"sessionId":"'+app.sessionId+'"' +
+                                '}';
+                        $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/get_waypoint', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                            success: function (data) {
+                                if (data[CODE] != 0) {
+                                    Message.toast('没有轨迹数据', 2);
+                                    return false;
+                                } else {
+                                    var arr = Helper.getJsonObj(data[MESSAGE]);
+                                    self.waypoints[launcher_vue.using] = {};
+                                    for(var i=0;i<arr.length;i++){
+                                        var pointObj = arr[i];
+                                        var dateObj = new Date(pointObj[WAYPOINT_INTTIME]*1000);
+                                        if(!self.waypoints[launcher_vue.using]['i'+dateObj.getFullYear()+(dateObj.getMonth()+1)+dateObj.getDate()]){
+                                            self.waypoints[launcher_vue.using]['i'+dateObj.getFullYear()+(dateObj.getMonth()+1)+dateObj.getDate()] = [];
+                                        }
+                                        self.waypoints[launcher_vue.using]['i'+dateObj.getFullYear()+(dateObj.getMonth()+1)+dateObj.getDate()].push({
+                                            time:pointObj[WAYPOINT_INTTIME],
+                                            point:pointObj[WAYPOINT_POINTS]
+                                        });
+                                    }
+
+                                    self.waypoint_initView();
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(errorThrown);
+                                index_vue.logout();
+                            }
+                        });
+                    }
+                },
+                waypoint_prevMonth:function(){
+                    if(!this.waypoints[launcher_vue.using]){
+                        return false;
+                    }else{
+                        for(var i in this.waypoints[launcher_vue.using]){
+                            var earlyTime = i.substr(0,i.length-1);
+                        }
+
+                        var earlyYear = earlyTime.substr(0,4);
+                        var earlyMonth = earlyTime.substr(4,2);
+
+                        if(this.waypoint.thisYear == earlyYear){
+                            if(this.waypoint.thisMonth == earlyMonth){
+                                return false;
+                            }else{
+                                $(".pmu-prev").trigger('click');
+                                this.waypoint.currentMonth = true;
+                                this.waypoint.thisMonth = earlyMonth;
+                            }
+                        }else{
+                            $(".pmu-prev").trigger('click');
+                            this.waypoint.currentMonth = true;
+                            this.waypoint.thisYear = earlyYear;
+                            this.waypoint.thisMonth = earlyMonth;
+                        }
+                    }
+                },
+                waypoint_nextMonth:function(){
+                    if(this.waypoint.currentMonth){
+                        this.waypoint.currentMonth = null;
+                        $(".pmu-next").trigger('click');
+                        this.waypoint.thisYear=(new Date).getFullYear()+'';
+                        this.waypoint.thisMonth=((new Date).getMonth()+1+'').length>=2? ((new Date).getMonth()+1)+'':'0'+((new Date).getMonth()+1);
+                        this.waypoint.thisDate=((new Date).getDate()+'').length>=2? (new Date).getDate()+'':'0'+(new Date).getDate();
+                    }
+                },
+                waypoint_back:function(){
+                    var self = this;
+                    this.wayPointShow = false;
+                    setTimeout(function(){
+                        self.locationShow = true;
+                    },300);
+                },
+                waypoint_openFence:function(){
+                },
+                showOpts:function(){
+                    var $cArr = $('#index_vue_opts .opt');
+                    var x = 40;
+                    var y = 60;
+                    var scale = 0.8;
+                    if($cArr.eq(0).css('opacity') == 0){
+                        this.isOptsShow = true;
+                        $cArr.eq(0).css({
+                            opacity:1,
+                            'transform':'scale('+scale+') translate(-'+x+'px,-'+y+'px)',
+                            '-webkit-transform':'scale('+scale+') translate(-'+x+'px,-'+y+'px)'
+                        });
+                        $cArr.eq(1).css({
+                            opacity:1,
+                            'transform':'scale('+scale+') translate('+x+'px,-'+y+'px)',
+                            '-webkit-transform':'scale('+scale+') translate('+x+'px,-'+y+'px)'
+                        });
+                    }else{
+                        this.isOptsShow = false;
+                        $cArr.eq(0).css({
+                            opacity:0,
+                            'transform':'scale('+scale+') translate(0px,0px)',
+                            '-webkit-transform':'scale('+scale+') translate(0px,0px)'
+                        });
+                        $cArr.eq(1).css({
+                            opacity:0,
+                            'transform':'scale('+scale+') translate(0px,0px)',
+                            '-webkit-transform':'scale('+scale+') translate(0px,0px)'
+                        });
+                    }
+                },
+                shutdown:function(){
+                    Message.dialog('提示','确定要进行远程关机吗','确定','取消',function(){
+                        Message.removeDialog();
+                    },function(){
+                        Message.removeDialog();
+                    });
+                },
+                locating:function(){
+                    Message.showWait('定位中');
+                    setTimeout(function(){
+                        Message.removeWait();
+                    },1000);
+                }
+            }
+        });
+        index_vue = new Vue({
+            el: '#index_vue',
+            created:function () {
+                this.launcher_vue = launcher_vue;
+            },
+            compiled:function () {
+                setTimeout(function(){
+                    locationP_vue = index_vue.$children[0];
+                    locationP_vue.initView();
+                    locationP_vue.initBind();
+                },100);
+
+                launcher_vue.makeSureHeight(this.$el);
+                this.initView();
+                this.initBind();
+            },
+
+            data: {
+                DEVICE_INFO:DEVICE_INFO,
+                DEVICE_AVT:DEVICE_AVT,
+                title_left:'',
+                title_right:'切换宝宝',
+                title:'关爱未来',
+                nowFootIndex:0,
+                pages:[
+                    {
+                        footer_img_pressed:'zhuye_pressed',
+                        footer_img_normal:'zhuye_normal',
+                        footer_text:'我的宝贝',
+                        opt:[
+                            {img:'class_table',text:"课程表"},
+                            {img:'home_work',text:"作业"},
+                            {img:'baby_notice',text:"宝贝消息"},
+                            {img:'tel_teacher',text:"联系老师"}
+                        ],
+                        place:'',
+                        title:'关爱未来',
+                        title_left:'',
+                        title_right:'切换宝宝'
+                    },
+                    {
+                        footer_img_pressed:'notice_pressed',
+                        footer_img_normal:'notice_normal',
+                        footer_text:'通知',
+                        title:'通知',
+                        title_left:'',
+                        title_right:''
+                    },
+                    {
+                        footer_img_pressed:'discovery_pressed',
+                        footer_img_normal:'discovery_normal',
+                        footer_text:'发现',
+                        title:'发现',
+                        title_left:'',
+                        title_right:''
+                    },
+                    {
+                        footer_img_pressed:'me_pressed',
+                        footer_img_normal:'me_normal',
+                        footer_text:'个人中心',
+                        title:'个人中心',
+                        title_left:'',
+                        title_right:''
+                    }
+                ],
+                pagesObj:$("#index_vue .page"),
+                DEVICE_NAME:DEVICE_NAME,
+                userPlace:''
+            },
+            methods: {
+                init:function(){
+                    if( app.isLogingout ){
+                        app.isLogingout = false;
+                        this.initView();
+                    }
+                },
+                initPlaceInfo:function(){
+                    var self = this;
+                    var babyLon,babyLat;
+                    babyLon = launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LON];
+                    babyLat = launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LAT];
+                    if(babyLon && babyLat){
+                        console.log('get baby PlaceInfo');
+                        console.log('babyLon:'+babyLon+' && babyLat:'+babyLat);
+                        setTimeout(function(){
+                            map.getPlaceByLatLon(babyLon, babyLat, self, 0);
+                        },0);
+                    }else{
+                        this.setPlaceInfo('');
+                    }
+                },
+                setPlaceInfo:function(str){
+                    var obj = $('#index_one-info');
+                    var oldText = obj.find('.s2').text();
+                    var newText = '此刻位置：'+str;
+                    if(oldText != newText){
+                        obj.find('.s2').text(newText);
+                    }
+                },
+                getPlaceByLatLon_CallBack:function(addComp){
+                    if(addComp){
+                        var placeInfo = addComp.province + " " + addComp.city + " " + addComp.district + " " + addComp.street + " " + addComp.streetNumber;
+                        this.setPlaceInfo(placeInfo)
+                    }else{
+                        Message.toast('error', 2);
+                    }
+                },
+                footer_press:function(eq){
+                    var i;
+                    for(i=0;i<this.pages.length;i++){
+                        var item = $(".footItem").eq(i);
+                        var imgName;
+                        var color;
+                        if(eq == i){
+                            imgName = this.pages[i].footer_img_pressed;
+                            color = '#0098FB';
+                            this.nowFootIndex = i;
+                            this.pagesObj.eq(i).show();
+                            this.pagesObj.eq(i).css('z-index','2');
+                        }else{
+                            imgName = this.pages[i].footer_img_normal;
+                            color = '#000';
+                            this.pagesObj.eq(i).css('z-index','1');
+                        }
+                        item.find('img').attr('src','./img/'+imgName+'.svg');
+                        item.find('span').css('color',color);
+                    }
+                },
+                logout:function(){
+                    app.publish(APP_EVENT_LOGOUT);
+                },
+                initView:function(){
+                    this.pagesObj.eq(1).hide();
+                    this.pagesObj.eq(2).hide();
+                    this.pagesObj.eq(3).hide();
+                    this.footer_press(0);
+
+                    if(launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_AVT].length>100){
+                        $("#deviceHead").attr("src",launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_AVT]);
+                    }
+
+                    this.initPlaceInfo();
+
+                    setTimeout(function(){
+                        //定位
+                        app.functionApi('getUserPosition','app.browser.setUserPosition');
+
+                        //initView
+                        $("#launcher").remove();
+                    },1000);
+                },
+                uploadImg:function(data1,input){
+                    var self = this;
+                    var method = input.attr('title');
+                    var dataStr = '{' +
+                            '"'+IMG+'":"'+data1+'",' +
+                            '"sessionId":"'+app.sessionId+'"' +
+                            '}';
+                    $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/'+method, data: Helper.getJsonObj(dataStr), dataType: 'json',
+                        success: function (data) {
+                            if (data[CODE] != 0) {
+                                Message.toast(data[MESSAGE], 2);
+                                return false
+                            } else {
+                                input.prev().attr('src',data1);
+                                if(method == 'set_avt'){
+                                    launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_AVT] = data1;
+                                    var str = JSON.stringify(launcher_vue.devices_);
+                                    launcher_vue.devices_ = JSON.parse(str);
+                                    localStorage.setItem('devices',str);
+                                    localStorage.setItem('devices',data[USER_DEVICES]);
+                                }else{
+                                    launcher_vue.useravt = data1;
+                                    localStorage.setItem('useravt',data1);
+                                }
+
+                                Message.toast('更新成功', 2);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                            self.logout();
+                        }
+                    });
+                },
+                initBind:function(){
+                    var self = this;
+                    var $obj = $(this.$el);
+                    $obj.find(".imgUpload").change(function(e){
+                        var f = e.target.files[0];//一次只上传1个文件，其实可以上传多个的
+                        var FR = new FileReader();
+                        var input = $(this);
+                        FR.onload = function(f){
+                            if(!this.result)return;
+                            var canvas = document.createElement('canvas');
+                            var img = new Image();
+                            img.src = this.result;
+                            var ctx = canvas.getContext("2d");
+                            canvas.width = 120;
+                            //canvas.height = img.height;
+                            canvas.height = 120;
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+                            ctx.fillRect(0,0,canvas.width, canvas.height);
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 将图像绘制到canvas上
+                            var data1 = canvas.toDataURL("image/jpeg");
+                            //alert(data1);
+                            //alert(data1.length);
+                            if(data1.length>1204){
+                                setTimeout(function(){
+                                    self.uploadImg(data1,input);
+                                },100);
+                            }
+                        };
+                        setTimeout(function(){
+                            FR.readAsDataURL(f);//先注册onload，再读取文件内容，否则读取内容是空的
+                        },500);
+                    });
+
+                    $obj.find(".username").blur(function(){self.save_name($(this))});
+                },
+                save_name:function(obj){
+                    var self = this;
+                    launcher_vue.username = obj.text();
+                    if(launcher_vue.username){
+                        if(launcher_vue.username.length > 12){
+                            Message.toast("输入的名字过长",2);
+                            launcher_vue.username = "";
+                            return false;
+                        }else{
+                            var dataStr = '{' +
+                                    '"'+NAME+'":"'+launcher_vue.username+'",' +
+                                    '"sessionId":"'+app.sessionId+'"' +
+                                    '}';
+                            $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/set_username', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                                success: function (data) {
+                                    if (data[CODE] != 0) {
+                                        Message.toast(data[MESSAGE], 2);
+                                        return false;
+                                    } else {
+                                        Message.toast('更新成功', 2);
+                                    }
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.log(errorThrown);
+                                    self.logout();
+                                }
+                            });
+                        }
+                    }else{
+                        $(this).text("请输入您的名字");
+                    }
+                },
+                test:function(){
+                    var dataStr = '{' +
+                            '"sessionId":"'+app.sessionId+'"' +
+                            '}';
+                    $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/test', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        }
+                    });
+                }
+            }
+        });
+    };
+</script>

@@ -1,0 +1,95 @@
+<style>
+    #bind_main{position: relative;height: 400px;}
+    #bind_box_border{position: relative;width: 88%;height: 50%;border: solid 1px #f1f1f1;border-radius: 9px;top: 8%;left: 6%;}
+    #bind_box_border i{position: absolute;left: 3%;width: 94%;height: 1px;display: inline-block;background-color: #ddd;}
+    #bind_box_border i:nth-of-type(1){top: 25%;}
+    #bind_box_border i:nth-of-type(2){top: 50%;}
+    #bind_box_border i:nth-of-type(3){top: 75%;}
+    #bind_vue input{position: relative;outline:none;}
+    #bind_input_code{padding: 0;font-size: 90%;box-shadow:none;background-color: transparent;height: 25%;width: 88%;border: 0;margin: 0 0 0 6%;}
+    #bind_input_num{margin: 0 0 0 6%;padding: 0;font-size: 90%;box-shadow:none;background-color: transparent;height: 25%;width: 88%;border: 0;}
+    #bind_input_name{margin: 0 0 0 6%;padding: 0;font-size: 90%;box-shadow:none;background-color: transparent;height: 25%;width: 88%;border: 0;}
+    #bind_input_school{margin: 0 0 0 6%;padding: 0;font-size: 90%;box-shadow:none;background-color: transparent;height: 25%;width: 88%;border: 0;}
+    #bind_btn_success{position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: 80% auto auto auto;width: 85%;height: 10%;background-color: #0098FB;}
+</style>
+<section id="bind_vue">
+    <table class="navigation">
+        <tr>
+            <td onclick="history.go(-1)"><img data-src="./img/back.svg">返回</td>
+            <td>绑定手表</td>
+            <td></td>
+        </tr>
+    </table>
+    <div id="bind_main" class="w100">
+        <div id="bind_box_border">
+            <i></i>
+            <i></i>
+            <i></i>
+            <input id="bind_input_code" type="text" v-model="input.code.text" placeholder="{{input.code.hint}}">
+            <input id="bind_input_num" type="text" v-model="input.num.text" placeholder="{{input.num.hint}}">
+            <input id="bind_input_name" type="text" v-model="input.name.text" placeholder="{{input.name.hint}}">
+            <input id="bind_input_school" type="text" v-model="input.school.text" placeholder="{{input.school.hint}}">
+        </div>
+        <button id="bind_btn_success" type="button" class="btn clwh" @click="success()">完成</button>
+    </div>
+</section>
+<script>
+    var bind_vue = function(){
+        bind_vue = new Vue({
+            el: '#bind_vue',
+            created: function () {},
+            compiled: function () {
+                launcher_vue.makeSureHeight(this.$el);
+            },
+            data:
+            {
+                input: {
+                    code: {text:"",hint:"请输入15位手表序列号"},
+                    num: {text:"",hint:"请输入4位S/N号码"},
+                    name: {text:"",hint:"请输入孩子的姓名"},
+                    school: {text:"",hint:"请输入学校的名称"}
+                }
+            },
+            computed: {},
+            methods: {
+                init:function(){},
+                success:function(){
+                    var dataStr = '{' +
+                            '"'+CODE+'":"'+this.input.code.text.trim()+'",' +
+                            '"'+NUM+'":"'+this.input.num.text.trim()+'",' +
+                            '"'+NAME+'":"'+this.input.name.text.trim()+'",' +
+                            '"'+SCHOOL+'":"'+this.input.school.text.trim()+'",' +
+                            '"sessionId":"'+app.sessionId+'"' +
+                            '}';
+                    $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/bind', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                        success: function (data) {
+                            if (data[CODE] != 0) {
+                                Message.toast(data[MESSAGE], 2);
+                            } else {
+                                launcher_vue.using = data[USER_USING];
+
+                                if(Helper.hasObjKey(launcher_vue.devices_)){
+                                    launcher_vue.devices_[launcher_vue.using] = {};
+                                }else{
+                                    launcher_vue.devices_ = {};
+                                    launcher_vue.devices_[launcher_vue.using] = {};
+                                }
+
+                                console.log(data[DEVICE_INFO]);
+                                launcher_vue.devices_[launcher_vue.using][DEVICE_INFO] = Helper.getJsonObj(data[DEVICE_INFO]);
+                                launcher_vue.devices_ = JSON.parse(JSON.stringify(launcher_vue.devices_));
+
+                                Message.toast("绑定成功", 2);
+                                setTimeout(function(){
+                                    window.history.go(-1);
+                                },2000);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {}
+                    });
+                }
+            }
+        });
+    };
+
+</script>

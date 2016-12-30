@@ -1,0 +1,104 @@
+<style>
+    #login_vue >div {height: 400px;position: relative;}
+    #login_input_account{top: 5%;width: 88%;position: absolute;left: 6%;height: 42%;padding: 0;font-size: 90%;outline: none;border: 0;box-shadow: none;background-color: transparent;}
+    #login_input_password{top: 52%;width: 88%;position: absolute;left: 6%;height: 45%;padding: 0;font-size: 90%;outline: none;border: 0;box-shadow: none;background-color: transparent;}
+    #login_btn_login{position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: 95% auto auto auto;width: 85%;height: 10%;background-color: #0098FB;}
+    #login_box_border{position: absolute;width: 88%;height: 25%;border: solid 1px #f1f1f1;border-radius: 9px;top: 0;left: 0;right: 0;bottom: 0;margin: 45% auto auto auto;}
+    #login_box_border i{position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto;width: 94%;height: 1px;display: inline-block;background-color: #ddd;}
+    #login_phone{position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: 10% auto auto auto;width: 80%;height: 23%;background:url("./img/phone.svg") no-repeat;background-size: 100% 100%;}
+    #login_vue .tip_span{position: absolute;font-size: 90%;top: 110%;color:#0098FB}
+    #login_span_forget{left: 0;}
+    #login_span_register{right: 0;}
+</style>
+<section id="login_vue">
+    <div>
+        <div id="login_phone"></div>
+        <div id="login_box_border">
+            <input id="login_input_account" class="showKeyboard" type="text" v-model="input.account.text" placeholder="{{input.account.hint}}">
+            <i></i>
+            <input id="login_input_password" class="showKeyboard" type="password" v-model="input.password.text" placeholder="{{input.password.hint}}">
+            <span id="login_span_forget" class="tip_span" @click="forgetPassword()">忘记密码？</span>
+            <span id="login_span_register" class="tip_span" onclick=" location.hash = 'register';">注册</span>
+        </div>
+        <button id="login_btn_login" class="btn btn-sm clwh" @click="login()">登录</button>
+    </div>
+</section>
+<script>
+    var login_vue = function(){
+        login_vue = new Vue({
+            el: '#login_vue',
+            created: function () {},
+            compiled: function () {},
+            data:
+            {
+                input: {
+                    account: {text:"",hint:"请输入您的账号"},
+                    password: {text:"",hint:"请输入您的密码"}
+                }
+            },
+            computed: {},
+            methods: {
+                init:function(){},
+                login: function(){
+                    var self = this;
+                    Message.showWait('登录中');
+                    setTimeout(function(){
+                        var dataStr = '{' +
+                                '"'+ACCOUNT+'":"'+self.input.account.text.trim()+'",' +
+                                '"'+PASSWORD+'":"'+hex_md5(self.input.password.text.trim())+'",' +
+                                '"sessionId":"'+app.sessionId+'"' +
+                                '}';
+                        $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/login', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                            success: function (data) {
+                                if (data[CODE] != 0) {
+                                    Message.removeWait();
+                                    Message.toast(data[MESSAGE], 2);
+                                } else {
+                                    if(data[USER_USING]){
+                                        launcher_vue.devices_ = JSON.parse(data[USER_DEVICES]);
+                                        launcher_vue.using = data[USER_USING];
+                                        launcher_vue.username = data[USER_NAME];
+                                        launcher_vue.useravt = data[USER_AVT];
+                                    }else{
+                                        launcher_vue.devices_ = {};
+                                        launcher_vue.using = '';
+                                        launcher_vue.username = '';
+                                        launcher_vue.useravt = '';
+                                    }
+
+                                    localStorage.setItem('using',data[USER_USING]);
+                                    localStorage.setItem('devices',data[USER_DEVICES]);
+                                    localStorage.setItem('username',data[USER_NAME]);
+                                    localStorage.setItem('useravt',data[USER_AVT]);
+
+                                    if(Helper.hasObjKey(launcher_vue.devices_)){
+                                        location.hash = 'index';
+                                    }else{
+                                        location.hash = 'choose';
+                                    }
+                                    setTimeout(function(){
+                                        Message.removeWait();
+                                    },200);
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                if(jqXHR.responseText.length == 32){
+                                    app.sessionId = jqXHR.responseText;
+                                    app.publish(APP_EVENT_CHANGE_SESSION);
+                                    self.login();
+                                }
+                                //if(data)
+                                //Message.removeWait();
+                                //app.publish(APP_EVENT_LOGOUT);
+                                //window.location.reload();
+                            }
+                        });
+                    },500);
+                },
+                forgetPassword:function(){
+                    console.log("forget");
+                }
+            }
+        });
+    };
+</script>

@@ -1,9 +1,0 @@
-#right .danger .contain{background-color: #f6f6f6}
-#right .danger .contain p{padding: 10px 5% 0;width: 100%}
-#right .danger .contain .area>.row{padding: 2% 0;height: 50px;background-color: #fff}
-#right .danger .contain .area>.row .icon{height: 90%;border-radius: 5px}
-#right .danger .contain .area>.row>div:last-of-type{padding-right: 4%}
-#right .danger .contain .area>.row>div:last-of-type span.long{display: inline-block;word-break: break-all;line-height: 140%;}
-#right .danger .contain .area>.row .icon img{width: 100%}
-#right .danger .space100{    height: 1px;  width: 100%;  background-color: #ddd;}
-#right .danger .space75{    width: 77%; height: 1px; background-color: #ddd; float: right;}

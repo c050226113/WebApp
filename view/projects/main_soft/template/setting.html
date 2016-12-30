@@ -1,0 +1,95 @@
+<style>
+    #setting_vue h3{box-shadow: 1px 1px 1px #ccc;position: relative;margin-top: 3%;background-color: #fff;width: 92%;left: 4%;font-size: 14px;padding-left: 20px;height: 45px;border-radius: 6px;line-height: 45px;}
+    #setting_vue h3:active{background-color: #dfdfdf}
+    #setting_vue h3 img:nth-of-type(1){margin-right: 14px;}
+    #setting_vue h3 img:nth-of-type(2){position: relative;top: 13px;left: -17px;}
+</style>
+<!--<section id="setting_vue">-->
+<!--<table class="navigation">-->
+<!--<tr>-->
+<!--<td onclick="history.go(-1)"><img data-src="./img/back.svg">返回</td>-->
+<!--<td>手表基础设置</td>-->
+<!--<td></td>-->
+<!--</tr>-->
+<!--</table>-->
+<!--<h3 class="h3" onclick="location.hash={{ '\''+line.pull+'\'' }}"  v-for="line in lines">-->
+<!--<img class="h60" :src="'./img/'+line.img">-->
+<!--<span>{{ line.text }}</span>-->
+<!--<img class="fr h40" data-src="img/right.svg">-->
+<!--</h3>-->
+<!--</section>-->
+<script>
+    var setting_vue = new Vue({
+        el: '#setting_vue',
+        created: function () {},
+        compiled: function () {
+            this.initView();
+            this.initBind();
+        },
+        data: {
+            lines:[
+                {
+                    text:"上课隐身",
+                    pull:"class_hide",
+                    img:"class_hide.svg"
+                },
+                {
+                    text:"定时开关机",
+                    pull:"interval_shutdown",
+                    img:"interval_close.svg"
+                },
+                {
+                    text:"系统设置",
+                    pull:"sys_setting",
+                    img:"setting.svg"
+                },
+                {
+                    text:"远程遥控",
+                    pull:"far_control",
+                    img:"control.svg"
+                },
+                {
+                    text:"解除绑定",
+                    pull:"unbind_setting",
+                    img:"cut_bind.svg"
+                },
+                {
+                    text:"一键还原",
+                    pull:"back_up",
+                    img:"backup.svg"
+                }
+            ]
+        },
+        computed: {},
+        methods: {
+            init:function(){},
+            initView:function(){
+                var dataStr = '{' +
+                        '"sessionId":"'+app.sessionId+'"' +
+                        '}';
+                $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/get_setting', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                    success: function (data) {
+                        if (data[CODE] != 0) {
+                            Message.toast(data[MESSAGE], 2);
+                            return false;
+                        }else{
+                            launcher_vue.devices_[launcher_vue.using][DEVICE_SETTING] = Helper.getJsonObj(data[DEVICE_SETTING]);
+                            launcher_vue.devices_ = JSON.parse(JSON.stringify(launcher_vue.devices_));
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                        index_vue.logout();
+                    }
+                });
+            },
+            initBind:function(){
+                //$("#setting h3").unbind().bind('touchstart',function(){
+                //    $(this).css('background-color','#ddd');
+                //}).bind('touchend',function(){
+                //    $(this).css('background-color','#fff');
+                //});
+            }
+        }
+    });
+</script>

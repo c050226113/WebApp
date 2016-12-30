@@ -1,0 +1,115 @@
+<style>
+    #fence_info{width: 90%;position: absolute;left: 5%;border-radius: 10px;border: solid 1px #ddd;height: 200px;top: 10%;}
+    #fence_info .line{position: relative;width: 100%;height: 25%;border-bottom:1px solid #ddd;}
+    #fence_info input{height: 100%;width: 100%;border: 0;text-align: right;box-shadow: none;background-color: transparent;outline: none;padding-right: 5%}
+    #fence_info span{position: absolute;left:5%;height: 25%;width: 100%;border: 0;line-height: 50px}
+</style>
+<section id="fence_vue">
+    <table class="navigation">
+        <tr>
+            <td onclick="history.go(-1)"><img data-src="./img/back.svg">返回</td>
+            <td></td>
+            <td @click="save()">保存</td>
+        </tr>
+    </table>
+    <div id="fence_info">
+        <div class="line">
+            <span>区域名称:</span>
+            <input type="text" v-model="info[name]" />
+        </div>
+        <div class="line">
+            <span>区域半径:</span>
+            <input type="text" v-model="info[radius]" />
+        </div>
+        <div class="line">
+            <span>区域类型:</span>
+            <div style="height: 100%;width: 100%;text-align: right;padding-right: 5%">
+                <select v-model="info[isdanger]" style="width: 86px;height: 100%;">
+                    <option value="0">安全</option>
+                    <option value="1">危险</option>
+                </select>
+            </div>
+        </div>
+        <div class="line">
+            <span>是否启用:</span>
+            <div class="switch c {{ info[status]?'open':'' }}" style="margin: auto 6% auto auto;">
+                <input id="fence_switch" type="checkbox" v-model="info[status]"/>
+                <label for="fence_switch" @click="fence_toggel()"></label>
+                <div class="pos_a w100 h100" onclick="$(this).prev().trigger('click')"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    var fence_vue = function(){
+        fence_vue = new Vue({
+            el: '#fence_vue',
+            created: function () {
+            },
+            compiled: function () {
+                this.initView();
+                launcher_vue.makeSureHeight(this.$el);
+            },
+            data: {
+                name:FENCE_NAME,
+                radius:FENCE_RADIUS,
+                isdanger:FENCE_ISDANGER,
+                status:FENCE_STATUS
+            },
+            computed: {
+                info:{
+                    get:function(){
+                        return launcher_vue.devices[launcher_vue.using][DEVICE_FENCE][locationP_vue.fenceKey];
+                    }
+                }
+            },
+            methods: {
+                init:function(){
+                    this.initView();
+                },
+                initView:function(){
+                    var $el = $(this.$el);
+                    $el.find('td:eq(1)').text('区域'+(parseInt(locationP_vue.fenceKey.substr(locationP_vue.fenceKey.length-1,locationP_vue.fenceKey.length))+1));
+                },
+                fence_toggel:function(){
+                    var input = $("#fence_switch");
+                    var bool = input.prop("checked");
+                    bool = bool? 0:1;
+
+                    var index = parseInt(locationP_vue.fenceKey.substr(locationP_vue.fenceKey.length-1,locationP_vue.fenceKey.length));
+
+                    var dataStr = '{' +
+                            '"'+INDEX+'":"'+ index +'",' +
+                            '"'+TYPE+'":"'+ bool +'",' +
+                            '"sessionId":"'+app.sessionId+'"' +
+                            '}';
+                    $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/fence_toggle', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                        success: function (data) {
+                            if (data[CODE] != 0) {
+                                Message.toast(data[MESSAGE], 2);
+                                return false;
+                            }else{
+                                launcher_vue.devices[launcher_vue.using][DEVICE_FENCE]['i-'+index][FENCE_STATUS] = bool;
+                                Message.toast('修改成功', 1);
+                                if(bool){
+                                    input.parent().addClass('open');
+                                }else{
+                                    input.parent().removeClass('open');
+                                }
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {console.log(errorThrown);
+                            index_vue.logout();
+                        },
+                        complete: function () {}
+                    });
+
+                    this.info[FENCE_STATUS] = bool;
+                },
+                save:function(){
+                    locationP_vue.fence_save();
+                }
+            }
+        });
+    };
+</script>

@@ -84,7 +84,7 @@
             margin: 10% auto auto auto;
             width: 80%;
             height: 23%;
-            background:url("/highcharts/static/img/main_soft/login/phone.svg") no-repeat;
+            background:url("./img/phone.svg") no-repeat;
             background-size: 100% 100%;
         }
         .tip_span{

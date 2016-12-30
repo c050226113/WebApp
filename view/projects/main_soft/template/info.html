@@ -1,0 +1,232 @@
+<style>
+    #info_vue{background-color: #f5f5f5;}
+    #info_main{margin-bottom: 30px;margin-top: 12%;background-color: #fff;border-radius: 3px;position: relative;width: 92%;left: 4%;height: auto;}
+    #info_main p{font-size: 84%;position:relative;width: 92%;left: 4%;margin: 0;border-top: 1px solid #ddd;height: 45px;line-height: 45px;}
+    #info_main p:nth-of-type(1){border:none}
+    #info_main input{height: 100%}
+    #info_main b{color: #0088e4;font-weight: 100;position: absolute;width: 50%;text-align: center;margin-top: -10%;left: 25%;}
+</style>
+<section id="info_vue">
+    <table class="navigation mh">
+        <tr>
+            <td onclick="history.go(-1)"><img data-src="./img/back.svg">返回</td>
+            <td>宝贝信息</td>
+            <td @click="save()">保存</td>
+        </tr>
+    </table>
+    <div class="pos_r w100" style="overflow: auto;height: 93%">
+        <div id="info_main" class="w100 pos_r" style="height: auto">
+            <b>基本信息</b>
+            <p>
+                <span class="fl">姓名：</span>
+                <span class="fr w50 txtr" contenteditable="true"
+                      onblur="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_NAME] = $(this).text().trim()">
+                    {{launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_NAME]}}
+                </span>
+            </p>
+            <p>
+                <span class="fl">性别：</span>
+                <select class="pos_a r0 t0 h100" v-model="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_SEX]" style="width:40px;">
+                    <option value="0">女</option>
+                    <option value="1">男</option>
+                </select>
+            </p>
+            <p>
+                <span class="fl">出生日期：</span>
+                <select class="pos_a h100 t0" v-model="year" style="width: 60px;right: 80px">
+                    <option v-for="y1 in y" value="{{y1.val}}">{{y1.val}}</option>
+                </select>
+                <select class="pos_a h100 t0" v-model="month" style="width: 40px;right: 40px">
+                    <option v-for="m1 in m" value="{{m1.val}}">{{m1.val}}</option>
+                </select>
+                <select class="pos_a h100 r0 t0" v-model="day" style="width: 40px;">
+                    <option v-for="d1 in d" value="{{d1.val}}">{{d1.val}}</option>
+                </select>
+            </p>
+            <p>
+                <span class="fl">身份证号：</span>
+                <span class="fr w50 txtr showKeyboard" contenteditable="true"
+                      onblur="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_ID] = $(this).text().trim()">
+                    {{launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_ID]}}
+                </span>
+            </p>
+            <p>
+                <span class="fl">户口所在地：</span>
+                 <span class="fr w50 txtr" contenteditable="true"
+                       onblur="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_HU] = $(this).text().trim()">
+                    {{launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_HU]}}
+                </span>
+            </p>
+            <p>
+                <span class="fl">户口性质：</span>
+                <select class="pos_a r0 t0 h100" v-model="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_TYPE]">
+                    <option value="0" :selected="(launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_TYPE])?'':'selected'">城市</option>
+                    <option value="1">农村</option>
+                </select>
+            </p>
+            <p>
+                <span class="fl">现住址：</span>
+                 <span class="fr w50 txtr" contenteditable="true"
+                       onblur="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LIVE] = $(this).text().trim()">
+                    {{launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_LIVE]}}
+                </span>
+            </p>
+            <p>
+                <span class="fl">学校信息：</span>
+                 <span class="fr w50 txtr" contenteditable="true"
+                       onblur="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_SCHOOL] = $(this).text().trim()">
+                    {{launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_SCHOOL]}}
+                </span>
+            </p>
+            <p>
+                <span class="fl">班级序号：</span>
+                  <span class="fr w50 txtr" contenteditable="true"
+                        onblur="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_CLASS] = $(this).text().trim()">
+                    {{launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_CLASS]}}
+                </span>
+            </p>
+            <p>
+                <span class="fl">政治面貌：</span>
+                  <span class="fr w50 txtr" contenteditable="true"
+                        onblur="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_FACE] = $(this).text().trim()">
+                    {{launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_FACE]}}
+                </span>
+            </p>
+            <p>
+                <span class="fl">就读方式：</span>
+                 <span class="fr w50 txtr showKeyboard" contenteditable="true"
+                       onblur="launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_SCHOOLWAY] = $(this).text().trim()">
+                    {{launcher_vue.devices_[launcher_vue.using][DEVICE_INFO][DEVICE_SCHOOLWAY]}}
+                </span>
+            </p>
+        </div>
+    </div>
+</section>
+<script>
+    var info_vue = function(){
+        info_vue = new Vue({
+            el: '#info_vue',
+            created: function () {
+                this.launcher_vue = launcher_vue;
+            },
+            compiled: function () {
+                launcher_vue.makeSureHeight(this.$el);
+            },
+            data: {
+                DEVICE_INFO:DEVICE_INFO,
+                DEVICE_NAME:DEVICE_NAME,
+                DEVICE_SEX:DEVICE_SEX,
+                DEVICE_ID:DEVICE_ID,
+                DEVICE_HU:DEVICE_HU,
+                DEVICE_TYPE:DEVICE_TYPE,
+                DEVICE_SCHOOL:DEVICE_SCHOOL,
+                DEVICE_CLASS:DEVICE_CLASS,
+                DEVICE_FACE:DEVICE_FACE,
+                DEVICE_SCHOOLWAY:DEVICE_SCHOOLWAY,
+                DEVICE_LIVE:DEVICE_LIVE
+            },
+            computed: {
+                year:{
+                    get:function(){
+                        var str = launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH]+'';
+                        var arr = str.split('|');
+                        return arr[0];
+                    },
+                    set:function(val){
+                        var str = launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH]+'';
+                        var arr = str.split('|');
+                        launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH] = val+"|"+arr[1]+"|"+arr[2];
+                    }
+                },
+                month:{
+                    get:function(){
+                        var str = launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH];
+                        var arr = str.split('|');
+                        return arr[1];
+                    },
+                    set:function(val){
+                        var str = launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH];
+                        var arr = str.split('|');
+                        launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH] = arr[0]+"|"+val+"|"+arr[2];
+                    }
+                },
+                day:{
+                    get:function(){
+                        var str = launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH];
+                        var arr = str.split('|');
+                        return arr[2];
+                    },
+                    set:function(val){
+                        var str = launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH];
+                        var arr = str.split('|');
+                        launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH] =  arr[0]+"|"+arr[1]+"|"+val;
+                    }
+                },
+                y:{
+                    get:function(){
+                        var arr = [];
+                        var year = parseInt((new Date).getFullYear())-1;
+                        var i;
+                        for( i= year;i>=(year - 30);i--){
+                            arr.push({val:i});
+                        }
+                        return arr;
+                    }
+                },
+                m:{
+                    get:function(){
+                        var arr = [];
+                        for(var i=1;i<=12;i++){
+                            arr.push({val:i});
+                        }
+                        return arr;
+                    }
+                },
+                d:{
+                    get:function(){
+                        var arr = [];
+                        for(var i=1;i<=31;i++){
+                            arr.push({val:i});
+                        }
+                        return arr;
+                    }
+                }
+            },
+            methods: {
+                init:function(){},
+                save:function(){
+                    //get and post
+                    var dataStr = '{' +
+                            '"'+NAME+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_NAME] +'",' +
+                            '"'+SEX+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_SEX] +'",' +
+                            '"'+BIRTH+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_BIRTH] +'",' +
+                            '"'+ID+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_ID] +'",' +
+                            '"'+HU+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_HU] +'",' +
+                            '"'+TYPE+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_TYPE] +'",' +
+                            '"'+SCHOOL+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_SCHOOL] +'",' +
+                            '"'+CLAS+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_CLASS] +'",' +
+                            '"'+FACE+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_FACE] +'",' +
+                            '"'+WAY+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_SCHOOLWAY] +'",' +
+                            '"'+LIVE+'":"'+ launcher_vue.devices[launcher_vue.using][DEVICE_INFO][DEVICE_LIVE] +'",' +
+                            '"sessionId":"'+app.sessionId+'"' +
+                            '}';
+                    $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/set_info', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                        success: function (data) {
+                            if(data[CODE] != 0){
+                                Message.toast(data[MESSAGE]);
+                                return false;
+                            }else{
+                                Message.toast('保存成功');
+                                return false;
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                            Message.toast('信息验证已过期请重新登陆',3);
+                        }
+                    });
+                }
+            }
+        });
+    };
+</script>

@@ -1,57 +1,26 @@
+var AndroidBrowser = (function() {
+    function AndroidBrowser(){}
 
-var Browser = (function() {
-    function Browser(){
-
-    }
-
-    //self.androidFunction = function(func){
-    //    return eval("phoneJS."+func+"()");
-    //};
-    //
-    //self.inputBlur=function(){
-    //    app.focusInput.blur();
-    //};
-    //
-    //this.inputObj = $('.showKeyboard');
-    //this.inputEvent = function(){
-    //    this.inputObj.bind('focus',function(){
-    //        app.hasKeyBoard = true;
-    //        app.focusInput = $(this);
-    //    }).bind('blur',function(){
-    //        app.hasKeyBoard = false;
-    //    });
-    //};
-    //
-    //this.initBind = function(){
-    //    console.log('android inputEvent');
-    //    this.inputEvent();
-    //};
-    //this.init = function(){
-    //    console.log('android bind');
-    //    this.initBind();
-    //};
-    //this.init();
-
-    Browser.prototype.setUserPosition = function(res){
-        //alert(res);
+    AndroidBrowser.prototype.setUserPosition = function(res){
+        alert(res);
         var WIFI = '1';
         var JIZHAN = '2';
         try{
             var obj = JSON.parse(res);
-            //alert(obj.code);
+            alert(obj.code);
             if(obj.code){
                 res = obj.msg;
                 if(!res){
                     throw new SQLException;
                 }
-                //alert(res);
+                alert(res);
                 switch (obj.code){
                     case WIFI:
                         var arr = res.split(",");
                         try {
                             var arr_1 = arr[1] + '';//BSSID:bo:ods:asd:daf:
                             var string = arr_1.substr(7, 20);//bo:ods:asd:daf
-                            //alert(string);
+                            alert(string);
                         } catch (err) {
                             Message.toast(err, 4);
                             return false;
@@ -71,6 +40,6 @@ var Browser = (function() {
         }
     };
 
-    return Browser;
+    return AndroidBrowser;
 }());
 

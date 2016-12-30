@@ -1,5 +1,0 @@
-#interval_shutdown_vue .item{position: relative;height: 65px;border-bottom: 1px solid #bbb}
-#interval_shutdown_vue .item .switch{line-height: 90px; z-index: 3;}
-#interval_shutdown_vue .opt .start_time{position: relative;width: 80%;left: 10%;margin-top: 18px;margin-bottom: 2%}
-#interval_shutdown_vue .opt .end_time{position: relative;width: 80%;left: 10%;margin-bottom: 3%}
-#interval_shutdown_vue .opt{height: 180px;position: absolute;bottom: 0;z-index: 4;background: #fff;border-top: solid 1px #bbb;}

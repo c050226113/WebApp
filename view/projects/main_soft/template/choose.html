@@ -1,0 +1,86 @@
+<style>
+    #choose_vue .li{list-style: none;height: 9%;width: 90%;left: 5%;background: #f5f5f5;position: relative;margin-bottom: 4%;border-radius: 10px;}
+    #choose_vue .head{margin: auto auto auto 4%;height: 90%;}
+    #choose_vue .flag{margin: auto 5% auto auto;height: 40%;}
+    #choose_vue div.font{position: relative;}
+    #choose_vue span,strong{height: 13px;font-size: 13px;line-height:1;width: 50%;}
+    #choose_vue div.img{position: absolute;width: 100%;height: 100%;top: 0;left: 0;}
+</style>
+<section id="choose_vue">
+    <table class="navigation">
+        <tr>
+            <td onclick="history.go(-1)"><img data-src="./img/back.svg">返回</td>
+            <td>选择宝贝</td>
+            <td @click="delDevice()">删除</td>
+        </tr>
+    </table>
+    <div style="height:5%;width:100%"></div>
+    <div class="li" v-for="(using,item) in launcher_vue.devices" @click="launcher_vue.choose(using)">
+        <div class="h50 w100 font"><strong class="name c">{{ item[DEVICE_INFO][DEVICE_NAME] }}</strong></div>
+        <div class="h50 w100 font"><span class="school c">{{ item[DEVICE_INFO][DEVICE_SCHOOL] }}</span></div>
+
+        <div class="img" v-show="item[DEVICE_INFO][DEVICE_AVT].length > 2">
+            <img class="c head" :src="item[DEVICE_INFO][DEVICE_AVT]">
+        </div>
+        <div class="img" v-else>
+            <img class="c head" data-src="./img/nodata.svg">
+        </div>
+
+        <div class="img" v-show="launcher_vue.using == using">
+            <img class="c flag" data-src="./img/choosed.svg">
+        </div>
+        <div class="img" v-else>
+            <img class="c flag" data-src="./img/choose.svg">
+        </div>
+    </div>
+    <img data-src="./img/add.svg" style="bottom:5%;width: 16%;left: 42%;" class="pos_a" onclick="location.hash='bind'"/>
+</section>
+<script>
+    var choose_vue = function(){
+        choose_vue = new Vue({
+            el: '#choose_vue',
+            created: function () {
+                this.launcher_vue = launcher_vue;
+            },
+            compiled: function () {},
+            data:{
+                DEVICE_INFO:DEVICE_INFO,
+                DEVICE_NAME:DEVICE_NAME,
+                DEVICE_IMEI:DEVICE_IMEI,
+                DEVICE_SCHOOL:DEVICE_SCHOOL,
+                DEVICE_AVT:DEVICE_AVT
+            },
+            computed: {},
+            methods: {
+                init:{},
+                delDevice:function(){
+                    Message.dialog("提示","取消绑定会清除设备的所有信息，确定清楚该设备吗","确定","取消",function(){
+                        var dataStr = '{' +
+                                '"'+CODE+'":"'+launcher_vue.using+'",' +
+                                '"sessionId":"'+app.sessionId+'"' +
+                                '}';
+                        $.ajax({type: 'post', url: app.API_URL+'?r=main_soft/del_device', data: Helper.getJsonObj(dataStr), dataType: 'json',
+                            success: function (data) {
+                                if (data[CODE] != 0) {
+                                    Message.toast(data[MESSAGE], 2);
+                                    return false;
+                                }else{
+                                    Message.toast("取消绑定成功", 2);
+                                    Vue.delete(launcher_vue.devices_, launcher_vue.using);
+                                    for(var using in launcher_vue.devices_){
+                                        launcher_vue.using = using;
+                                        break;
+                                    }
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {}
+                        });
+                        Message.removeDialog();
+                    },function(){
+                        Message.removeDialog();
+                    });
+                }
+            }
+        });
+    };
+</script>

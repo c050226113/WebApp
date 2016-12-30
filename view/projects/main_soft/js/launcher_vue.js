@@ -36,10 +36,10 @@ var launcher_vue = function(){
                         alarm_vue.initView();
                     } catch (e) {}
                     try {
-                        index.initPlaceInfo();
+                        index_vue.initPlaceInfo();
                     } catch (e) {}
                     try {
-                        sports.refreshFlag = true;
+                        sports_vue.refreshFlag = true;
                     } catch (e) {}
                 }
             }
